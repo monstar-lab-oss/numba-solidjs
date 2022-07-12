@@ -2,6 +2,14 @@
 
 Figma plugin for screen definition document
 
+## Runs the app in development mode.
+
+It will automatically build if you make changes to the code.
+
+```
+npm run dev
+```
+
 ## Builds the app for production to the dist folder.
 
 ```

@@ -6,7 +6,9 @@
   "scripts": {
     "build:main": "esbuild src/main.ts --outfile=dist/code.js --bundle",
     "build:ui": "vite build",
-    "build": "npm run build:main && npm run build:ui"
+    "prebuild": "node -e 'fs.rmSync(`dist`, { recursive: true, force: true })'",
+    "build": "concurrently -c yellow,blue -P \"npm:build:* -- {*}\" -- --minify",
+    "dev": "concurrently -k -c yellow,blue -P \"npm:build:* -- {*}\" -- --watch"
   },
   "repository": {
     "type": "git",
