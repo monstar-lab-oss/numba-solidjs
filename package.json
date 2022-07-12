@@ -4,6 +4,8 @@
   "version": "0.0.1",
   "description": "Figma plugin for screen definition document",
   "scripts": {
+    "type": "tsc --noEmit",
+    "test": "uvu -r esbuild-register src/lib/__tests__",
     "build:main": "esbuild src/main.ts --outfile=dist/code.js --bundle",
     "build:ui": "vite build",
     "prebuild": "node -e 'fs.rmSync(`dist`, { recursive: true, force: true })'",
@@ -27,7 +29,9 @@
     "@types/node": "18.0.3",
     "concurrently": "7.2.2",
     "esbuild": "0.14.49",
+    "esbuild-register": "3.3.3",
     "typescript": "4.7.4",
+    "uvu": "0.5.6",
     "tailwindcss": "3.1.5",
     "postcss": "8.4.14",
     "autoprefixer": "10.4.7",
