@@ -11,3 +11,4 @@ npm run build
 ## What’s Included?
 
 - Solid, JSX, ES6, TypeScript syntax support.
+- Tailwind CSS, A utility-first CSS framework for rapidly building custom designs
