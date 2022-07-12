@@ -1,6 +1,10 @@
+## build
 node_modules
+dist
 
 ## OS
-memo.md
 .DS_Store
+
+## notes
+memo.md
 artifacts
