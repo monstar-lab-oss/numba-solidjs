@@ -1,0 +1,10 @@
+## build
+node_modules
+dist
+
+## OS
+.DS_Store
+
+## notes
+memo.md
+artifacts

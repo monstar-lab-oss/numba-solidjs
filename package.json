@@ -1,0 +1,33 @@
+{
+  "name": "ia-screen-spec",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Figma plugin for screen definition document",
+  "scripts": {
+    "build:main": "esbuild src/main.ts --outfile=dist/code.js --bundle",
+    "build:ui": "vite build",
+    "build": "npm run build:main && npm run build:ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monstar-lab-group/ia-screen-spec.git"
+  },
+  "author": "Jinma Yamashita",
+  "bugs": {
+    "url": "https://github.com/monstar-lab-group/ia-screen-spec/issues"
+  },
+  "homepage": "https://github.com/monstar-lab-group/ia-screen-spec#readme",
+  "dependencies": {
+    "solid-js": "1.4.7"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "1.49.0",
+    "@types/node": "18.0.3",
+    "concurrently": "7.2.2",
+    "esbuild": "0.14.49",
+    "typescript": "4.7.4",
+    "vite": "2.9.13",
+    "vite-plugin-singlefile": "0.10.0",
+    "vite-plugin-solid": "2.2.6"
+  }
+}
