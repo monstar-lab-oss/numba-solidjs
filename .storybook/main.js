@@ -33,6 +33,9 @@ module.exports = {
     tailwind.config = {
       theme: {
         extend: {
+          colors: {
+            "figma": "#e6e6e6",
+          },
           fontFamily: {
             sans: ["Inter var"],
           },
