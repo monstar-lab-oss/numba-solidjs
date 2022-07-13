@@ -1,7 +1,7 @@
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 
-type Props = {
+export type Props = {
   title: string;
 } & JSX.HTMLAttributes<HTMLButtonElement>;
 
