@@ -20,6 +20,7 @@ module.exports = {
     return config;
   },
   // https://storybook.js.org/docs/react/addons/writing-presets#previewmanager-templates
+  // TODO: duplicate. Use tailwind.config.js
   previewHead: (head) => `
   ${head}
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
