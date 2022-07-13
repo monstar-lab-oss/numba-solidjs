@@ -6,6 +6,8 @@
   "scripts": {
     "type": "tsc --noEmit",
     "test": "uvu -r esbuild-register src/lib/__tests__",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
     "build:main": "esbuild src/main.ts --outfile=dist/code.js --bundle",
     "build:ui": "vite build",
     "prebuild": "node -e 'fs.rmSync(`dist`, { recursive: true, force: true })'",
@@ -25,6 +27,15 @@
     "solid-js": "1.4.7"
   },
   "devDependencies": {
+    "@babel/core": "7.18.6",
+    "@storybook/addon-actions": "6.5.9",
+    "@storybook/addon-essentials": "6.5.9",
+    "@storybook/addon-interactions": "6.5.9",
+    "@storybook/addon-links": "6.5.9",
+    "@storybook/builder-vite": "0.1.39",
+    "@storybook/html": "6.5.9",
+    "@storybook/testing-library": "0.0.13",
+    "babel-loader": "8.2.5",
     "@figma/plugin-typings": "1.49.0",
     "@types/node": "18.0.3",
     "concurrently": "7.2.2",
