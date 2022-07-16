@@ -1,46 +1,12 @@
-import { Component, JSX, splitProps } from "solid-js";
+import { Component } from "solid-js";
 import { appStore } from "@/lib/store";
-
-type ButtonProps = {
-  onClick: () => void;
-  disabled: boolean;
-  children: JSX.Element;
-};
-const Button: Component<ButtonProps> = (props) => {
-  const [, attributes] = splitProps(props, ["children"]);
-  return (
-    // disabled={props.disabled} onClick={props.onClick}
-    <button {...attributes}>{props.children}</button>
-  );
-};
+import { Button } from "@/components/Button";
+import { useDispatch } from "@/lib/hooks/useDispatch";
 
 export const FromScratch: Component = () => {
-  const { enabled, setEnabled } = appStore;
+  const { enabled } = appStore;
 
-  window.onmessage = ({ data }: { data: { pluginMessage: any } }) => {
-    const { type, payload } = data.pluginMessage;
-    switch (type) {
-      case "SELECTION_CHANGE":
-        setEnabled(payload);
-        return;
-      case "RUN":
-        return;
-      default:
-        return;
-    }
-  };
-
-  const onClick = () => {
-    parent.postMessage(
-      {
-        pluginMessage: {
-          type: "CREATE_INDEX",
-          data: "CREATE_INDEX_DATA",
-        },
-      },
-      "*"
-    );
-  };
+  const onClick = () => useDispatch({ type: "CREATE_INDEX", data: null });
 
   return (
     <>
