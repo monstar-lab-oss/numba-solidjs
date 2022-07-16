@@ -1,5 +1,6 @@
 /* @refresh reload */
-import "@/components/index.css";
+// TODO: uncomment when this branch is merged
+// import "@/components/index.css";
 import { render } from "solid-js/web";
 import { FromScratch } from "@/components/FromScratch";
 
