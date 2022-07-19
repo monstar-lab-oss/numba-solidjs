@@ -1,4 +1,4 @@
-import { createSignal, createRoot, createUniqueId, createMemo } from "solid-js";
+import { createSignal, createRoot, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 import type { Group } from "@/types/Group";
 import type { Badge } from "@/types/Badge";
@@ -23,8 +23,7 @@ function createAppStore() {
   });
 
   // groups
-  const createGroup = (name: string) => {
-    const id = createUniqueId();
+  const createGroup = ({ id, name }: { id: string; name: string }) => {
     setState("groups", (g) => [...g, { id, name }]);
   };
 
@@ -38,9 +37,16 @@ function createAppStore() {
     return id ? state.badges[id] : [];
   };
 
-  const createBadge = (parentId: Group["id"]) => {
-    const id = createUniqueId();
-    const b: Badge = { id, color: "BLUE" };
+  const createBadge = ({
+    parentId,
+    id,
+    name,
+  }: {
+    parentId: Group["id"];
+    id: Badge["id"];
+    name: Badge["name"];
+  }) => {
+    const b: Badge = { id, name, color: "BLUE" };
     setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
   };
 
@@ -54,7 +60,7 @@ function createAppStore() {
   const groups = createMemo(() => state.groups);
 
   return {
-    state,
+    state, // TODO: use only debug
     enabled,
     setEnabled,
     groups,
