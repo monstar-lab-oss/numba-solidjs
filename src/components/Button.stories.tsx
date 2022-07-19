@@ -7,7 +7,7 @@ export default {
 
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => {
-  return <Button title="button" />;
+  return <Button title="button">title</Button>;
 };
 
 export const Primary = Template.bind({});
