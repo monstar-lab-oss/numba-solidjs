@@ -111,6 +111,8 @@ figma.on("selectionchange", () => {
 
   const current = figma.currentPage.selection;
 
+  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current.length });
+
   // REMOVE OR NO SELECT
   if (!current.length) {
     figma.ui.postMessage({
@@ -120,8 +122,6 @@ figma.on("selectionchange", () => {
     });
     return;
   }
-
-  figma.ui.postMessage({ type: "SELECTION_CHANGE", payload: !!current.length });
 });
 
 figma.on("run", async () => {
@@ -131,6 +131,9 @@ figma.on("run", async () => {
     figma.loadFontAsync({ family: "Inter", style: "Regular" }),
     figma.loadFontAsync({ family: "Inter", style: "Bold" }),
   ]);
+
+  const current = figma.currentPage.selection;
+  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current.length });
 
   figma.ui.postMessage({
     type: "GROUP/INITIALIZE",
