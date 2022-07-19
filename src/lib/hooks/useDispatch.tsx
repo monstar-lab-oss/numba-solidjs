@@ -1,12 +1,4 @@
-type DispatchPayload =
-  | {
-      type: "CREATE_INDEX";
-      data: null;
-    }
-  | {
-      type: "CREATE_INDEX2";
-      data: "CREATE_INDEX_DATA2";
-    };
+import type { FigmaMessage } from "@/types/Actions";
 
-export const useDispatch = ({ type, data }: DispatchPayload) =>
+export const useDispatch = ({ type, data }: FigmaMessage) =>
   parent.postMessage({ pluginMessage: { type, data } }, "*");

@@ -1,13 +1,10 @@
 import { store } from "@/lib/store";
 import { onCleanup } from "solid-js";
-
-type PluginMessage = {
-  type: string;
-  payload: any;
-};
+// import { useDispatch } from "@/lib/hooks/useDispatch";
+import type { PluginMessage } from "@/types/Actions";
 
 export function useHandler() {
-  const { setEnabled } = store;
+  const { setEnabled, createGroup, createBadge } = store;
 
   const messageHandler = ({
     data,
@@ -16,6 +13,12 @@ export function useHandler() {
     switch (type) {
       case "SELECTION_CHANGE":
         setEnabled(payload);
+        return;
+      case "GROUP/CREATE":
+        createGroup(payload);
+        return;
+      case "BADGE/CREATE":
+        createBadge(payload);
         return;
       case "RUN":
         return;
