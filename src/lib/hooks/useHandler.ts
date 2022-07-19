@@ -1,4 +1,4 @@
-import { appStore } from "@/lib/store";
+import { store } from "@/lib/store";
 import { onCleanup } from "solid-js";
 
 type PluginMessage = {
@@ -7,7 +7,7 @@ type PluginMessage = {
 };
 
 export function useHandler() {
-  const { setEnabled } = appStore;
+  const { setEnabled } = store;
 
   const messageHandler = ({
     data,
