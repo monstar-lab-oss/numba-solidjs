@@ -4,7 +4,7 @@ import { onCleanup } from "solid-js";
 import type { PluginMessage } from "@/types/Actions";
 
 export function useHandler() {
-  const { setEnabled, createGroup, createBadge } = store;
+  const { setEnabled, syncAll, createGroup, createBadge } = store;
 
   const messageHandler = ({
     data,
@@ -20,7 +20,8 @@ export function useHandler() {
       case "BADGE/CREATE":
         createBadge(payload);
         return;
-      case "RUN":
+      case "GROUP/INITIALIZE":
+        syncAll(payload);
         return;
       default:
         return;

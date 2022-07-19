@@ -1,12 +1,40 @@
 import { figmaRGBA } from "@/lib/utils";
 import type { FigmaMessage } from "@/types/Actions";
 
+const BADGE_ID = "BADGE_,d7e*jKXL}fCF3KiLxzs";
+
 function setColor({ r = 0, g = 0, b = 0, a = 1 }) {
   return <SolidPaint>{
     type: "SOLID",
     color: figmaRGBA({ r, g, b, a }),
     opacity: a,
   };
+}
+
+function scan() {
+  // Currently using `findAllWithCriteria`, should I use `findChildren` ?
+  // OR https://github.com/figma/plugin-samples/blob/22e12c5406c72f2a88d18810d3a6efb18ece0356/text-search/code.ts#L28-L36
+  const instances = getNodesByType("INSTANCE") as InstanceNode[];
+
+  const badgeNodes = instances.filter(
+    // Badge has its own ID that we specify
+    (i) => i.mainComponent && i.mainComponent.description === BADGE_ID
+  );
+  const parentNodes = badgeNodes.map((b) => b.parent as GroupNode);
+
+  const groups = parentNodes.map((x) => ({ id: x.id, name: x.name }));
+
+  const badges = parentNodes.reduce((acc, cur) => {
+    return Object.assign(acc, {
+      [cur.id]: cur.children.map((x) => ({
+        id: x.id,
+        name: x.name,
+        color: "BLUE",
+      })),
+    });
+  }, {});
+
+  return [groups, badges];
 }
 
 function getNodesByType(type: "INSTANCE" | "GROUP") {
@@ -46,7 +74,7 @@ function setIndexNode(index: number, targetNode: SceneNode) {
   // TODO: user custom color
   componentNode.fills = [setColor({ r: 24, g: 160, b: 251 })];
   // TODO: use by id when reload file
-  componentNode.description = "COMPONENT_ID";
+  componentNode.description = BADGE_ID;
 
   const textNode = figma.createText();
   textNode.fontSize = 12;
@@ -79,7 +107,20 @@ figma.showUI(__html__, { themeColors: true, width: 450, height: 300 });
  * Messages
  */
 figma.on("selectionchange", () => {
+  scan();
+
   const current = figma.currentPage.selection;
+
+  // REMOVE OR NO SELECT
+  if (!current.length) {
+    figma.ui.postMessage({
+      type: "GROUP/INITIALIZE",
+      // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
+      payload: scan(),
+    });
+    return;
+  }
+
   figma.ui.postMessage({ type: "SELECTION_CHANGE", payload: !!current.length });
 });
 
@@ -92,8 +133,9 @@ figma.on("run", async () => {
   ]);
 
   figma.ui.postMessage({
-    type: "RUN",
-    payload: null,
+    type: "GROUP/INITIALIZE",
+    // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
+    payload: scan(),
   });
 });
 

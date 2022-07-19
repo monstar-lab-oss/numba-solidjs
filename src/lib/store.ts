@@ -57,10 +57,17 @@ function createAppStore() {
     removeGroup(parentId);
   };
 
+  const syncAll = (payload: [Group[], Record<string, Badge[]>]) => {
+    const [groups, badges] = payload;
+
+    setState((s) => ({ groups, badges }));
+  };
+
   const groups = createMemo(() => state.groups);
 
   return {
     state, // TODO: use only debug
+    syncAll,
     enabled,
     setEnabled,
     groups,

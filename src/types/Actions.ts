@@ -1,3 +1,6 @@
+import type { Badge } from "@/types/Badge";
+import type { Group } from "@/types/Group";
+
 export type PluginMessage =
   | {
       type: "GROUP/CREATE";
@@ -19,8 +22,8 @@ export type PluginMessage =
       payload: any;
     }
   | {
-      type: "RUN";
-      payload: any;
+      type: "GROUP/INITIALIZE";
+      payload: [Group[], Record<string, Badge[]>];
     };
 
 export type FigmaMessage =
