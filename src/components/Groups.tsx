@@ -3,7 +3,6 @@ import type { Group } from "@/types/Group";
 
 type Props = {
   data: Group[];
-  onCreate: () => void;
   onRemove: (id: Group["id"]) => void;
   onSelect: (id: Group["id"]) => void;
 };
@@ -11,7 +10,6 @@ type Props = {
 export const Groups: Component<Props> = (props) => {
   return (
     <div>
-      <button onClick={props.onCreate}>+</button>
       <For each={props.data}>
         {(group) => (
           <li>
