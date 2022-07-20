@@ -23,9 +23,20 @@ function scan() {
     // Badge has its own ID that we specify
     (i) => i.mainComponent && i.mainComponent.description === BADGE_ID
   );
-  const parentNodes = badgeNodes.map((b) => b.parent as GroupNode);
 
-  const groups = parentNodes.map((x) => ({ id: x.id, name: x.name }));
+  const parentIds = badgeNodes.map((b) => b.parent && b.parent.id);
+  const groupIds = parentIds.filter((v, i, a) => a.indexOf(v) === i);
+
+  const groups = groupIds.map((id) => {
+    const node = getNodesByType("GROUP").find((g) => g.id === id);
+    if (!node) return;
+    return {
+      id,
+      name: node.name,
+    };
+  });
+
+  const parentNodes = badgeNodes.map((b) => b.parent as GroupNode);
 
   const badges = parentNodes.reduce((acc, cur) => {
     return Object.assign(acc, {
