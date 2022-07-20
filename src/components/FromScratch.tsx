@@ -1,4 +1,10 @@
-import { Component, createMemo, createSignal, Show } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createMemo,
+  createSignal,
+  Show,
+} from "solid-js";
 import { store } from "@/lib/store";
 import { Button } from "@/components/Button";
 import { useDispatch } from "@/lib/hooks/useDispatch";
@@ -12,9 +18,26 @@ export const FromScratch: Component = () => {
     store;
 
   const onClick = () => useDispatch({ type: "CREATE_INDEX", data: null });
-  const [selectedGroup, setSelectedGroup] = createSignal<string>();
 
-  const onSelectGroup = (id: Group["id"]) => setSelectedGroup(id);
+  const [selectedGroup, setSelectedGroup] = createSignal<string | undefined>();
+
+  const onUnSelectGroup = () => {
+    setSelectedGroup(undefined);
+    useDispatch({ type: "SELECT_GROUP", data: undefined });
+  };
+
+  const onSelectGroup = (id: Group["id"]) => {
+    setSelectedGroup(id);
+    useDispatch({ type: "SELECT_GROUP", data: id });
+  };
+
+  createEffect(() => {
+    const gx = groups();
+    const lastIdx = gx.length - 1;
+    if (lastIdx < 0) return;
+
+    onSelectGroup(gx[lastIdx].id);
+  });
 
   const badges = createMemo(() => getBadgeByGroupId(selectedGroup()));
 
@@ -40,8 +63,10 @@ export const FromScratch: Component = () => {
       </Button>
       <div style={{ display: "flex" }}>
         <Groups
+          selectedGroup={selectedGroup()}
           data={groups()}
           onSelect={onSelectGroup}
+          onUnSelect={onUnSelectGroup}
           onRemove={onRemoveGroup}
         />
         <Show when={selectedGroup()}>

@@ -3,6 +3,14 @@ import type { Group } from "@/types/Group";
 
 export type PluginMessage =
   | {
+      type: "GROUP/ENABLE";
+      payload: boolean;
+    }
+  | {
+      type: "GROUP/INITIALIZE";
+      payload: [Group[], Record<string, Badge[]>];
+    }
+  | {
       type: "GROUP/CREATE";
       payload: {
         id: string;
@@ -16,20 +24,16 @@ export type PluginMessage =
         id: string;
         name: string;
       };
-    }
-  | {
-      type: "SELECTION_CHANGE";
-      payload: any;
-    }
-  | {
-      type: "GROUP/INITIALIZE";
-      payload: [Group[], Record<string, Badge[]>];
     };
 
 export type FigmaMessage =
   | {
       type: "CREATE_INDEX";
       data: null;
+    }
+  | {
+      type: "SELECT_GROUP";
+      data: string | undefined;
     }
   | {
       type: "REMOVE_GROUP";

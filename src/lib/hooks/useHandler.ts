@@ -11,7 +11,7 @@ export function useHandler() {
   }: MessageEvent<{ pluginMessage: PluginMessage }>) => {
     const { type, payload } = data.pluginMessage;
     switch (type) {
-      case "SELECTION_CHANGE":
+      case "GROUP/ENABLE":
         setEnabled(payload);
         return;
       case "GROUP/CREATE":
