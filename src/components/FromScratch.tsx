@@ -20,7 +20,11 @@ export const FromScratch: Component = () => {
   const onClick = () => useDispatch({ type: "CREATE_INDEX", data: null });
 
   const [selectedGroup, setSelectedGroup] = createSignal<string>();
-  const onSelectGroup = (id: Group["id"]) => setSelectedGroup(id);
+
+  const onSelectGroup = (id: Group["id"]) => {
+    setSelectedGroup(id);
+    useDispatch({ type: "SELECT_GROUP", data: id });
+  };
 
   createEffect(() => {
     const gx = groups();

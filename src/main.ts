@@ -1,7 +1,10 @@
-import { figmaRGBA } from "@/lib/utils";
+import { getMissingSerialNumber, figmaRGBA } from "@/lib/utils";
 import type { FigmaMessage } from "@/types/Actions";
 
 const BADGE_ID = "BADGE_,d7e*jKXL}fCF3KiLxzs";
+
+// global state
+let selectedGroup: GroupNode | undefined;
 
 function setColor({ r = 0, g = 0, b = 0, a = 1 }) {
   return <SolidPaint>{
@@ -44,6 +47,12 @@ function getNodesByType(type: "INSTANCE" | "GROUP") {
   return nodes;
 }
 
+function getGroupNodeById(id: string) {
+  const node = getNodesByType("GROUP").find((g) => g.id === id);
+  if (!node) throw new Error("NO GROUP NODE!");
+  return node as GroupNode;
+}
+
 function setGroup(node: SceneNode, name: string) {
   const group = figma.group([node], figma.currentPage);
   group.name = `numbering_${name}`;
@@ -52,9 +61,7 @@ function setGroup(node: SceneNode, name: string) {
 }
 
 function removeGroupNode(id: string) {
-  const node = getNodesByType("GROUP").find((g) => g.id === id);
-  if (!node) throw new Error("NO GROUP NODE!");
-
+  const node = getGroupNodeById(id);
   node.remove();
 }
 
@@ -109,12 +116,12 @@ figma.showUI(__html__, { themeColors: true, width: 450, height: 300 });
 figma.on("selectionchange", () => {
   scan();
 
-  const current = figma.currentPage.selection;
+  const [current] = figma.currentPage.selection;
 
-  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current.length });
+  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current });
 
   // REMOVE OR NO SELECT
-  if (!current.length) {
+  if (!current) {
     figma.ui.postMessage({
       type: "GROUP/INITIALIZE",
       // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
@@ -122,6 +129,25 @@ figma.on("selectionchange", () => {
     });
     return;
   }
+
+  // SELECTED
+  if (!selectedGroup) return;
+
+  const idx = getMissingSerialNumber(
+    selectedGroup.children.map((x) => Number(x.name))
+  );
+  const badgeNode = setIndexNode(idx, current);
+
+  selectedGroup.appendChild(badgeNode);
+
+  figma.ui.postMessage({
+    type: "BADGE/CREATE",
+    payload: {
+      parentId: selectedGroup.id,
+      id: badgeNode.id,
+      name: badgeNode.name,
+    },
+  });
 });
 
 figma.on("run", async () => {
@@ -174,6 +200,9 @@ figma.ui.onmessage = (msg: FigmaMessage) => {
       // TODO:
       // figma.viewport.scrollAndZoomIntoView([indexNode]);
       // figma.currentPage.appendChild(indexNode);
+      return;
+    case "SELECT_GROUP":
+      selectedGroup = data ? getGroupNodeById(data) : undefined;
       return;
     case "REMOVE_GROUP":
       removeGroupNode(data);

@@ -32,6 +32,10 @@ export type FigmaMessage =
       data: null;
     }
   | {
+      type: "SELECT_GROUP";
+      data: string;
+    }
+  | {
       type: "REMOVE_GROUP";
       data: string;
     }
