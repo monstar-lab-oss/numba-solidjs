@@ -216,6 +216,7 @@ figma.ui.onmessage = (msg: FigmaMessage) => {
       selectedGroup = data ? getGroupNodeById(data) : undefined;
       return;
     case "REMOVE_GROUP":
+      selectedGroup = undefined;
       removeGroupNode(data);
       return;
     case "REMOVE_BADGE":
