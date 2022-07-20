@@ -15,4 +15,11 @@ test("dashify", () => {
   assert.is(utils.dashify("foobar"), "foobar");
 });
 
+test("getMissingSerialNumber", () => {
+  assert.type(utils.getMissingSerialNumber, "function");
+  assert.is(utils.getMissingSerialNumber([1, 2, 3, 4]), 5);
+  assert.is(utils.getMissingSerialNumber([1, 5]), 2);
+  assert.is(utils.getMissingSerialNumber([1, 2, 5, 10]), 3);
+});
+
 test.run();
