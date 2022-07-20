@@ -19,7 +19,12 @@ export const FromScratch: Component = () => {
 
   const onClick = () => useDispatch({ type: "CREATE_INDEX", data: null });
 
-  const [selectedGroup, setSelectedGroup] = createSignal<string>();
+  const [selectedGroup, setSelectedGroup] = createSignal<string | undefined>();
+
+  const onUnSelectGroup = () => {
+    setSelectedGroup(undefined);
+    useDispatch({ type: "SELECT_GROUP", data: undefined });
+  };
 
   const onSelectGroup = (id: Group["id"]) => {
     setSelectedGroup(id);
@@ -58,8 +63,10 @@ export const FromScratch: Component = () => {
       </Button>
       <div style={{ display: "flex" }}>
         <Groups
+          selectedGroup={selectedGroup()}
           data={groups()}
           onSelect={onSelectGroup}
+          onUnSelect={onUnSelectGroup}
           onRemove={onRemoveGroup}
         />
         <Show when={selectedGroup()}>

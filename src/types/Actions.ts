@@ -33,7 +33,7 @@ export type FigmaMessage =
     }
   | {
       type: "SELECT_GROUP";
-      data: string;
+      data: string | undefined;
     }
   | {
       type: "REMOVE_GROUP";
