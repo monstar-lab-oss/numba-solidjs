@@ -1,4 +1,10 @@
-import { Component, createMemo, createSignal, Show } from "solid-js";
+import {
+  Component,
+  createEffect,
+  createMemo,
+  createSignal,
+  Show,
+} from "solid-js";
 import { store } from "@/lib/store";
 import { Button } from "@/components/Button";
 import { useDispatch } from "@/lib/hooks/useDispatch";
@@ -12,9 +18,17 @@ export const FromScratch: Component = () => {
     store;
 
   const onClick = () => useDispatch({ type: "CREATE_INDEX", data: null });
-  const [selectedGroup, setSelectedGroup] = createSignal<string>();
 
+  const [selectedGroup, setSelectedGroup] = createSignal<string>();
   const onSelectGroup = (id: Group["id"]) => setSelectedGroup(id);
+
+  createEffect(() => {
+    const gx = groups();
+    const lastIdx = gx.length - 1;
+    if (lastIdx < 0) return;
+
+    onSelectGroup(gx[lastIdx].id);
+  });
 
   const badges = createMemo(() => getBadgeByGroupId(selectedGroup()));
 
