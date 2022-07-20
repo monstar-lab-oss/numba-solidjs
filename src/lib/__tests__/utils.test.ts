@@ -17,9 +17,10 @@ test("dashify", () => {
 
 test("getMissingSerialNumber", () => {
   assert.type(utils.getMissingSerialNumber, "function");
-  assert.is(utils.getMissingSerialNumber([1, 2, 3, 4]), 5);
   assert.is(utils.getMissingSerialNumber([1, 5]), 2);
-  assert.is(utils.getMissingSerialNumber([1, 2, 5, 10]), 3);
+  assert.is(utils.getMissingSerialNumber([1, 2, 5]), 3);
+  assert.is(utils.getMissingSerialNumber([2, 5, 3]), 1);
+  assert.is(utils.getMissingSerialNumber([2, 5, 3, 1]), 4);
 });
 
 test.run();
