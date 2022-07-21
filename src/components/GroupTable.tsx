@@ -1,21 +1,35 @@
 import { Component, JSX, For } from "solid-js";
+import type { Group } from "@/types/Group";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
 
 export type Props = {
-  data: { id: string; name: string }[];
+  data: Group[];
+  selectedGroup: string | undefined;
+  onRemoveClick: (id: Group["id"]) => void;
+  onSelectClick: (id: Group["id"]) => void;
+  onUnSelectClick: () => void;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const GroupTable: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["data"]);
+  const [, attributes] = splitProps(props, [
+    "data",
+    "selectedGroup",
+    "onRemoveClick",
+    "onSelectClick",
+    "onUnSelectClick",
+  ]);
 
   const onSelectClick = (e: MouseEvent, id: string) => {
-    console.log("g click", id);
+    props.selectedGroup === id
+      ? props.onUnSelectClick()
+      : props.onSelectClick(id);
+
     e.stopImmediatePropagation();
   };
 
   const onRemoveClick = (e: MouseEvent, id: string) => {
-    console.log("g remove", id);
+    props.onRemoveClick(id);
     e.stopImmediatePropagation();
   };
 
@@ -35,7 +49,11 @@ export const GroupTable: Component<Props> = (props) => {
             {(item) => (
               <tr
                 onClick={(e) => onSelectClick(e, item.id)}
-                class="cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600"
+                class={clsx({
+                  "cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600":
+                    true,
+                  "bg-gray-50": props.selectedGroup === item.id,
+                })}
               >
                 <th
                   scope="row"

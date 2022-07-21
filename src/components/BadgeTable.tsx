@@ -1,17 +1,19 @@
 import { Component, JSX, For } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
+import type { Badge } from "@/types/Badge";
 import { Button } from "./Button";
 
 export type Props = {
-  data: { id: string; name: string }[];
+  data: Badge[];
+  onRemove: (id: Badge["id"]) => void;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const BadgeTable: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["data"]);
+  const [, attributes] = splitProps(props, ["data", "onRemove"]);
 
   const onRemoveClick = (e: MouseEvent, id: string) => {
-    console.log("b remove", id);
+    props.onRemove(id);
     e.stopImmediatePropagation();
   };
 
@@ -33,7 +35,7 @@ export const BadgeTable: Component<Props> = (props) => {
               </div>
             </th>
             <th scope="col" class="px-4"></th>
-            <th scope="col" class="px-4">
+            <th scope="col" class="px-4 text-right">
               <Button use="danger">R</Button>
             </th>
           </tr>

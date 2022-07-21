@@ -3,28 +3,32 @@ import { splitProps } from "solid-js";
 import { clsx } from "clsx";
 import { Button } from "@/components/Button";
 import { Pannel } from "@/components/Pannel";
-import { GroupTable } from "@/components/GroupTable";
 
-export type Props = {} & JSX.HTMLAttributes<HTMLDivElement>;
+export type Props = {
+  createButtonDisabled: boolean;
+  onCreateClick: () => void;
+  children: JSX.Element;
+} & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const GroupPannel: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, []);
-
-  // TODO:
-  const data = new Array(10).fill(null).map((_, i) => ({
-    id: `id${i}`,
-    name: `Name${i}`,
-  }));
+  const [, attributes] = splitProps(props, [
+    "onCreateClick",
+    "createButtonDisabled",
+    "children",
+  ]);
 
   return (
     <Pannel>
       <div class={clsx({ "grid grid-rows-1 gap-4": true })}>
         <div class={clsx({ "flex justify-end": true })} {...attributes}>
-          <Button>Create</Button>
+          <Button
+            onClick={props.onCreateClick}
+            disabled={props.createButtonDisabled}
+          >
+            Create
+          </Button>
         </div>
-        <div>
-          <GroupTable data={data} />
-        </div>
+        <div>{props.children}</div>
       </div>
     </Pannel>
   );
