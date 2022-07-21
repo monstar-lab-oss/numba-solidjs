@@ -1,7 +1,10 @@
 import { getMissingSerialNumber, figmaRGBA } from "@/lib/utils";
 import type { FigmaMessage } from "@/types/Actions";
 
+// constants
 const BADGE_ID = "BADGE_,d7e*jKXL}fCF3KiLxzs";
+const UI_WIDTH = 592;
+const UI_HEIGHT = 424;
 
 // global state
 let selectedGroup: GroupNode | undefined;
@@ -119,7 +122,11 @@ function setIndexNode(index: number, targetNode: SceneNode) {
 /**
  *
  */
-figma.showUI(__html__, { themeColors: true, width: 450, height: 300 });
+figma.showUI(__html__, {
+  themeColors: true,
+  width: UI_WIDTH,
+  height: UI_HEIGHT,
+});
 
 /**
  * Messages

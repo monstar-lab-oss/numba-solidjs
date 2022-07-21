@@ -6,12 +6,13 @@ import {
   Show,
 } from "solid-js";
 import { store } from "@/lib/store";
-import { Button } from "@/components/Button";
 import { useDispatch } from "@/lib/hooks/useDispatch";
-import { Groups } from "@/components/Groups";
-import { Badges } from "@/components/Badges";
 import type { Badge } from "@/types/Badge";
 import type { Group } from "@/types/Group";
+import { GroupPannel } from "./GroupPannel";
+import { BadgePannel } from "./BadgePannel";
+import { GroupTable } from "@/components/GroupTable";
+import { BadgeTable } from "@/components/BadgeTable";
 
 export const FromScratch: Component = () => {
   const { enabled, groups, removeGroup, getBadgeByGroupId, removeBadge } =
@@ -58,20 +59,22 @@ export const FromScratch: Component = () => {
 
   return (
     <>
-      <Button disabled={!enabled()} onClick={onClick}>
-        Create
-      </Button>
-      <div style={{ display: "flex" }}>
-        <Groups
-          selectedGroup={selectedGroup()}
-          data={groups()}
-          onSelect={onSelectGroup}
-          onUnSelect={onUnSelectGroup}
-          onRemove={onRemoveGroup}
-        />
-        <Show when={selectedGroup()}>
-          <Badges data={badges()} onRemove={onRemoveBadge} />
-        </Show>
+      {/* FIXME: Fixed height only now */}
+      <div class="flex h-[424px] items-stretch">
+        <GroupPannel createButtonDisabled={!enabled()} onCreateClick={onClick}>
+          <GroupTable
+            selectedGroup={selectedGroup()}
+            data={groups()}
+            onSelectClick={onSelectGroup}
+            onUnSelectClick={onUnSelectGroup}
+            onRemoveClick={onRemoveGroup}
+          />
+        </GroupPannel>
+        <BadgePannel>
+          <Show when={selectedGroup()}>
+            <BadgeTable data={badges()} onRemove={onRemoveBadge} />
+          </Show>
+        </BadgePannel>
       </div>
     </>
   );
