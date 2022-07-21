@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/monstar-lab-group/ia-screen-spec#readme",
   "dependencies": {
+    "clsx": "1.2.1",
     "solid-js": "1.4.7"
   },
   "devDependencies": {
