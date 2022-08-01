@@ -1,0 +1,7 @@
+feature: ["feature/*", "feat/*"]
+design: design/*
+fix: ["bug/*", "fix/*"]
+refactoring: ["refactoring/*", "refactor/*"]
+chore: chore/*
+build: [build/*, "ci/*"]
+bump: [bump/*, "release/*"]
