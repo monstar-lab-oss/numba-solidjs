@@ -41,5 +41,5 @@ export type FigmaMessage =
     }
   | {
       type: "REMOVE_BADGE";
-      data: string;
+      data: Badge["id"][];
     };

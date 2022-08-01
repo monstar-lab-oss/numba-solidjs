@@ -1,4 +1,4 @@
-import { Component, JSX, For } from "solid-js";
+import { Component, JSX, For, createMemo } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
 import type { Badge } from "@/types/Badge";
@@ -6,16 +6,44 @@ import { Button } from "./Button";
 
 export type Props = {
   data: Badge[];
-  onRemove: (id: Badge["id"]) => void;
+  onRemove: (id: Badge["id"][]) => void;
+  onUnSelectGroup: () => void;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const BadgeTable: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["data", "onRemove"]);
+  const [, attributes] = splitProps(props, [
+    "data",
+    "onRemove",
+    "onUnSelectGroup",
+  ]);
 
-  const onRemoveClick = (e: MouseEvent, id: string) => {
-    props.onRemove(id);
+  const isDisabledRemove = createMemo(() =>
+    props.data.every((x) => !x.selected())
+  );
+
+  const onRemoveClick = (e: MouseEvent) => {
+    const selectedBageIds = props.data
+      .filter((x) => x.selected())
+      .map(({ id }) => id);
+
+    props.onRemove(selectedBageIds);
+    !props.data.length && props.onUnSelectGroup();
+
     e.stopImmediatePropagation();
   };
+
+  const onToggleAllClick = () => {
+    const toggle = isSelectAll();
+    props.data.forEach((x) => x.setSelected(!toggle));
+  };
+
+  const onToggleClick = (id: string) => {
+    const item = props.data.find((x) => x.id === id);
+    if (!item) return;
+    item.setSelected(!item.selected());
+  };
+
+  const isSelectAll = createMemo(() => props.data.every((x) => x.selected()));
 
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
@@ -27,6 +55,8 @@ export const BadgeTable: Component<Props> = (props) => {
                 <input
                   id="checkbox-all-search"
                   type="checkbox"
+                  checked={isSelectAll()}
+                  onChange={() => onToggleAllClick()}
                   class="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                 />
                 <label for="checkbox-all-search" class="sr-only">
@@ -36,7 +66,13 @@ export const BadgeTable: Component<Props> = (props) => {
             </th>
             <th scope="col" class="px-4"></th>
             <th scope="col" class="px-4 text-right">
-              <Button use="danger">R</Button>
+              <Button
+                use="danger"
+                onClick={onRemoveClick}
+                disabled={isDisabledRemove()}
+              >
+                Remove
+              </Button>
             </th>
           </tr>
         </thead>
@@ -49,6 +85,8 @@ export const BadgeTable: Component<Props> = (props) => {
                     <input
                       id="checkbox-table-search-1"
                       type="checkbox"
+                      checked={item.selected()}
+                      onChange={() => onToggleClick(item.id)}
                       class="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                     />
                     <label for="checkbox-table-search-1" class="sr-only">
@@ -62,15 +100,7 @@ export const BadgeTable: Component<Props> = (props) => {
                 >
                   {item.name}
                 </th>
-                <td class="flex items-center py-4 px-4">
-                  <a
-                    href="#"
-                    onClick={(e) => onRemoveClick(e, item.id)}
-                    class="font-medium text-red-600 hover:underline dark:text-red-500"
-                  >
-                    Remove
-                  </a>
-                </td>
+                <td class="flex items-center py-4 px-4" />
               </tr>
             )}
           </For>

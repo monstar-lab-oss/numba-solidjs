@@ -40,15 +40,15 @@ export const FromScratch: Component = () => {
     onSelectGroup(gx[lastIdx].id);
   });
 
-  const badges = createMemo(() => getBadgeByGroupId(selectedGroup()));
+  const badges = createMemo(() => getBadgeByGroupId(selectedGroup()) || []);
 
-  const onRemoveBadge = (id: Badge["id"]) => {
+  const onRemoveBadge = (ids: Badge["id"][]) => {
     const groupId = selectedGroup();
     if (!groupId) return;
 
-    useDispatch({ type: "REMOVE_BADGE", data: id });
+    useDispatch({ type: "REMOVE_BADGE", data: ids });
     // TODO: Synchronize them in one action
-    removeBadge(groupId, id);
+    removeBadge(groupId, ids);
   };
 
   const onRemoveGroup = (id: string) => {
@@ -72,7 +72,11 @@ export const FromScratch: Component = () => {
         </GroupPannel>
         <BadgePannel>
           <Show when={selectedGroup()}>
-            <BadgeTable data={badges()} onRemove={onRemoveBadge} />
+            <BadgeTable
+              data={badges()}
+              onRemove={onRemoveBadge}
+              onUnSelectGroup={onUnSelectGroup}
+            />
           </Show>
         </BadgePannel>
       </div>
