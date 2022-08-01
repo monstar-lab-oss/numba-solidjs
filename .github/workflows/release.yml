@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - "main"
+
+jobs:
+  incremental_tag_and_release_build:
+    if: startsWith(github.head_ref, 'bump/') && github.event.pull_request.merged == true
+    permissions:
+      contents: write # for release-drafter/release-drafter to create a github release
+      pull-requests: write # for release-drafter/release-drafter to add label to PR
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Create tag
+        id: tag
+        run: |
+          TAG_NAME=v`npm pkg get version | tr -d '"'`
+          echo ::set-output name=tag_name::$TAG_NAME
+          git tag $TAG_NAME
+          git tag
+          git push origin $TAG_NAME
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+          zip ${{ github.event.repository.name }}-${{ steps.tag.outputs.tag_name }} dist/* manifest.json
+      - name: Publish a release
+        id: release_drafter
+        uses: release-drafter/release-drafter@v5
+        with:
+          publish: true
+          tag: ${{ steps.tag.outputs.tag_name }}
+      - name: Upload build
+        uses: actions/upload-release-asset@v1.0.1
+        with:
+          upload_url: ${{ steps.release_drafter.outputs.upload_url }}
+          asset_path: ./${{ github.event.repository.name }}-${{ steps.tag.outputs.tag_name }}
+          asset_name: ${{ github.event.repository.name }}-${{ steps.tag.outputs.tag_name }}.zip
+          asset_content_type: application/zip
