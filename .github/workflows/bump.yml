@@ -1,0 +1,35 @@
+name: Create a bump pr
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: Version
+        required: true
+        default: minor
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  create_bump_pr:
+    runs-on: ubuntu-latest
+    env:
+      LEVEL: ${{ inputs.logLevel }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        # https://github.com/orgs/community/discussions/26560#discussioncomment-3252339
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - name: Create bump pr
+        run: |
+          NEXT_VERSION=`npm version $LEVEL --no-commit-hooks --no-git-tag-version`
+          git switch -C bump/$NEXT_VERSION
+          git commit -am "bump to $NEXT_VERSION"
+          git push -u origin HEAD && gh pr create -t "Bump to $NEXT_VERSION" -b "" -l bump
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
