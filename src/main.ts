@@ -227,7 +227,7 @@ figma.ui.onmessage = (msg: FigmaMessage) => {
       selectedGroup = undefined;
       return;
     case "REMOVE_BADGE":
-      removeBadgeNode(data);
+      data.forEach((badge) => removeBadgeNode(badge));
       return;
     default:
       return;

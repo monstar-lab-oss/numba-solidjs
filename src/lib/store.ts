@@ -37,6 +37,15 @@ function createAppStore() {
     return id ? state.badges[id] : [];
   };
 
+  const createBadgeWithSelectedState = ({
+    id,
+    name,
+  }: Pick<Badge, "id" | "name">) => {
+    const [selected, setSelected] = createSignal(false);
+    const b: Badge = { id, name, color: "BLUE", selected, setSelected };
+    return b;
+  };
+
   const createBadge = ({
     parentId,
     id,
@@ -46,20 +55,28 @@ function createAppStore() {
     id: Badge["id"];
     name: Badge["name"];
   }) => {
-    const b: Badge = { id, name, color: "BLUE" };
+    const b: Badge = createBadgeWithSelectedState({ id, name });
     setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
   };
 
-  const removeBadge = (parentId: Group["id"], id: Badge["id"]) => {
-    setState("badges", [parentId], (bx) => bx.filter((b) => b.id !== id));
+  const removeBadge = (parentId: Group["id"], ids: Badge["id"][]) => {
+    ids.forEach((id) =>
+      setState("badges", [parentId], (bx) => bx.filter((b) => b.id !== id))
+    );
 
     if (getBadgeByGroupId(parentId).length) return;
     removeGroup(parentId);
   };
 
+  // TODO: check unnecessary properties e.g. Symbol(solid-proxy)
   const syncAll = (payload: [Group[], Record<string, Badge[]>]) => {
-    const [groups, badges] = payload;
+    const [groups, badgesRaw] = payload;
 
+    const badges = Object.keys(badgesRaw).reduce((acc, key) => {
+      return Object.assign(acc, {
+        [key]: badgesRaw[key].map((x) => createBadgeWithSelectedState(x)),
+      });
+    }, {});
     setState((s) => ({ groups, badges }));
   };
 
