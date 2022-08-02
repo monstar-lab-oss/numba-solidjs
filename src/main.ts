@@ -1,4 +1,5 @@
-import { getMissingSerialNumber, figmaRGBA } from "@/lib/utils";
+import { figmaRGBA } from "@/lib/utils/figmaRGBA";
+import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
 import type { FigmaMessage } from "@/types/Actions";
 
 // constants
