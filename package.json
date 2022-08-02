@@ -5,7 +5,7 @@
   "description": "Figma plugin for screen definition document",
   "scripts": {
     "type": "tsc --noEmit",
-    "test": "uvu -r esbuild-register src/lib/__tests__",
+    "test": "uvu -r esbuild-register ./src/lib/utils \".*.test.ts\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "build:main": "esbuild src/main.ts --outfile=dist/code.js --bundle",
