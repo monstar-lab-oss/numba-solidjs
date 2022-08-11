@@ -14,38 +14,14 @@ module.exports = {
   features: {
     storyStoreV7: true,
   },
-  async viteFinal(config, { configType }) {
+  async viteFinal(config) {
     config.plugins.unshift(Solid({ hot: false }));
-
     return config;
   },
   // https://storybook.js.org/docs/react/addons/writing-presets#previewmanager-templates
-  // TODO: duplicate. Use tailwind.config.js
   previewHead: (head) => `
-  ${head}
+    ${head}
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <style>
-      body {
-        background-color: #f5f5f5;
-      }
-    </style>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            "figma-gray": "#e6e6e6",
-          },
-          fontFamily: {
-            sans: ["Inter var"],
-          },
-        },
-      },
-    }
-    </script>
-    <script>
-      window.global = window;
-    </script>
+    <script>window.global = window;</script>
   `,
 };
