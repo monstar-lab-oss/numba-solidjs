@@ -1,3 +1,11 @@
+/* https://tailwindcss.com/docs/functions-and-directives */
+/**
+ * This injects Tailwind's base styles and any base styles registered by
+ * plugins.
+ */
 @tailwind base;
-@tailwind components;
+/**
+ * This injects Tailwind's utility classes and any utility classes registered
+* by plugins.
+ */
 @tailwind utilities;
