@@ -1,7 +1,13 @@
+import "../src/components/index.css";
+
 export const parameters = {
   backgrounds: {
-    default: "white",
+    default: "figmagray",
     values: [
+      {
+        name: "figmagray",
+        value: "#e6e6e6",
+      },
       {
         name: "white",
         value: "#fff",
