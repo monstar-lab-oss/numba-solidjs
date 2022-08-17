@@ -5,7 +5,6 @@ import {
   createSignal,
   Show,
 } from "solid-js";
-import { store } from "@/lib/store";
 import { useDispatch } from "@/lib/hooks/useDispatch";
 import type { Badge } from "@/types/Badge";
 import type { Group } from "@/types/Group";
@@ -13,10 +12,11 @@ import { GroupPannel } from "./GroupPannel";
 import { BadgePannel } from "./BadgePannel";
 import { GroupTable } from "@/components/GroupTable";
 import { BadgeTable } from "@/components/BadgeTable";
+import { useStore } from "@/lib/hooks/useStore";
 
 export const FromScratch: Component = () => {
-  const { enabled, groups, removeGroup, getBadgeByGroupId, removeBadge } =
-    store;
+  const [_, { enabled, groups, removeGroup, getBadgeByGroupId, removeBadge }] =
+    useStore();
 
   const onClick = () => useDispatch({ type: "CREATE_INDEX", data: null });
 
