@@ -1,6 +1,13 @@
 import { figmaRGBA } from "@/lib/utils/figmaRGBA";
 import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
 import type { FigmaMessage } from "@/types/Actions";
+import {
+  getNodesByType,
+  setGroup,
+  getGroupNodeById,
+  removeGroupNode,
+  removeBadgeNode,
+} from "@/lib/utils/figmaNodeHandle";
 
 // constants
 const BADGE_ID = "BADGE_,d7e*jKXL}fCF3KiLxzs";
@@ -53,38 +60,6 @@ function scan() {
   }, {});
 
   return [groups, badges];
-}
-
-function getNodesByType(type: "INSTANCE" | "GROUP") {
-  const nodes: SceneNode[] = figma.currentPage.findAllWithCriteria({
-    types: [type],
-  });
-  return nodes;
-}
-
-function getGroupNodeById(id: string) {
-  const node = getNodesByType("GROUP").find((g) => g.id === id);
-  if (!node) throw new Error("NO GROUP NODE!");
-  return node as GroupNode;
-}
-
-function setGroup(node: SceneNode, name: string) {
-  const group = figma.group([node], figma.currentPage);
-  group.name = `numbering_${name}`;
-
-  return group;
-}
-
-function removeGroupNode(id: string) {
-  const node = getGroupNodeById(id);
-  node.remove();
-}
-
-function removeBadgeNode(id: string) {
-  const node = getNodesByType("INSTANCE").find((g) => g.id === id);
-  if (!node) throw new Error("NO BADGE NODE!");
-
-  node.remove();
 }
 
 function setIndexNode(index: number, targetNode: SceneNode) {
