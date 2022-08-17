@@ -95,19 +95,7 @@ function setIndexNode(index: number, targetNode: SceneNode) {
   return instanceNode;
 }
 
-/**
- *
- */
-figma.showUI(__html__, {
-  themeColors: true,
-  width: UI_WIDTH,
-  height: UI_HEIGHT,
-});
-
-/**
- * Messages
- */
-figma.on("selectionchange", () => {
+function onSelectionchange() {
   scan();
 
   const [current] = figma.currentPage.selection;
@@ -142,30 +130,9 @@ figma.on("selectionchange", () => {
       name: badgeNode.name,
     },
   });
-});
+}
 
-figma.on("run", async () => {
-  console.clear();
-
-  await Promise.all([
-    figma.loadFontAsync({ family: "Inter", style: "Regular" }),
-    figma.loadFontAsync({ family: "Inter", style: "Bold" }),
-  ]);
-
-  const current = figma.currentPage.selection;
-  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current.length });
-
-  figma.ui.postMessage({
-    type: "GROUP/INITIALIZE",
-    // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
-    payload: scan(),
-  });
-});
-
-/**
- *
- */
-figma.ui.onmessage = (msg: FigmaMessage) => {
+function onMessage(msg: FigmaMessage) {
   const { type, data } = msg;
   switch (type) {
     case "CREATE_INDEX":
@@ -210,6 +177,38 @@ figma.ui.onmessage = (msg: FigmaMessage) => {
   }
   //FIXME: prevent close in developing
   // figma.closePlugin();
-};
+}
+
+async function onRun() {
+  console.clear();
+
+  await Promise.all([
+    figma.loadFontAsync({ family: "Inter", style: "Regular" }),
+    figma.loadFontAsync({ family: "Inter", style: "Bold" }),
+  ]);
+
+  figma.showUI(__html__, {
+    themeColors: true,
+    width: UI_WIDTH,
+    height: UI_HEIGHT,
+  });
+
+  const current = figma.currentPage.selection;
+  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current.length });
+
+  figma.ui.postMessage({
+    type: "GROUP/INITIALIZE",
+    // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
+    payload: scan(),
+  });
+}
+
+function main() {
+  figma.on("run", onRun);
+  figma.on("selectionchange", onSelectionchange);
+
+  figma.ui.onmessage = onMessage;
+}
+main();
 
 export {};
