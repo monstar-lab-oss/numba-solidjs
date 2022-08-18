@@ -43,3 +43,18 @@ export type FigmaMessage =
       type: "REMOVE_BADGE";
       data: Badge["id"][];
     };
+
+// refs. https://github.com/redux-utilities/flux-standard-action
+export type Action =
+  | {
+      type: "UI/UPDATE_STORE";
+      payload: {};
+    }
+  | {
+      type: "APP/CREATE_GROUP";
+      payload: null;
+    }
+  | {
+      type: "APP/REMOVE_GROUP";
+      payload: Group["id"];
+    };
