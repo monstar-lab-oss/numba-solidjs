@@ -14,6 +14,7 @@ import type { Badge } from "@/types/Badge";
 import { createStore } from "solid-js/store";
 import type { PluginMessage } from "@/types/Actions";
 import { omit } from "@/lib/utils/omit";
+import type { Action } from "@/types/Actions";
 
 const Context = createContext();
 
@@ -99,21 +100,18 @@ export const Provider: ParentComponent<Props> = (props) => {
       ({
         data,
       }: MessageEvent<{
-        pluginMessage: PluginMessage;
+        pluginMessage: Action;
       }>) => {
         const { type, payload } = data.pluginMessage;
         switch (type) {
-          case "GROUP/ENABLE":
-            setEnabled(payload);
+          case "UI/UPDATE_STORE":
+            setState("groups", payload);
             return;
-          case "GROUP/CREATE":
-            createGroup(payload);
+          case "UI/TOGGLE_CREATE_GROUP_BUTTON":
+            setEnabled(payload);
             return;
           case "BADGE/CREATE":
             createBadge(payload);
-            return;
-          case "GROUP/INITIALIZE":
-            syncAll(payload);
             return;
           default:
             return;

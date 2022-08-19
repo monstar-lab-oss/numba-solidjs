@@ -17,22 +17,26 @@ import {
 // global state
 let selectedGroup: GroupNode | undefined;
 
+function isEnableCreategroup(node?: SceneNode) {
+  if (!node) return false;
+
+  // Group node
+  if (node.getPluginData(NUMBERING_GROUP_ID)) return false;
+
+  // Node already included in the Group node
+  if (node.parent && node.parent.getPluginData(NUMBERING_GROUP_ID))
+    return false;
+
+  return true;
+}
+
 function onSelectionchange() {
-  scan();
+  const [currentNode] = figma.currentPage.selection;
 
-  const [current] = figma.currentPage.selection;
-
-  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current });
-
-  // REMOVE OR NO SELECT
-  if (!current) {
-    figma.ui.postMessage({
-      type: "GROUP/INITIALIZE",
-      // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
-      payload: scan(),
-    });
-    return;
-  }
+  dispatch({
+    type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
+    payload: isEnableCreategroup(currentNode),
+  });
 
   // SELECTED
   if (!selectedGroup) return;
@@ -40,7 +44,7 @@ function onSelectionchange() {
   const idx = getMissingSerialNumber(
     selectedGroup.children.map((x) => Number(x.name))
   );
-  const badgeNode = setIndexNode(idx, current);
+  const badgeNode = setIndexNode(idx, currentNode);
 
   selectedGroup.appendChild(badgeNode);
 

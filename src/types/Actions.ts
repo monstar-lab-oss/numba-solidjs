@@ -51,6 +51,10 @@ export type Action =
       payload: {};
     }
   | {
+      type: "UI/TOGGLE_CREATE_GROUP_BUTTON";
+      payload: boolean;
+    }
+  | {
       type: "APP/CREATE_GROUP";
       payload: null;
     }

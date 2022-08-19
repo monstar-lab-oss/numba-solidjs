@@ -17,6 +17,7 @@ export const Button: Component<Props> = (props) => {
         [css.style]: true,
         [css.primary]: props.use === "primary",
         [css.danger]: props.use === "danger",
+        [css.disabled]: props.disabled,
       })}
       {...attributes}
     >
