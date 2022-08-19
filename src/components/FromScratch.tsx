@@ -13,12 +13,13 @@ import { BadgePannel } from "./BadgePannel";
 import { GroupTable } from "@/components/GroupTable";
 import { BadgeTable } from "@/components/BadgeTable";
 import { useStore } from "@/lib/hooks/useStore";
+import { dispatch } from "@/lib/dispatch";
 
 export const FromScratch: Component = () => {
   const [_, { enabled, groups, removeGroup, getBadgeByGroupId, removeBadge }] =
     useStore();
 
-  const onClick = () => useDispatch({ type: "CREATE_INDEX", data: null });
+  const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
 
   const [selectedGroup, setSelectedGroup] = createSignal<string | undefined>();
 
@@ -52,9 +53,7 @@ export const FromScratch: Component = () => {
   };
 
   const onRemoveGroup = (id: string) => {
-    useDispatch({ type: "REMOVE_GROUP", data: id });
-    // TODO: Synchronize them in one action
-    removeGroup(id);
+    dispatch({ type: "APP/REMOVE_GROUP", payload: id });
   };
 
   return (

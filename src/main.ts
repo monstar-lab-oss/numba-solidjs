@@ -1,14 +1,18 @@
+import { UI_WIDTH, UI_HEIGHT, NUMBERING_GROUP_ID } from "@/constants";
+import type { FigmaMessage, Action } from "@/types/Actions";
+import { store, subscribes, initializeStore, updateStoreUI } from "@/lib/store";
+import { dispatch } from "@/lib/dispatch";
 import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
-import type { FigmaMessage } from "@/types/Actions";
 import {
   scan,
   setGroup,
+  getNodesByType,
   getGroupNodeById,
   removeGroupNode,
   removeBadgeNode,
   setIndexNode,
+  createGroup,
 } from "@/lib/utils/figmaNodeHandle";
-import { UI_WIDTH, UI_HEIGHT } from "@/constants";
 
 // global state
 let selectedGroup: GroupNode | undefined;
@@ -50,9 +54,34 @@ function onSelectionchange() {
   });
 }
 
-function onMessage(msg: FigmaMessage) {
-  const { type, data } = msg;
+function onMessage(action: Action) {
+  const { type, payload } = action;
+
   switch (type) {
+    case "APP/CREATE_GROUP":
+      if (figma.currentPage.selection.length !== 1)
+        return figma.notify("Please select a single node.");
+
+      const [currentNode] = figma.currentPage.selection;
+
+      const groupNode = createGroup(currentNode);
+      if (!groupNode) return;
+
+      // Add also items in store.
+      // TODO: Can we subscribe when there are changes on Figma and effectively reflect them in store?
+      store.numberingGroups = [
+        ...store.numberingGroups,
+        { id: groupNode.id, name: groupNode.name },
+      ];
+      return;
+    case "APP/REMOVE_GROUP":
+      removeGroupNode(payload);
+      // Remove also items in store.
+      // TODO: Can we subscribe when there are changes on Figma and effectively reflect them in store?
+      store.numberingGroups = store.numberingGroups.filter(
+        (x) => x.id !== payload
+      );
+      return;
     case "CREATE_INDEX":
       // Currently creating index badge for single object. should we need to support multiple?
       const [current] = figma.currentPage.selection;
@@ -109,6 +138,15 @@ async function onRun() {
     themeColors: true,
     width: UI_WIDTH,
     height: UI_HEIGHT,
+  });
+
+  // Initialize store data at startup app
+  initializeStore({
+    numberingGroups: getNodesByType("GROUP")
+      .map(
+        (g) => g.getPluginData(NUMBERING_GROUP_ID) && { id: g.id, name: g.name }
+      )
+      .filter((x) => x) as { id: string; name: string }[],
   });
 
   const current = figma.currentPage.selection;

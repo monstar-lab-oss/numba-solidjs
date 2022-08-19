@@ -1,5 +1,5 @@
 import { setColor } from "@/lib/utils/figmaRGBA";
-import { BADGE_ID } from "@/constants";
+import { BADGE_ID, GROUP_NAME, NUMBERING_GROUP_ID } from "@/constants";
 
 // TODO: remove scan function
 export function scan() {
@@ -39,7 +39,7 @@ export function scan() {
   return [groups, badges];
 }
 
-function getNodesByType(type: "INSTANCE" | "GROUP") {
+export function getNodesByType(type: "INSTANCE" | "GROUP") {
   const nodes: SceneNode[] = figma.currentPage.findAllWithCriteria({
     types: [type],
   });
@@ -60,8 +60,13 @@ export function setGroup(node: SceneNode, name: string) {
 }
 
 export function removeGroupNode(id: string) {
-  const node = getGroupNodeById(id);
-  node.remove();
+  const groupNode = getGroupNodeById(id);
+  const parent = groupNode.parent;
+  if (!parent) return;
+
+  // TODO: should we iterator? is children of group node is only one?
+  const i = parent.children.findIndex((x) => groupNode.id === x.id);
+  groupNode.children.forEach((x) => parent.insertChild(i, x));
 }
 
 export function removeBadgeNode(id: string) {
@@ -102,4 +107,14 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 
   componentNode.remove();
   return instanceNode;
+}
+
+export function createGroup(node: SceneNode) {
+  if (!node.parent) return;
+  const i = node.parent.children.findIndex((x) => node.id === x.id);
+  const group = figma.group([node], node.parent, i);
+  group.name = `${GROUP_NAME}_${node.name}`;
+  group.setPluginData(NUMBERING_GROUP_ID, group.id);
+
+  return group;
 }
