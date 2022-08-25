@@ -15,12 +15,14 @@ export function reduceAllNodes() {
       if (!cur.parent) return acc;
 
       return Object.assign(acc, {
-        [cur.parent.id]: cur.children.map((x) => ({
-          id: x.id,
-          name: x.name,
-          color: "BLUE",
-          targetId: x.getPluginData(BADGE_TARGET_ID),
-        })),
+        [cur.parent.id]: cur.children
+          .map((x) => ({
+            id: x.id,
+            name: x.name,
+            color: "BLUE",
+            targetId: x.getPluginData(BADGE_TARGET_ID),
+          }))
+          .reverse(),
       });
     }, {});
 
