@@ -2,7 +2,6 @@ import {
   createSignal,
   createContext,
   useContext,
-  createEffect,
   ParentComponent,
   Accessor,
   onMount,
@@ -12,9 +11,8 @@ import {
 import type { Group } from "@/types/Group";
 import type { Badge } from "@/types/Badge";
 import { createStore } from "solid-js/store";
-import type { PluginMessage } from "@/types/Actions";
-import { omit } from "@/lib/utils/omit";
 import type { Action } from "@/types/Actions";
+import { dispatch } from "@/lib/dispatch";
 
 const Context = createContext();
 
@@ -29,6 +27,9 @@ type Props = {
 
 export const Provider: ParentComponent<Props> = (props) => {
   const [enabled, setEnabled] = createSignal(props.value.enabled);
+  const [selectedGroupId, setSelectedGroupId] = createSignal<string | null>(
+    null
+  );
 
   const [state, setState] = createStore({
     groups: props.value.groups || [],
@@ -36,40 +37,45 @@ export const Provider: ParentComponent<Props> = (props) => {
   });
   const groups = createMemo(() => state.groups);
 
-  // groups
-  const createGroup = ({ id, name }: { id: string; name: string }) => {
-    setState("groups", (g) => [...g, { id, name }]);
-  };
-
   const removeGroup = (id: Group["id"]) => {
-    setState("groups", (gx) => gx.filter((g) => g.id !== id));
-    setState((state) => ({ badges: omit(state.badges, [id]) }));
+    setState("groups", (gs) => gs.filter((g) => g.id !== id));
+    dispatch({ type: "APP/REMOVE_GROUP", payload: id });
   };
 
   // badges
   const getBadgeByGroupId = (id?: Group["id"]) => {
+    console.log(id);
     return id ? state.badges[id] : [];
   };
 
   const createBadgeWithSelectedState = ({
     id,
     name,
-  }: Pick<Badge, "id" | "name">) => {
+    targetId,
+  }: Pick<Badge, "id" | "name" | "targetId">) => {
     const [selected, setSelected] = createSignal(false);
-    const b: Badge = { id, name, color: "BLUE", selected, setSelected };
-    return b;
+    return {
+      id,
+      name,
+      color: "BLUE",
+      targetId,
+      selected,
+      setSelected,
+    } as Badge;
   };
 
   const createBadge = ({
     parentId,
     id,
     name,
+    targetId,
   }: {
     parentId: Group["id"];
     id: Badge["id"];
     name: Badge["name"];
+    targetId: string;
   }) => {
-    const b: Badge = createBadgeWithSelectedState({ id, name });
+    const b: Badge = createBadgeWithSelectedState({ id, name, targetId });
     setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
   };
 
@@ -105,13 +111,50 @@ export const Provider: ParentComponent<Props> = (props) => {
         const { type, payload } = data.pluginMessage;
         switch (type) {
           case "UI/UPDATE_STORE":
-            setState("groups", payload);
+            // reduce with selected state
+            const badgesRaw = payload.numberingbadgeGroups;
+            const badges = Object.keys(badgesRaw).reduce((acc, key) => {
+              return Object.assign(acc, {
+                [key]: badgesRaw[key].map((x) =>
+                  createBadgeWithSelectedState(x)
+                ),
+              });
+            }, {});
+
+            // TODO: Because of the very expensive logic, we have to optimize.
+            setState(() => ({
+              groups: payload.numberingGroups,
+              badges,
+            }));
             return;
+          case "UI/SHOULD_MAKE_BADGE": {
+            const { groupId, targetId } = payload;
+            // passes if node not managed on plugin side
+            if (!groupId) return;
+
+            // if badge already exists
+            const hasBadge = state.badges[groupId]?.find(
+              (b) => b.targetId === targetId
+            );
+            if (hasBadge) return;
+
+            // if a badge group already exists
+            if (state.badges[groupId]) {
+              dispatch({
+                type: "APP/APPEND_BADGE",
+                payload: {
+                  parentId: groupId,
+                  index: state.badges[groupId].length + 1,
+                },
+              });
+              return;
+            }
+            // create new badge group
+            dispatch({ type: "APP/CREATE_BADGE", payload: groupId });
+            return;
+          }
           case "UI/TOGGLE_CREATE_GROUP_BUTTON":
             setEnabled(payload);
-            return;
-          case "BADGE/CREATE":
-            createBadge(payload);
             return;
           default:
             return;
@@ -120,18 +163,15 @@ export const Provider: ParentComponent<Props> = (props) => {
     );
   });
 
-  createEffect(() => {
-    // TODO: not yet implemented
-  });
-
   const store = [
     state,
     {
       syncAll,
       enabled,
       setEnabled,
+      selectedGroupId,
+      setSelectedGroupId,
       groups,
-      createGroup,
       removeGroup,
       getBadgeByGroupId,
       createBadge,
@@ -148,6 +188,8 @@ export function useStore() {
     {
       syncAll: (payload: [Group[], Record<string, Badge[]>]) => void;
       enabled: Accessor<boolean>;
+      selectedGroupId: Accessor<string | null>;
+      setSelectedGroupId: Setter<string | null>;
       setEnabled: Setter<boolean>;
       groups: Accessor<Group[]>;
       createGroup: ({ id, name }: { id: string; name: string }) => void;

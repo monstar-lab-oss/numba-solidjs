@@ -1,35 +1,25 @@
-import { Component, JSX, For, splitProps } from "solid-js";
+import { Component, JSX, For, splitProps, createSignal } from "solid-js";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
 import css from "./GroupTable.module.css";
+import { useStore } from "@/lib/hooks/useStore";
 
 export type Props = {
   data: Group[];
-  selectedGroup: string | undefined;
-  onRemoveClick: (id: Group["id"]) => void;
-  onSelectClick: (id: Group["id"]) => void;
-  onUnSelectClick: () => void;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const GroupTable: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, [
-    "data",
-    "selectedGroup",
-    "onRemoveClick",
-    "onSelectClick",
-    "onUnSelectClick",
-  ]);
+  const [, attributes] = splitProps(props, ["data"]);
+
+  const [_, { selectedGroupId, setSelectedGroupId, removeGroup }] = useStore();
 
   const onSelectClick = (e: MouseEvent, id: string) => {
-    props.selectedGroup === id
-      ? props.onUnSelectClick()
-      : props.onSelectClick(id);
-
+    setSelectedGroupId(selectedGroupId() !== id ? id : null);
     e.stopImmediatePropagation();
   };
 
   const onRemoveClick = (e: MouseEvent, id: string) => {
-    props.onRemoveClick(id);
+    removeGroup(id);
     e.stopImmediatePropagation();
   };
 
@@ -50,7 +40,7 @@ export const GroupTable: Component<Props> = (props) => {
               <tr
                 onClick={(e) => onSelectClick(e, item.id)}
                 class={clsx({
-                  [css.selected_row]: props.selectedGroup === item.id,
+                  [css.selected_row]: selectedGroupId() === item.id,
                 })}
               >
                 <th scope="row">{item.name}</th>

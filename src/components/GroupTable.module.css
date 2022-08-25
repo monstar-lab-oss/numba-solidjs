@@ -5,7 +5,7 @@
     @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
   }
   .style thead {
-    @apply bg-gray-50 text-xs capitalize text-gray-700 dark:bg-gray-700 dark:text-gray-400;
+    @apply bg-gray-100 text-xs capitalize text-gray-700 dark:bg-gray-700 dark:text-gray-400;
   }
   .style tbody tr {
     @apply cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
@@ -20,6 +20,6 @@
     @apply flex items-center py-4 px-4;
   }
   .style tbody td a {
-    @apply font-medium text-red-600 hover:underline dark:text-red-500;
+    @apply font-medium text-red-500 hover:underline dark:text-red-400;
   }
 }

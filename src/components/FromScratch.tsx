@@ -1,11 +1,4 @@
-import {
-  Component,
-  createEffect,
-  createMemo,
-  createSignal,
-  Show,
-} from "solid-js";
-import { useDispatch } from "@/lib/hooks/useDispatch";
+import { Component, createEffect, createMemo, Show } from "solid-js";
 import type { Badge } from "@/types/Badge";
 import type { Group } from "@/types/Group";
 import { GroupPannel } from "./GroupPannel";
@@ -16,44 +9,43 @@ import { useStore } from "@/lib/hooks/useStore";
 import { dispatch } from "@/lib/dispatch";
 
 export const FromScratch: Component = () => {
-  const [_, { enabled, groups, removeGroup, getBadgeByGroupId, removeBadge }] =
+  const [_, { selectedGroupId, enabled, groups, getBadgeByGroupId }] =
     useStore();
 
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
 
-  const [selectedGroup, setSelectedGroup] = createSignal<string | undefined>();
-
   const onUnSelectGroup = () => {
-    setSelectedGroup(undefined);
-    useDispatch({ type: "SELECT_GROUP", data: undefined });
+    console.log("onunselect");
+    // setSelectedGroup(undefined);
+    // useDispatch({ type: "SELECT_GROUP", data: undefined });
   };
 
   const onSelectGroup = (id: Group["id"]) => {
-    setSelectedGroup(id);
-    useDispatch({ type: "SELECT_GROUP", data: id });
+    console.log("onselect", id);
+    // setSelectedGroup(id);
+    // useDispatch({ type: "SELECT_GROUP", data: id });
   };
 
   createEffect(() => {
-    const gx = groups();
-    const lastIdx = gx.length - 1;
-    if (lastIdx < 0) return;
-
-    onSelectGroup(gx[lastIdx].id);
+    // TODO: make sure later
+    // const gx = groups();
+    // const lastIdx = gx.length - 1;
+    // if (lastIdx < 0) return;
+    // onSelectGroup(gx[lastIdx].id);
   });
 
-  const badges = createMemo(() => getBadgeByGroupId(selectedGroup()) || []);
+  const badges = createMemo(() => {
+    const groupId = selectedGroupId();
+    if (!groupId) return [];
+    return getBadgeByGroupId(groupId);
+  });
 
   const onRemoveBadge = (ids: Badge["id"][]) => {
-    const groupId = selectedGroup();
-    if (!groupId) return;
-
-    useDispatch({ type: "REMOVE_BADGE", data: ids });
-    // TODO: Synchronize them in one action
-    removeBadge(groupId, ids);
-  };
-
-  const onRemoveGroup = (id: string) => {
-    dispatch({ type: "APP/REMOVE_GROUP", payload: id });
+    // const groupId = selectedGroup();
+    // if (!groupId) return;
+    // useDispatch({ type: "REMOVE_BADGE", data: ids });
+    // // TODO: Synchronize them in one action
+    // removeBadge(groupId, ids);
   };
 
   return (
@@ -61,18 +53,12 @@ export const FromScratch: Component = () => {
       {/* FIXME: Fixed height only now */}
       <div class="flex h-[424px] items-stretch">
         <GroupPannel createButtonDisabled={!enabled()} onCreateClick={onClick}>
-          <GroupTable
-            selectedGroup={selectedGroup()}
-            data={groups()}
-            onSelectClick={onSelectGroup}
-            onUnSelectClick={onUnSelectGroup}
-            onRemoveClick={onRemoveGroup}
-          />
+          <GroupTable data={groups()} />
         </GroupPannel>
         <BadgePannel>
-          <Show when={selectedGroup()}>
+          <Show when={selectedGroupId()}>
             <BadgeTable
-              data={badges()}
+              data={badges() || []}
               onRemove={onRemoveBadge}
               onUnSelectGroup={onUnSelectGroup}
             />

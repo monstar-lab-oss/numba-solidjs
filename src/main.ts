@@ -1,10 +1,14 @@
-import { UI_WIDTH, UI_HEIGHT, NUMBERING_GROUP_ID } from "@/constants";
-import type { FigmaMessage, Action } from "@/types/Actions";
-import { store, subscribes, initializeStore, updateStoreUI } from "@/lib/store";
+import {
+  UI_WIDTH,
+  UI_HEIGHT,
+  NUMBERING_GROUP_ID,
+  NUMBERING_BADGE_GROUP_ID,
+} from "@/constants";
+import type { Action } from "@/types/Actions";
 import { dispatch } from "@/lib/dispatch";
 import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
 import {
-  scan,
+  reduceAllNodes,
   setGroup,
   getNodesByType,
   getGroupNodeById,
@@ -12,48 +16,45 @@ import {
   removeBadgeNode,
   setIndexNode,
   createGroup,
+  createNumberGroup,
+  isEnableCreategroup,
 } from "@/lib/utils/figmaNodeHandle";
 
-// global state
-let selectedGroup: GroupNode | undefined;
-
-function isEnableCreategroup(node?: SceneNode) {
-  if (!node) return false;
-
-  // Group node
-  if (node.getPluginData(NUMBERING_GROUP_ID)) return false;
-
-  // Node already included in the Group node
-  if (node.parent && node.parent.getPluginData(NUMBERING_GROUP_ID))
-    return false;
-
-  return true;
+function shouldMakeBadge(
+  node: BaseNode
+): ((node: BaseNode) => string | void) | string | void {
+  if (!node || !node.parent) return;
+  // node is numbering child
+  if (node.getPluginData(NUMBERING_BADGE_GROUP_ID)) return;
+  // node is group child (normal node)
+  if (node.parent.getPluginData(NUMBERING_GROUP_ID)) return node.parent.id;
+  // node is nest group
+  if (node.getPluginData(NUMBERING_GROUP_ID)) return;
+  // or recall own self
+  return shouldMakeBadge(node.parent);
 }
 
 function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
+  // Reflected in Store when operated at the Figma panel
+  // TODO: Very expensive logic, see useStore.tsx L115
+  dispatch({
+    type: "UI/UPDATE_STORE",
+    payload: reduceAllNodes(),
+  });
 
   dispatch({
     type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
     payload: isEnableCreategroup(currentNode),
   });
 
-  // SELECTED
-  if (!selectedGroup) return;
+  if (!currentNode) return;
 
-  const idx = getMissingSerialNumber(
-    selectedGroup.children.map((x) => Number(x.name))
-  );
-  const badgeNode = setIndexNode(idx, currentNode);
-
-  selectedGroup.appendChild(badgeNode);
-
-  figma.ui.postMessage({
-    type: "BADGE/CREATE",
+  dispatch({
+    type: "UI/SHOULD_MAKE_BADGE",
     payload: {
-      parentId: selectedGroup.id,
-      id: badgeNode.id,
-      name: badgeNode.name,
+      groupId: shouldMakeBadge(currentNode) as string | undefined,
+      targetId: currentNode.id,
     },
   });
 }
@@ -62,72 +63,60 @@ function onMessage(action: Action) {
   const { type, payload } = action;
 
   switch (type) {
-    case "APP/CREATE_GROUP":
-      if (figma.currentPage.selection.length !== 1)
+    case "APP/CREATE_GROUP": {
+      const [currentNode, ...rest] = figma.currentPage.selection;
+
+      if (!currentNode || rest.length)
         return figma.notify("Please select a single node.");
 
-      const [currentNode] = figma.currentPage.selection;
+      const group = createGroup(currentNode);
+      group && (figma.currentPage.selection = [group]);
 
-      const groupNode = createGroup(currentNode);
-      if (!groupNode) return;
-
-      // Add also items in store.
-      // TODO: Can we subscribe when there are changes on Figma and effectively reflect them in store?
-      store.numberingGroups = [
-        ...store.numberingGroups,
-        { id: groupNode.id, name: groupNode.name },
-      ];
+      figma.currentPage.selection = [];
       return;
+    }
+
     case "APP/REMOVE_GROUP":
-      removeGroupNode(payload);
-      // Remove also items in store.
-      // TODO: Can we subscribe when there are changes on Figma and effectively reflect them in store?
-      store.numberingGroups = store.numberingGroups.filter(
-        (x) => x.id !== payload
+      return removeGroupNode(payload);
+
+    case "APP/CREATE_BADGE": {
+      const [currentNode] = figma.currentPage.selection;
+      if (!currentNode) return;
+
+      createNumberGroup({
+        targetNode: currentNode,
+        parentNode: getGroupNodeById(payload),
+      });
+
+      figma.currentPage.selection = [];
+      return;
+    }
+
+    case "APP/APPEND_BADGE": {
+      const [currentNode] = figma.currentPage.selection;
+      if (!currentNode) return;
+
+      const badgeGroup = getGroupNodeById(payload.parentId)
+        .findAllWithCriteria({
+          types: ["GROUP"],
+        })
+        .find((x) => x.getPluginData(NUMBERING_BADGE_GROUP_ID)) as GroupNode;
+
+      const idx = getMissingSerialNumber(
+        badgeGroup.children.map((x) => Number(x.name))
       );
-      return;
-    case "CREATE_INDEX":
-      // Currently creating index badge for single object. should we need to support multiple?
-      const [current] = figma.currentPage.selection;
+      const badgeNode = setIndexNode(idx, currentNode);
+      badgeGroup.insertChild(0, badgeNode);
 
-      const node = setIndexNode(1, current);
-      const group = setGroup(node, current.name);
+      figma.currentPage.selection = [];
+      return;
+    }
+    // TODO: select badge or group, scroll view
+    // figma.viewport.scrollAndZoomIntoView([badgeNode]);
 
-      figma.ui.postMessage({
-        type: "GROUP/CREATE",
-        payload: {
-          id: group.id,
-          name: group.name,
-        },
-      });
-
-      figma.ui.postMessage({
-        type: "BADGE/CREATE",
-        payload: {
-          parentId: group.id,
-          id: node.id,
-          name: node.name,
-        },
-      });
-      // TODO:
-      // figma.viewport.scrollAndZoomIntoView([indexNode]);
-      // figma.currentPage.appendChild(indexNode);
-      return;
-    case "SELECT_GROUP":
-      selectedGroup = data ? getGroupNodeById(data) : undefined;
-      return;
-    case "REMOVE_GROUP":
-      removeGroupNode(data);
-      selectedGroup = undefined;
-      return;
-    case "REMOVE_BADGE":
-      data.forEach((badge) => removeBadgeNode(badge));
-      return;
     default:
       return;
   }
-  //FIXME: prevent close in developing
-  // figma.closePlugin();
 }
 
 async function onRun() {
@@ -145,21 +134,16 @@ async function onRun() {
   });
 
   // Initialize store data at startup app
-  initializeStore({
-    numberingGroups: getNodesByType("GROUP")
-      .map(
-        (g) => g.getPluginData(NUMBERING_GROUP_ID) && { id: g.id, name: g.name }
-      )
-      .filter((x) => x) as { id: string; name: string }[],
+  dispatch({
+    type: "UI/UPDATE_STORE",
+    payload: reduceAllNodes(),
   });
 
-  const current = figma.currentPage.selection;
-  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current.length });
+  const [currentNode] = figma.currentPage.selection;
 
-  figma.ui.postMessage({
-    type: "GROUP/INITIALIZE",
-    // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
-    payload: scan(),
+  dispatch({
+    type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
+    payload: isEnableCreategroup(currentNode),
   });
 }
 

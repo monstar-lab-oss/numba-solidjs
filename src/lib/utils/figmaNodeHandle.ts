@@ -1,49 +1,51 @@
 import { setColor } from "@/lib/utils/figmaRGBA";
-import { BADGE_ID, GROUP_NAME, NUMBERING_GROUP_ID } from "@/constants";
+import {
+  BADGE_TARGET_ID,
+  GROUP_NAME,
+  NUMBERING_BADGE_GROUP_ID,
+  NUMBERING_GROUP_ID,
+} from "@/constants";
 
-// TODO: remove scan function
-export function scan() {
+export function reduceAllNodes() {
+  const numberingbadgeGroups = getNodesByType("GROUP")
+    .map((g) => g.getPluginData(NUMBERING_BADGE_GROUP_ID) && (g as GroupNode))
+    .filter((x) => x)
+    .reduce((acc, cur) => {
+      if (!cur) return acc;
+      if (!cur.parent) return acc;
+
+      return Object.assign(acc, {
+        [cur.parent.id]: cur.children.map((x) => ({
+          id: x.id,
+          name: x.name,
+          color: "BLUE",
+          targetId: x.getPluginData(BADGE_TARGET_ID),
+        })),
+      });
+    }, {});
+
+  const numberingGroups = getNodesByType("GROUP")
+    .map(
+      (g) =>
+        g.getPluginData(NUMBERING_GROUP_ID) && {
+          id: g.id,
+          name: g.name,
+          children: g.children.map(({ id }) => id),
+        }
+    )
+    .filter((x) => x) as { id: string; name: string; children: string[] }[];
+
+  return {
+    numberingGroups,
+    numberingbadgeGroups,
+  };
+}
+export function getNodesByType<T extends "INSTANCE" | "GROUP">(type: T) {
   // Currently using `findAllWithCriteria`, should I use `findChildren` ?
   // OR https://github.com/figma/plugin-samples/blob/22e12c5406c72f2a88d18810d3a6efb18ece0356/text-search/code.ts#L28-L36
-  const instances = getNodesByType("INSTANCE") as InstanceNode[];
-
-  const badgeNodes = instances.filter(
-    // Badge has its own ID that we specify
-    (i) => i.mainComponent && i.mainComponent.description === BADGE_ID
-  );
-
-  const parentIds = badgeNodes.map((b) => b.parent && b.parent.id);
-  const groupIds = parentIds.filter((v, i, a) => a.indexOf(v) === i);
-
-  const groups = groupIds.map((id) => {
-    const node = getNodesByType("GROUP").find((g) => g.id === id);
-    if (!node) return;
-    return {
-      id,
-      name: node.name,
-    };
-  });
-
-  const parentNodes = badgeNodes.map((b) => b.parent as GroupNode);
-
-  const badges = parentNodes.reduce((acc, cur) => {
-    return Object.assign(acc, {
-      [cur.id]: cur.children.map((x) => ({
-        id: x.id,
-        name: x.name,
-        color: "BLUE",
-      })),
-    });
-  }, {});
-
-  return [groups, badges];
-}
-
-export function getNodesByType(type: "INSTANCE" | "GROUP") {
-  const nodes: SceneNode[] = figma.currentPage.findAllWithCriteria({
+  return figma.currentPage.findAllWithCriteria({
     types: [type],
   });
-  return nodes;
 }
 
 export function getGroupNodeById(id: string) {
@@ -63,6 +65,12 @@ export function removeGroupNode(id: string) {
   const groupNode = getGroupNodeById(id);
   const parent = groupNode.parent;
   if (!parent) return;
+
+  // remove badge group
+  const badgeGroup = parent
+    .findAllWithCriteria({ types: ["GROUP"] })
+    .find((x) => x.getPluginData(NUMBERING_BADGE_GROUP_ID));
+  badgeGroup && badgeGroup.remove();
 
   // TODO: should we iterator? is children of group node is only one?
   const i = parent.children.findIndex((x) => groupNode.id === x.id);
@@ -84,8 +92,6 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
   componentNode.layoutMode = "HORIZONTAL";
   // TODO: user custom color
   componentNode.fills = [setColor({ r: 24, g: 160, b: 251 })];
-  // TODO: use by id when reload file
-  componentNode.description = BADGE_ID;
 
   const textNode = figma.createText();
   textNode.fontSize = 12;
@@ -98,6 +104,7 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
   componentNode.appendChild(textNode);
 
   const instanceNode = componentNode.createInstance();
+  instanceNode.setPluginData(BADGE_TARGET_ID, targetNode.id);
 
   // refs. https://forum.figma.com/t/known-bug-getting-x-y-coordinates-of-rectangles-within-frames-but-not-groups/7012
   const newNode = targetNode.absoluteTransform;
@@ -111,10 +118,44 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 
 export function createGroup(node: SceneNode) {
   if (!node.parent) return;
+
   const i = node.parent.children.findIndex((x) => node.id === x.id);
   const group = figma.group([node], node.parent, i);
   group.name = `${GROUP_NAME}_${node.name}`;
   group.setPluginData(NUMBERING_GROUP_ID, group.id);
 
   return group;
+}
+
+export function createNumberGroup({
+  targetNode,
+  parentNode,
+}: {
+  targetNode: SceneNode;
+  parentNode: GroupNode;
+}) {
+  const badgeNode = setIndexNode(1, targetNode);
+  const group = figma.group([badgeNode], parentNode);
+  // TODO: temporary code Removal
+  group.name = parentNode.name
+    .split("○")
+    .filter((x) => x)
+    .join("numbering");
+
+  group.setPluginData(NUMBERING_BADGE_GROUP_ID, group.id);
+
+  return group;
+}
+
+export function isEnableCreategroup(node?: SceneNode) {
+  if (!node) return false;
+
+  // Group node
+  if (node.getPluginData(NUMBERING_GROUP_ID)) return false;
+
+  // Node already included in the Group node
+  if (node.parent && node.parent.getPluginData(NUMBERING_GROUP_ID))
+    return false;
+
+  return true;
 }
