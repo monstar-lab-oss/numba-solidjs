@@ -5,6 +5,7 @@ import {
   splitProps,
   createSignal,
   createMemo,
+  Show,
 } from "solid-js";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
@@ -60,43 +61,52 @@ export const GroupTable: Component<Props> = (props) => {
 
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
-      <GroupSearch query={query} setQuery={setQuery} />
-      <table class={clsx({ [css.style]: true })}>
-        <thead>
-          <tr class="h-12">
-            <th scope="col" class="p-4">
-              name
-            </th>
-            <th scope="col" class="px-4"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <For
-            each={filteredData()}
-            fallback={() => (
-              <tr>
-                <td>Sorry, no matches found</td>
-              </tr>
-            )}
-          >
-            {(item) => (
-              <tr
-                onClick={(e) => onSelectClick(e, item.id)}
-                class={clsx({
-                  [css.selected_row]: selectedGroupId() === item.id,
-                })}
-              >
-                <th scope="row">{item.name}</th>
-                <td>
-                  <a href="#" onClick={(e) => onRemoveClick(e, item.id)}>
-                    Remove
-                  </a>
-                </td>
-              </tr>
-            )}
-          </For>
-        </tbody>
-      </table>
+      <Show
+        when={props.data.length}
+        fallback={() => (
+          <span class="inline-block rounded bg-gray-100 px-4 py-2 text-xs text-gray-400">
+            First select a frame/object you want to add numbering to 😄
+          </span>
+        )}
+      >
+        <GroupSearch query={query} setQuery={setQuery} />
+        <table class={clsx({ [css.style]: true })}>
+          <thead>
+            <tr class="h-12">
+              <th scope="col" class="p-4">
+                name
+              </th>
+              <th scope="col" class="px-4"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <For
+              each={filteredData()}
+              fallback={() => (
+                <tr>
+                  <td>Sorry, no matches found</td>
+                </tr>
+              )}
+            >
+              {(item) => (
+                <tr
+                  onClick={(e) => onSelectClick(e, item.id)}
+                  class={clsx({
+                    [css.selected_row]: selectedGroupId() === item.id,
+                  })}
+                >
+                  <th scope="row">{item.name}</th>
+                  <td>
+                    <a href="#" onClick={(e) => onRemoveClick(e, item.id)}>
+                      Remove
+                    </a>
+                  </td>
+                </tr>
+              )}
+            </For>
+          </tbody>
+        </table>
+      </Show>
     </div>
   );
 };
