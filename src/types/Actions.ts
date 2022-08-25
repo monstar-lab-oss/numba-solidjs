@@ -28,10 +28,6 @@ export type Action =
       payload: NodeId | null;
     }
   | {
-      type: "UI/SELECT_GROUP";
-      payload: Group["id"] | null;
-    }
-  | {
       type: "APP/CREATE_GROUP";
       payload: null;
     }

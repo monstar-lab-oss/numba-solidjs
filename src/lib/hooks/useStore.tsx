@@ -112,12 +112,6 @@ export const Provider: ParentComponent<Props> = (props) => {
               badges,
             }));
             return;
-          case "UI/SELECT_GROUP":
-            if (!payload) _setSelectedGroupId(null);
-            const groupId = state.groups.find((x) => x.id === payload)?.id;
-            if (!groupId) return;
-            _setSelectedGroupId(groupId);
-            return;
           case "UI/SHOULD_MAKE_BADGE": {
             const { groupId, targetId } = payload;
             // passes if node not managed on plugin side
