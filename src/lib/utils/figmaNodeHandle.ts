@@ -92,8 +92,9 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
   componentNode.resize(24, 24);
   componentNode.cornerRadius = 24;
   componentNode.layoutMode = "HORIZONTAL";
-  // TODO: user custom color
-  componentNode.fills = [setColor({ r: 24, g: 160, b: 251 })];
+
+  // TODO: Maybe we need a user custom color feature.
+  componentNode.fills = [setColor({ r: 221, g: 221, b: 221 })];
 
   const textNode = figma.createText();
   textNode.fontSize = 12;
