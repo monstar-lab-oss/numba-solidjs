@@ -82,9 +82,7 @@ export const Provider: ParentComponent<Props> = (props) => {
     ids.forEach((id) =>
       setState("badges", [parentId], (bx) => bx.filter((b) => b.id !== id))
     );
-
-    if (getBadgeByGroupId(parentId).length) return;
-    removeGroup(parentId);
+    dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
   };
 
   // TODO: check unnecessary properties e.g. Symbol(solid-proxy)

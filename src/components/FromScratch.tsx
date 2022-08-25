@@ -1,5 +1,4 @@
 import { Component, createEffect, createMemo, Show } from "solid-js";
-import type { Badge } from "@/types/Badge";
 import { GroupPannel } from "./GroupPannel";
 import { BadgePannel } from "./BadgePannel";
 import { GroupTable } from "@/components/GroupTable";
@@ -13,27 +12,11 @@ export const FromScratch: Component = () => {
 
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
 
-  createEffect(() => {
-    // TODO: make sure later
-    // const gx = groups();
-    // const lastIdx = gx.length - 1;
-    // if (lastIdx < 0) return;
-    // onSelectGroup(gx[lastIdx].id);
-  });
-
   const badges = createMemo(() => {
     const groupId = selectedGroupId();
     if (!groupId) return [];
     return getBadgeByGroupId(groupId);
   });
-
-  const onRemoveBadge = (ids: Badge["id"][]) => {
-    // const groupId = selectedGroup();
-    // if (!groupId) return;
-    // useDispatch({ type: "REMOVE_BADGE", data: ids });
-    // // TODO: Synchronize them in one action
-    // removeBadge(groupId, ids);
-  };
 
   return (
     <>
@@ -44,7 +27,7 @@ export const FromScratch: Component = () => {
         </GroupPannel>
         <BadgePannel>
           <Show when={selectedGroupId()}>
-            <BadgeTable data={badges() || []} onRemove={onRemoveBadge} />
+            <BadgeTable data={badges() || []} />
           </Show>
         </BadgePannel>
       </div>

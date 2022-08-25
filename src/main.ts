@@ -126,6 +126,10 @@ function onMessage(action: Action) {
     // TODO: select badge or group, scroll view
     // figma.viewport.scrollAndZoomIntoView([badgeNode]);
 
+    case "APP/REMOVE_BADGES": {
+      payload.forEach((id) => removeBadgeNode(id));
+      return;
+    }
     default:
       return;
   }

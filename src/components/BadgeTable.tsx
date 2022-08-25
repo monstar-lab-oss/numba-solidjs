@@ -3,19 +3,16 @@ import { splitProps } from "solid-js";
 import { clsx } from "clsx";
 import type { Badge } from "@/types/Badge";
 import { Button } from "./Button";
+import { useStore } from "@/lib/hooks/useStore";
 
 export type Props = {
   data: Badge[];
-  onRemove: (id: Badge["id"][]) => void;
-  onUnSelectGroup: () => void;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const BadgeTable: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, [
-    "data",
-    "onRemove",
-    "onUnSelectGroup",
-  ]);
+  const [, attributes] = splitProps(props, ["data"]);
+
+  const [_, { removeBadge, selectedGroupId }] = useStore();
 
   const isDisabledRemove = createMemo(() =>
     props.data.every((x) => !x.selected())
@@ -26,9 +23,10 @@ export const BadgeTable: Component<Props> = (props) => {
       .filter((x) => x.selected())
       .map(({ id }) => id);
 
-    props.onRemove(selectedBageIds);
-    !props.data.length && props.onUnSelectGroup();
+    const parentId = selectedGroupId();
+    if (!parentId) return;
 
+    removeBadge(parentId, selectedBageIds);
     e.stopImmediatePropagation();
   };
 

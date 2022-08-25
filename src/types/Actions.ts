@@ -49,4 +49,8 @@ export type Action =
         parentId: Group["id"];
         index: number;
       };
+    }
+  | {
+      type: "APP/REMOVE_BADGES";
+      payload: Group["id"][];
     };
