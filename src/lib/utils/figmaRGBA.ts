@@ -12,3 +12,11 @@ export function figmaRGBA(rgba: {
   const color = { r: rgba.r / 255, g: rgba.g / 255, b: rgba.b / 255 };
   return color;
 }
+
+export function setColor({ r = 0, g = 0, b = 0, a = 1 }) {
+  return <SolidPaint>{
+    type: "SOLID",
+    color: figmaRGBA({ r, g, b, a }),
+    opacity: a,
+  };
+}

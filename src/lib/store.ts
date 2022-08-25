@@ -1,98 +1,40 @@
-import { createSignal, createRoot, createMemo } from "solid-js";
-import { createStore } from "solid-js/store";
-import type { Group } from "@/types/Group";
-import type { Badge } from "@/types/Badge";
+//FIXME: because unused, remove this file
 
-// utils
-const omit = (obj: Record<string, any>, key: string) => {
-  const { [key]: _, ...rest } = obj;
-  return rest;
-};
+import equal from "fast-deep-equal";
+import { dispatch } from "@/lib/dispatch";
+import { Store } from "@/types/Store";
 
-type Store = {
-  groups: Group[];
-  badges: Record<string, Badge[]>;
-};
+export const subscribes: ((_: Store, __?: Store) => void)[] = [];
 
-function createAppStore() {
-  const [enabled, setEnabled] = createSignal(false);
+export const store = new Proxy<Store>(
+  {
+    numberingGroups: [],
+  },
+  {
+    // refs. https://shorturl.at/BDGNO, https://blog.logrocket.com/how-to-use-keyof-operator-typescript/
+    set: <T extends Store, K extends keyof T>(
+      state: T,
+      key: K,
+      value: T[K]
+    ) => {
+      // TODO: use spread operator
+      const prev = Object.assign({}, state);
+      state[key] = value;
+      subscribes.forEach((callback) => callback(state, prev));
 
-  const [state, setState] = createStore<Store>({
-    groups: [],
-    badges: {},
-  });
+      return true;
+    },
+  }
+);
 
-  // groups
-  const createGroup = ({ id, name }: { id: string; name: string }) => {
-    setState("groups", (g) => [...g, { id, name }]);
-  };
-
-  const removeGroup = (id: Group["id"]) => {
-    setState("groups", (gx) => gx.filter((g) => g.id !== id));
-    setState((state) => ({ badges: omit(state.badges, id) }));
-  };
-
-  // badges
-  const getBadgeByGroupId = (id?: Group["id"]) => {
-    return id ? state.badges[id] : [];
-  };
-
-  const createBadgeWithSelectedState = ({
-    id,
-    name,
-  }: Pick<Badge, "id" | "name">) => {
-    const [selected, setSelected] = createSignal(false);
-    const b: Badge = { id, name, color: "BLUE", selected, setSelected };
-    return b;
-  };
-
-  const createBadge = ({
-    parentId,
-    id,
-    name,
-  }: {
-    parentId: Group["id"];
-    id: Badge["id"];
-    name: Badge["name"];
-  }) => {
-    const b: Badge = createBadgeWithSelectedState({ id, name });
-    setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
-  };
-
-  const removeBadge = (parentId: Group["id"], ids: Badge["id"][]) => {
-    ids.forEach((id) =>
-      setState("badges", [parentId], (bx) => bx.filter((b) => b.id !== id))
-    );
-
-    if (getBadgeByGroupId(parentId).length) return;
-    removeGroup(parentId);
-  };
-
-  // TODO: check unnecessary properties e.g. Symbol(solid-proxy)
-  const syncAll = (payload: [Group[], Record<string, Badge[]>]) => {
-    const [groups, badgesRaw] = payload;
-
-    const badges = Object.keys(badgesRaw).reduce((acc, key) => {
-      return Object.assign(acc, {
-        [key]: badgesRaw[key].map((x) => createBadgeWithSelectedState(x)),
-      });
-    }, {});
-    setState((s) => ({ groups, badges }));
-  };
-
-  const groups = createMemo(() => state.groups);
-
-  return {
-    state, // TODO: use only debug
-    syncAll,
-    enabled,
-    setEnabled,
-    groups,
-    createGroup,
-    removeGroup,
-    getBadgeByGroupId,
-    createBadge,
-    removeBadge,
-  };
+// subscribers
+export function updateStoreUI(state: Store, prevState?: Store) {
+  if (equal(state, prevState)) return;
+  // @ts-ignore
+  dispatch({ type: "UI/UPDATE_STORE", payload: state.numberingGroups });
 }
-export const store = createRoot(createAppStore);
+subscribes.push(updateStoreUI);
+
+export function initializeStore({ numberingGroups }: Store) {
+  store.numberingGroups = numberingGroups;
+}

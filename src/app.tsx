@@ -3,12 +3,20 @@
 import "@/components/index.css";
 import { render } from "solid-js/web";
 import { FromScratch } from "@/components/FromScratch";
-import { onMount } from "solid-js";
-import { useHandler } from "@/lib/hooks/useHandler";
+import { Provider } from "./lib/hooks/useStore";
+
+const defaultValue = {
+  enabled: false,
+  groups: [],
+  badges: {},
+};
 
 const App = () => {
-  onMount(() => useHandler());
-  return <FromScratch />;
+  return (
+    <Provider value={defaultValue}>
+      <FromScratch />
+    </Provider>
+  );
 };
 
 render(() => <App />, document.getElementById("root") as HTMLElement);

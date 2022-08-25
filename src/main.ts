@@ -1,175 +1,136 @@
-import { figmaRGBA } from "@/lib/utils/figmaRGBA";
+import {
+  UI_WIDTH,
+  UI_HEIGHT,
+  NUMBERING_GROUP_ID,
+  NUMBERING_BADGE_GROUP_ID,
+} from "@/constants";
+import type { Action } from "@/types/Actions";
+import { dispatch } from "@/lib/dispatch";
 import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
-import type { FigmaMessage } from "@/types/Actions";
+import {
+  reduceAllNodes,
+  setGroup,
+  getNodesByType,
+  getGroupNodeById,
+  removeGroupNode,
+  removeBadgeNode,
+  setIndexNode,
+  createGroup,
+  createNumberGroup,
+  isEnableCreategroup,
+} from "@/lib/utils/figmaNodeHandle";
 
-// constants
-const BADGE_ID = "BADGE_,d7e*jKXL}fCF3KiLxzs";
-const UI_WIDTH = 592;
-const UI_HEIGHT = 424;
-
-// global state
-let selectedGroup: GroupNode | undefined;
-
-function setColor({ r = 0, g = 0, b = 0, a = 1 }) {
-  return <SolidPaint>{
-    type: "SOLID",
-    color: figmaRGBA({ r, g, b, a }),
-    opacity: a,
-  };
+function shouldMakeBadge(
+  node: BaseNode
+): ((node: BaseNode) => string | void) | string | void {
+  if (!node || !node.parent) return;
+  // node is numbering child
+  if (node.getPluginData(NUMBERING_BADGE_GROUP_ID)) return;
+  // node is group child (normal node)
+  if (node.parent.getPluginData(NUMBERING_GROUP_ID)) return node.parent.id;
+  // node is nest group
+  if (node.getPluginData(NUMBERING_GROUP_ID)) return;
+  // or recall own self
+  return shouldMakeBadge(node.parent);
 }
 
-function scan() {
-  // Currently using `findAllWithCriteria`, should I use `findChildren` ?
-  // OR https://github.com/figma/plugin-samples/blob/22e12c5406c72f2a88d18810d3a6efb18ece0356/text-search/code.ts#L28-L36
-  const instances = getNodesByType("INSTANCE") as InstanceNode[];
+function onSelectionchange() {
+  const [currentNode] = figma.currentPage.selection;
 
-  const badgeNodes = instances.filter(
-    // Badge has its own ID that we specify
-    (i) => i.mainComponent && i.mainComponent.description === BADGE_ID
-  );
-
-  const parentIds = badgeNodes.map((b) => b.parent && b.parent.id);
-  const groupIds = parentIds.filter((v, i, a) => a.indexOf(v) === i);
-
-  const groups = groupIds.map((id) => {
-    const node = getNodesByType("GROUP").find((g) => g.id === id);
-    if (!node) return;
-    return {
-      id,
-      name: node.name,
-    };
+  // Reflected in Store when operated at the Figma panel
+  // TODO: Very expensive logic, see useStore.tsx L115
+  dispatch({
+    type: "UI/UPDATE_STORE",
+    payload: reduceAllNodes(),
   });
 
-  const parentNodes = badgeNodes.map((b) => b.parent as GroupNode);
-
-  const badges = parentNodes.reduce((acc, cur) => {
-    return Object.assign(acc, {
-      [cur.id]: cur.children.map((x) => ({
-        id: x.id,
-        name: x.name,
-        color: "BLUE",
-      })),
-    });
-  }, {});
-
-  return [groups, badges];
-}
-
-function getNodesByType(type: "INSTANCE" | "GROUP") {
-  const nodes: SceneNode[] = figma.currentPage.findAllWithCriteria({
-    types: [type],
+  dispatch({
+    type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
+    payload: isEnableCreategroup(currentNode),
   });
-  return nodes;
-}
 
-function getGroupNodeById(id: string) {
-  const node = getNodesByType("GROUP").find((g) => g.id === id);
-  if (!node) throw new Error("NO GROUP NODE!");
-  return node as GroupNode;
-}
+  if (!currentNode) return;
 
-function setGroup(node: SceneNode, name: string) {
-  const group = figma.group([node], figma.currentPage);
-  group.name = `numbering_${name}`;
-
-  return group;
-}
-
-function removeGroupNode(id: string) {
-  const node = getGroupNodeById(id);
-  node.remove();
-}
-
-function removeBadgeNode(id: string) {
-  const node = getNodesByType("INSTANCE").find((g) => g.id === id);
-  if (!node) throw new Error("NO BADGE NODE!");
-
-  node.remove();
-}
-
-function setIndexNode(index: number, targetNode: SceneNode) {
-  const componentNode = figma.createComponent();
-  componentNode.name = `${index}`;
-  componentNode.resize(24, 24);
-  componentNode.cornerRadius = 24;
-  componentNode.layoutMode = "HORIZONTAL";
-  // TODO: user custom color
-  componentNode.fills = [setColor({ r: 24, g: 160, b: 251 })];
-  // TODO: use by id when reload file
-  componentNode.description = BADGE_ID;
-
-  const textNode = figma.createText();
-  textNode.fontSize = 12;
-  textNode.characters = `${index}`;
-  textNode.fills = [setColor({ r: 255, g: 255, b: 255 })];
-  textNode.resize(24, 24);
-  textNode.textAlignHorizontal = "CENTER";
-  textNode.fontName = { family: "Inter", style: "Bold" };
-  textNode.lineHeight = { value: 24, unit: "PIXELS" };
-  componentNode.appendChild(textNode);
-
-  const instanceNode = componentNode.createInstance();
-
-  // refs. https://forum.figma.com/t/known-bug-getting-x-y-coordinates-of-rectangles-within-frames-but-not-groups/7012
-  const newNode = targetNode.absoluteTransform;
-
-  instanceNode.x = newNode[0][2] - 8;
-  instanceNode.y = newNode[1][2] - 8;
-
-  componentNode.remove();
-  return instanceNode;
-}
-
-/**
- *
- */
-figma.showUI(__html__, {
-  themeColors: true,
-  width: UI_WIDTH,
-  height: UI_HEIGHT,
-});
-
-/**
- * Messages
- */
-figma.on("selectionchange", () => {
-  scan();
-
-  const [current] = figma.currentPage.selection;
-
-  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current });
-
-  // REMOVE OR NO SELECT
-  if (!current) {
-    figma.ui.postMessage({
-      type: "GROUP/INITIALIZE",
-      // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
-      payload: scan(),
-    });
-    return;
-  }
-
-  // SELECTED
-  if (!selectedGroup) return;
-
-  const idx = getMissingSerialNumber(
-    selectedGroup.children.map((x) => Number(x.name))
-  );
-  const badgeNode = setIndexNode(idx, current);
-
-  selectedGroup.appendChild(badgeNode);
-
-  figma.ui.postMessage({
-    type: "BADGE/CREATE",
+  dispatch({
+    type: "UI/SHOULD_MAKE_BADGE",
     payload: {
-      parentId: selectedGroup.id,
-      id: badgeNode.id,
-      name: badgeNode.name,
+      groupId: shouldMakeBadge(currentNode) as string | undefined,
+      targetId: currentNode.id,
     },
   });
-});
+}
 
-figma.on("run", async () => {
+function onMessage(action: Action) {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "APP/SELECT_NODE":
+      if (!payload) return (figma.currentPage.selection = []);
+
+      figma.currentPage.selection = [getGroupNodeById(payload)];
+      figma.viewport.scrollAndZoomIntoView([getGroupNodeById(payload)]);
+      return;
+    case "APP/CREATE_GROUP": {
+      const [currentNode, ...rest] = figma.currentPage.selection;
+
+      if (!currentNode || rest.length)
+        return figma.notify("Please select a single node.");
+
+      const group = createGroup(currentNode);
+      group && (figma.currentPage.selection = [group]);
+
+      figma.currentPage.selection = [];
+      return;
+    }
+
+    case "APP/REMOVE_GROUP":
+      return removeGroupNode(payload);
+
+    case "APP/CREATE_BADGE": {
+      const [currentNode] = figma.currentPage.selection;
+      if (!currentNode) return;
+
+      createNumberGroup({
+        targetNode: currentNode,
+        parentNode: getGroupNodeById(payload),
+      });
+
+      figma.currentPage.selection = [getGroupNodeById(payload)];
+      return;
+    }
+
+    case "APP/APPEND_BADGE": {
+      const [currentNode] = figma.currentPage.selection;
+      if (!currentNode) return;
+
+      const badgeGroup = getGroupNodeById(payload.parentId)
+        .findAllWithCriteria({
+          types: ["GROUP"],
+        })
+        .find((x) => x.getPluginData(NUMBERING_BADGE_GROUP_ID)) as GroupNode;
+
+      const idx = getMissingSerialNumber(
+        badgeGroup.children.map((x) => Number(x.name))
+      );
+      const badgeNode = setIndexNode(idx, currentNode);
+      badgeGroup.insertChild(0, badgeNode);
+
+      figma.currentPage.selection = [getGroupNodeById(payload.parentId)];
+      return;
+    }
+    // TODO: select badge or group, scroll view
+    // figma.viewport.scrollAndZoomIntoView([badgeNode]);
+
+    case "APP/REMOVE_BADGES": {
+      payload.forEach((id) => removeBadgeNode(id));
+      return;
+    }
+    default:
+      return;
+  }
+}
+
+async function onRun() {
   console.clear();
 
   await Promise.all([
@@ -177,64 +138,30 @@ figma.on("run", async () => {
     figma.loadFontAsync({ family: "Inter", style: "Bold" }),
   ]);
 
-  const current = figma.currentPage.selection;
-  figma.ui.postMessage({ type: "GROUP/ENABLE", payload: !!current.length });
-
-  figma.ui.postMessage({
-    type: "GROUP/INITIALIZE",
-    // FIXME: Change: replacing all items in the Store does not seem to be very good from a performance standpoint.
-    payload: scan(),
+  figma.showUI(__html__, {
+    themeColors: true,
+    width: UI_WIDTH,
+    height: UI_HEIGHT,
   });
-});
 
-/**
- *
- */
-figma.ui.onmessage = (msg: FigmaMessage) => {
-  const { type, data } = msg;
-  switch (type) {
-    case "CREATE_INDEX":
-      // Currently creating index badge for single object. should we need to support multiple?
-      const [current] = figma.currentPage.selection;
+  // Initialize store data at startup app
+  dispatch({
+    type: "UI/UPDATE_STORE",
+    payload: reduceAllNodes(),
+  });
 
-      const node = setIndexNode(1, current);
-      const group = setGroup(node, current.name);
+  const [currentNode] = figma.currentPage.selection;
 
-      figma.ui.postMessage({
-        type: "GROUP/CREATE",
-        payload: {
-          id: group.id,
-          name: group.name,
-        },
-      });
+  dispatch({
+    type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
+    payload: isEnableCreategroup(currentNode),
+  });
+}
 
-      figma.ui.postMessage({
-        type: "BADGE/CREATE",
-        payload: {
-          parentId: group.id,
-          id: node.id,
-          name: node.name,
-        },
-      });
-      // TODO:
-      // figma.viewport.scrollAndZoomIntoView([indexNode]);
-      // figma.currentPage.appendChild(indexNode);
-      return;
-    case "SELECT_GROUP":
-      selectedGroup = data ? getGroupNodeById(data) : undefined;
-      return;
-    case "REMOVE_GROUP":
-      removeGroupNode(data);
-      selectedGroup = undefined;
-      return;
-    case "REMOVE_BADGE":
-      data.forEach((badge) => removeBadgeNode(badge));
-      return;
-    default:
-      return;
-  }
-  //FIXME: prevent close in developing
-  // figma.closePlugin();
-};
+function main() {
+  figma.on("run", onRun);
+  figma.on("selectionchange", onSelectionchange);
 
-export {};
+  figma.ui.onmessage = onMessage;
+}
+main();

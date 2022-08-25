@@ -1,45 +1,52 @@
 import type { Badge } from "@/types/Badge";
 import type { Group } from "@/types/Group";
 
-export type PluginMessage =
+type NodeId = string;
+
+// refs. https://github.com/redux-utilities/flux-standard-action
+export type Action =
   | {
-      type: "GROUP/ENABLE";
+      type: "UI/UPDATE_STORE";
+      payload: {
+        numberingGroups: Group[];
+        numberingbadgeGroups: Record<string, Badge[]>;
+      };
+    }
+  | {
+      type: "UI/TOGGLE_CREATE_GROUP_BUTTON";
       payload: boolean;
     }
   | {
-      type: "GROUP/INITIALIZE";
-      payload: [Group[], Record<string, Badge[]>];
-    }
-  | {
-      type: "GROUP/CREATE";
+      type: "UI/SHOULD_MAKE_BADGE";
       payload: {
-        id: string;
-        name: string;
+        groupId: string | undefined;
+        targetId: string;
       };
     }
   | {
-      type: "BADGE/CREATE";
+      type: "APP/SELECT_NODE";
+      payload: NodeId | null;
+    }
+  | {
+      type: "APP/CREATE_GROUP";
+      payload: null;
+    }
+  | {
+      type: "APP/REMOVE_GROUP";
+      payload: Group["id"];
+    }
+  | {
+      type: "APP/CREATE_BADGE";
+      payload: Group["id"];
+    }
+  | {
+      type: "APP/APPEND_BADGE";
       payload: {
-        parentId: string;
-        id: string;
-        name: string;
+        parentId: Group["id"];
+        index: number;
       };
-    };
-
-export type FigmaMessage =
-  | {
-      type: "CREATE_INDEX";
-      data: null;
     }
   | {
-      type: "SELECT_GROUP";
-      data: string | undefined;
-    }
-  | {
-      type: "REMOVE_GROUP";
-      data: string;
-    }
-  | {
-      type: "REMOVE_BADGE";
-      data: Badge["id"][];
+      type: "APP/REMOVE_BADGES";
+      payload: Group["id"][];
     };
