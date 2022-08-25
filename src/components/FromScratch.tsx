@@ -1,6 +1,5 @@
 import { Component, createEffect, createMemo, Show } from "solid-js";
 import type { Badge } from "@/types/Badge";
-import type { Group } from "@/types/Group";
 import { GroupPannel } from "./GroupPannel";
 import { BadgePannel } from "./BadgePannel";
 import { GroupTable } from "@/components/GroupTable";
@@ -13,18 +12,6 @@ export const FromScratch: Component = () => {
     useStore();
 
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
-
-  const onUnSelectGroup = () => {
-    console.log("onunselect");
-    // setSelectedGroup(undefined);
-    // useDispatch({ type: "SELECT_GROUP", data: undefined });
-  };
-
-  const onSelectGroup = (id: Group["id"]) => {
-    console.log("onselect", id);
-    // setSelectedGroup(id);
-    // useDispatch({ type: "SELECT_GROUP", data: id });
-  };
 
   createEffect(() => {
     // TODO: make sure later
@@ -57,11 +44,7 @@ export const FromScratch: Component = () => {
         </GroupPannel>
         <BadgePannel>
           <Show when={selectedGroupId()}>
-            <BadgeTable
-              data={badges() || []}
-              onRemove={onRemoveBadge}
-              onUnSelectGroup={onUnSelectGroup}
-            />
+            <BadgeTable data={badges() || []} onRemove={onRemoveBadge} />
           </Show>
         </BadgePannel>
       </div>

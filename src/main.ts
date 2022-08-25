@@ -36,6 +36,12 @@ function shouldMakeBadge(
 
 function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
+
+  dispatch({
+    type: "UI/SELECT_GROUP",
+    payload: currentNode ? currentNode.id : null,
+  });
+
   // Reflected in Store when operated at the Figma panel
   // TODO: Very expensive logic, see useStore.tsx L115
   dispatch({
@@ -63,6 +69,12 @@ function onMessage(action: Action) {
   const { type, payload } = action;
 
   switch (type) {
+    case "APP/SELECT_NODE":
+      if (!payload) return (figma.currentPage.selection = []);
+
+      figma.currentPage.selection = [getGroupNodeById(payload)];
+      figma.viewport.scrollAndZoomIntoView([getGroupNodeById(payload)]);
+      return;
     case "APP/CREATE_GROUP": {
       const [currentNode, ...rest] = figma.currentPage.selection;
 
@@ -88,7 +100,7 @@ function onMessage(action: Action) {
         parentNode: getGroupNodeById(payload),
       });
 
-      figma.currentPage.selection = [];
+      figma.currentPage.selection = [getGroupNodeById(payload)];
       return;
     }
 
@@ -108,7 +120,7 @@ function onMessage(action: Action) {
       const badgeNode = setIndexNode(idx, currentNode);
       badgeGroup.insertChild(0, badgeNode);
 
-      figma.currentPage.selection = [];
+      figma.currentPage.selection = [getGroupNodeById(payload.parentId)];
       return;
     }
     // TODO: select badge or group, scroll view

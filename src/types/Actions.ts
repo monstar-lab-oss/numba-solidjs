@@ -24,6 +24,14 @@ export type Action =
       };
     }
   | {
+      type: "APP/SELECT_NODE";
+      payload: NodeId | null;
+    }
+  | {
+      type: "UI/SELECT_GROUP";
+      payload: Group["id"] | null;
+    }
+  | {
       type: "APP/CREATE_GROUP";
       payload: null;
     }

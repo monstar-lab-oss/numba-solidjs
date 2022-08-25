@@ -27,7 +27,7 @@ type Props = {
 
 export const Provider: ParentComponent<Props> = (props) => {
   const [enabled, setEnabled] = createSignal(props.value.enabled);
-  const [selectedGroupId, setSelectedGroupId] = createSignal<string | null>(
+  const [selectedGroupId, _setSelectedGroupId] = createSignal<string | null>(
     null
   );
 
@@ -44,7 +44,6 @@ export const Provider: ParentComponent<Props> = (props) => {
 
   // badges
   const getBadgeByGroupId = (id?: Group["id"]) => {
-    console.log(id);
     return id ? state.badges[id] : [];
   };
 
@@ -127,6 +126,12 @@ export const Provider: ParentComponent<Props> = (props) => {
               badges,
             }));
             return;
+          case "UI/SELECT_GROUP":
+            if (!payload) _setSelectedGroupId(null);
+            const groupId = state.groups.find((x) => x.id === payload)?.id;
+            if (!groupId) return;
+            _setSelectedGroupId(groupId);
+            return;
           case "UI/SHOULD_MAKE_BADGE": {
             const { groupId, targetId } = payload;
             // passes if node not managed on plugin side
@@ -170,7 +175,10 @@ export const Provider: ParentComponent<Props> = (props) => {
       enabled,
       setEnabled,
       selectedGroupId,
-      setSelectedGroupId,
+      setSelectedGroupId: (id: string | null) => {
+        _setSelectedGroupId(id);
+        dispatch({ type: "APP/SELECT_NODE", payload: id });
+      },
       groups,
       removeGroup,
       getBadgeByGroupId,
