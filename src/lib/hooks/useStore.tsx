@@ -85,18 +85,6 @@ export const Provider: ParentComponent<Props> = (props) => {
     dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
   };
 
-  // TODO: check unnecessary properties e.g. Symbol(solid-proxy)
-  const syncAll = (payload: [Group[], Record<string, Badge[]>]) => {
-    const [groups, badgesRaw] = payload;
-
-    const badges = Object.keys(badgesRaw).reduce((acc, key) => {
-      return Object.assign(acc, {
-        [key]: badgesRaw[key].map((x) => createBadgeWithSelectedState(x)),
-      });
-    }, {});
-    setState(() => ({ groups, badges }));
-  };
-
   onMount(() => {
     window.addEventListener(
       "message",
@@ -169,7 +157,6 @@ export const Provider: ParentComponent<Props> = (props) => {
   const store = [
     state,
     {
-      syncAll,
       enabled,
       setEnabled,
       selectedGroupId,
@@ -192,7 +179,6 @@ export function useStore() {
   return useContext(Context) as [
     Store,
     {
-      syncAll: (payload: [Group[], Record<string, Badge[]>]) => void;
       enabled: Accessor<boolean>;
       selectedGroupId: Accessor<string | null>;
       setSelectedGroupId: Setter<string | null>;
