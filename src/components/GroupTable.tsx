@@ -1,8 +1,36 @@
-import { Component, JSX, For, splitProps, createSignal } from "solid-js";
+import {
+  Component,
+  JSX,
+  For,
+  splitProps,
+  createSignal,
+  createMemo,
+} from "solid-js";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
 import css from "./GroupTable.module.css";
 import { useStore } from "@/lib/hooks/useStore";
+
+export type GroupSearchProps = {
+  query: () => string;
+  setQuery: (_: string) => void;
+} & JSX.HTMLAttributes<HTMLFormElement>;
+const GroupSearch: Component<GroupSearchProps> = (props) => {
+  return (
+    <form onSubmit={(e) => e.preventDefault()}>
+      <input
+        class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 text-sm leading-tight text-gray-600 shadow-sm focus:outline-none"
+        id="query"
+        value={props.query()}
+        type="text"
+        placeholder="Search"
+        onInput={(e) => {
+          props.setQuery(e.currentTarget.value);
+        }}
+      />
+    </form>
+  );
+};
 
 export type Props = {
   data: Group[];
@@ -10,6 +38,7 @@ export type Props = {
 
 export const GroupTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
+  const [query, setQuery] = createSignal("");
 
   const [_, { selectedGroupId, setSelectedGroupId, removeGroup }] = useStore();
 
@@ -23,8 +52,15 @@ export const GroupTable: Component<Props> = (props) => {
     e.stopImmediatePropagation();
   };
 
+  const filteredData = createMemo(() => {
+    if (!query()) return props.data;
+    const re = new RegExp(query(), "i");
+    return props.data.filter((x) => re.test(x.name));
+  });
+
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
+      <GroupSearch query={query} setQuery={setQuery} />
       <table class={clsx({ [css.style]: true })}>
         <thead>
           <tr class="h-12">
@@ -35,7 +71,14 @@ export const GroupTable: Component<Props> = (props) => {
           </tr>
         </thead>
         <tbody>
-          <For each={props.data}>
+          <For
+            each={filteredData()}
+            fallback={() => (
+              <tr>
+                <td>Sorry, no matches found</td>
+              </tr>
+            )}
+          >
             {(item) => (
               <tr
                 onClick={(e) => onSelectClick(e, item.id)}
