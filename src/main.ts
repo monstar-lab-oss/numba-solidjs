@@ -37,11 +37,6 @@ function shouldMakeBadge(
 function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
 
-  dispatch({
-    type: "UI/SELECT_GROUP",
-    payload: currentNode ? currentNode.id : null,
-  });
-
   // Reflected in Store when operated at the Figma panel
   // TODO: Very expensive logic, see useStore.tsx L115
   dispatch({
