@@ -9,8 +9,6 @@ import { dispatch } from "@/lib/dispatch";
 import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
 import {
   reduceAllNodes,
-  setGroup,
-  getNodesByType,
   getGroupNodeById,
   removeGroupNode,
   removeBadgeNode,

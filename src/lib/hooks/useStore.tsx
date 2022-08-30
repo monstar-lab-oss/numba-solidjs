@@ -95,7 +95,7 @@ export const Provider: ParentComponent<Props> = (props) => {
       }>) => {
         const { type, payload } = data.pluginMessage;
         switch (type) {
-          case "UI/UPDATE_STORE":
+          case "UI/UPDATE_STORE": {
             // reduce with selected state
             const badgesRaw = payload.numberingbadgeGroups;
             const badges = Object.keys(badgesRaw).reduce((acc, key) => {
@@ -112,6 +112,8 @@ export const Provider: ParentComponent<Props> = (props) => {
               badges,
             }));
             return;
+          }
+
           case "UI/SHOULD_MAKE_BADGE": {
             const { groupId, targetId } = payload;
             // passes if node not managed on plugin side
