@@ -1,4 +1,4 @@
-import { Component, createEffect, createMemo, Show } from "solid-js";
+import { Component, createMemo, Show } from "solid-js";
 import { GroupPannel } from "./GroupPannel";
 import { BadgePannel } from "./BadgePannel";
 import { GroupTable } from "@/components/GroupTable";

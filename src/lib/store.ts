@@ -30,7 +30,7 @@ export const store = new Proxy<Store>(
 // subscribers
 export function updateStoreUI(state: Store, prevState?: Store) {
   if (equal(state, prevState)) return;
-  // @ts-ignore
+  // @ts-expect-error because unused, remove this file
   dispatch({ type: "UI/UPDATE_STORE", payload: state.numberingGroups });
 }
 subscribes.push(updateStoreUI);
