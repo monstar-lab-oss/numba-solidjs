@@ -1,5 +1,6 @@
 import { Story, Meta } from "@storybook/html";
 import { Confirm, Props } from "./Confirm";
+import { within, userEvent } from "@storybook/testing-library";
 
 export default {
   title: "Components/Confirm",
@@ -11,15 +12,28 @@ export default {
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => <Confirm {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Default = Template.bind({});
+Default.args = {
   options: {
-    onConfirm: () => null,
-    onClose: () => null,
+    onConfirm: () => console.log("onConfirm"),
+    onClose: () => console.log("onClose"),
     show: true,
     body: "Confirm component",
     confirmButtonColor: "primary",
-    confirmButtonText: "Primary",
+    confirmButtonText: "Default(Primary)",
+    cancelButtonText: "Cancel",
+  },
+};
+
+export const ConfirmHidden = Template.bind({});
+ConfirmHidden.args = {
+  options: {
+    onConfirm: () => console.log("onConfirm"),
+    onClose: () => console.log("onClose"),
+    show: false,
+    body: "Confirm component",
+    confirmButtonColor: "primary",
+    confirmButtonText: "Confirm Hidden",
     cancelButtonText: "Cancel",
   },
 };
@@ -100,4 +114,44 @@ SecondaryOutline.args = {
     confirmButtonText: "Secondary Outline",
     cancelButtonText: "Cancel",
   },
+};
+
+// TEST
+
+export const ConfirmClick = Template.bind({});
+
+ConfirmClick.args = {
+  options: {
+    onConfirm: () => console.log("OnConfirm fired !"),
+    onClose: () => console.log("OnClose fired !"),
+    show: true,
+    body: "Confirm component",
+    confirmButtonColor: "secondaryOutline",
+    confirmButtonText: "Confirm",
+    cancelButtonText: "Cancel",
+  },
+};
+
+ConfirmClick.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  await userEvent.click(canvas.getByRole("button", { name: "Confirm" }));
+};
+
+export const ConfirmCancel = Template.bind({});
+
+ConfirmCancel.args = {
+  options: {
+    onConfirm: () => console.log("OnConfirm fired !"),
+    onClose: () => console.log("OnClose fired !"),
+    show: true,
+    body: "Confirm component",
+    confirmButtonColor: "secondaryOutline",
+    confirmButtonText: "Confirm",
+    cancelButtonText: "Cancel",
+  },
+};
+
+ConfirmCancel.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  await userEvent.click(canvas.getByRole("button", { name: "Cancel" }));
 };

@@ -13,7 +13,8 @@
     "build:ui": "vite build",
     "prebuild": "node -e 'fs.rmSync(`dist`, { recursive: true, force: true })'",
     "build": "concurrently -c yellow,blue -P \"npm:build:* -- {*}\" -- --minify",
-    "dev": "concurrently -k -c yellow,blue -P \"npm:build:* -- {*}\" -- --watch"
+    "dev": "concurrently -k -c yellow,blue -P \"npm:build:* -- {*}\" -- --watch",
+    "test-storybook": "test-storybook"
   },
   "repository": {
     "type": "git",
@@ -34,10 +35,11 @@
     "@figma/plugin-typings": "1.50.0",
     "@storybook/addon-actions": "6.5.10",
     "@storybook/addon-essentials": "6.5.10",
-    "@storybook/addon-interactions": "6.5.10",
+    "@storybook/addon-interactions": "6.5.12",
     "@storybook/addon-links": "6.5.10",
     "@storybook/builder-vite": "0.2.2",
     "@storybook/html": "6.5.10",
+    "@storybook/test-runner": "0.7.1",
     "@storybook/testing-library": "0.0.13",
     "@types/node": "18.7.1",
     "@typescript-eslint/eslint-plugin": "5.36.0",
