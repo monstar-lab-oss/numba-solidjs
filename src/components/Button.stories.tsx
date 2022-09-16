@@ -13,8 +13,8 @@ const Template: Story<Props> = (args) => {
   return <Button {...args}>{args.children}</Button>;
 };
 
-export const Defalt = Template.bind({});
-Defalt.args = {};
+export const Default = Template.bind({});
+Default.args = {};
 
 export const Primary = Template.bind({});
 Primary.args = {
@@ -24,4 +24,29 @@ Primary.args = {
 export const Danger = Template.bind({});
 Danger.args = {
   use: "danger",
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  use: "disabled",
+};
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  use: "secondary",
+};
+
+export const PrimaryOutline = Template.bind({});
+PrimaryOutline.args = {
+  use: "primaryOutline",
+};
+
+export const DangerOutline = Template.bind({});
+DangerOutline.args = {
+  use: "dangerOutline",
+};
+
+export const SecondaryOutline = Template.bind({});
+SecondaryOutline.args = {
+  use: "secondaryOutline",
 };

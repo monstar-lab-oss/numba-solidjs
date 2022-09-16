@@ -13,4 +13,16 @@
   .danger {
     @apply border-red-500 bg-red-500 text-white hover:border-red-600 hover:bg-red-600;
   }
+  .secondary {
+    @apply border-gray-500 bg-gray-500 text-white hover:border-gray-600 hover:bg-gray-600;
+  }
+  .primaryOutline {
+    @apply border-blue-500 bg-transparent text-blue-500 hover:border-transparent hover:bg-blue-600 hover:text-white;
+  }
+  .dangerOutline {
+    @apply border-red-500 bg-transparent text-red-500 hover:border-transparent hover:bg-red-600 hover:text-white;
+  }
+  .secondaryOutline {
+    @apply border-gray-500 bg-transparent text-gray-500 hover:border-transparent hover:bg-gray-600 hover:text-white;
+  }
 }
