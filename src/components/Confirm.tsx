@@ -1,5 +1,4 @@
 import type { Component, JSX } from "solid-js";
-import { Show } from "solid-js";
 import { ConfirmOptions } from "@/types/Confirm";
 import { Button } from "./Button";
 import { clsx } from "clsx";
