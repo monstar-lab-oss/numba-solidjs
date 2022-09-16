@@ -94,10 +94,21 @@ export const Provider: ParentComponent<Props> = (props) => {
   };
 
   const removeBadge = (parentId: Group["id"], ids: Badge["id"][]) => {
-    ids.forEach((id) =>
-      setState("badges", [parentId], (bx) => bx.filter((b) => b.id !== id))
-    );
-    dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
+    setConfirmOptions({
+      onConfirm: () => {
+        ids.forEach((id) =>
+          setState("badges", [parentId], (bx) => bx.filter((b) => b.id !== id))
+        );
+        dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
+        setConfirmOptions({ ...confirmOptions(), show: false });
+      },
+      onClose: () => setConfirmOptions({ ...confirmOptions(), show: false }),
+      show: true,
+      body: `Do you want to delete ${ids.length} numbers ?`,
+      confirmButtonColor: "dangerOutline",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+    });
   };
 
   onMount(() => {
