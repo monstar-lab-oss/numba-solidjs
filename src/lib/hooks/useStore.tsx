@@ -13,6 +13,7 @@ import type { Badge } from "@/types/Badge";
 import { createStore } from "solid-js/store";
 import type { Action } from "@/types/Actions";
 import { dispatch } from "@/lib/dispatch";
+import type { ConfirmOptions } from "@/types/Confirm";
 
 const Context = createContext();
 
@@ -27,6 +28,9 @@ type Props = {
 
 export const Provider: ParentComponent<Props> = (props) => {
   const [enabled, setEnabled] = createSignal(props.value.enabled);
+  const [confirmOptions, setConfirmOptions] = createSignal<ConfirmOptions>(
+    {} as ConfirmOptions
+  );
   const [selectedGroupId, _setSelectedGroupId] = createSignal<string | null>(
     null
   );
@@ -38,8 +42,19 @@ export const Provider: ParentComponent<Props> = (props) => {
   const groups = createMemo(() => state.groups);
 
   const removeGroup = (id: Group["id"]) => {
-    setState("groups", (gs) => gs.filter((g) => g.id !== id));
-    dispatch({ type: "APP/REMOVE_GROUP", payload: id });
+    setConfirmOptions({
+      onConfirm: () => {
+        setState("groups", (gs) => gs.filter((g) => g.id !== id));
+        dispatch({ type: "APP/REMOVE_GROUP", payload: id });
+        setConfirmOptions({ ...confirmOptions(), show: false });
+      },
+      onClose: () => setConfirmOptions({ ...confirmOptions(), show: false }),
+      show: true,
+      body: "Do you want to delete ?",
+      confirmButtonColor: "dangerOutline",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+    });
   };
 
   // badges
@@ -155,6 +170,8 @@ export const Provider: ParentComponent<Props> = (props) => {
     {
       enabled,
       setEnabled,
+      confirmOptions,
+      setConfirmOptions,
       selectedGroupId,
       setSelectedGroupId: (id: string | null) => {
         _setSelectedGroupId(id);
@@ -176,9 +193,11 @@ export function useStore() {
     Store,
     {
       enabled: Accessor<boolean>;
+      confirmOptions: Accessor<ConfirmOptions>;
       selectedGroupId: Accessor<string | null>;
       setSelectedGroupId: Setter<string | null>;
       setEnabled: Setter<boolean>;
+      setConfirmOptions: Setter<ConfirmOptions>;
       groups: Accessor<Group[]>;
       createGroup: ({ id, name }: { id: string; name: string }) => void;
       removeGroup: (id: Group["id"]) => void;

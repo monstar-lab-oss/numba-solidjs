@@ -1,0 +1,22 @@
+@tailwind components;
+
+@layer components {
+  .modal {
+    @apply fixed top-0 right-0 left-0 bottom-0 z-50 w-full overflow-y-auto overflow-x-hidden md:inset-0 md:h-full;
+  }
+  .modal_inner {
+    @apply relative flex h-screen w-full max-w-2xl items-center justify-center p-4 md:h-auto;
+  }
+  .body {
+    @apply relative w-1/2 rounded-lg bg-white shadow-2xl;
+  }
+  .header {
+    @apply flex items-start justify-between rounded-t p-4;
+  }
+  .text {
+    @apply text-base font-semibold text-gray-500;
+  }
+  .footer {
+    @apply flex items-center justify-end space-x-2 p-6;
+  }
+}

@@ -1,14 +1,18 @@
 import { Component, createMemo, Show } from "solid-js";
+import { Portal } from "solid-js/web";
 import { GroupPannel } from "./GroupPannel";
 import { BadgePannel } from "./BadgePannel";
 import { GroupTable } from "@/components/GroupTable";
 import { BadgeTable } from "@/components/BadgeTable";
+import { Confirm } from "@/components/Confirm";
 import { useStore } from "@/lib/hooks/useStore";
 import { dispatch } from "@/lib/dispatch";
 
 export const FromScratch: Component = () => {
-  const [_, { selectedGroupId, enabled, groups, getBadgeByGroupId }] =
-    useStore();
+  const [
+    _,
+    { selectedGroupId, enabled, groups, getBadgeByGroupId, confirmOptions },
+  ] = useStore();
 
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
 
@@ -22,6 +26,9 @@ export const FromScratch: Component = () => {
     <>
       {/* FIXME: Fixed height only now */}
       <div class="flex h-[424px] items-stretch">
+        <Portal>
+          <Confirm options={confirmOptions()} />
+        </Portal>
         <GroupPannel createButtonDisabled={!enabled()} onCreateClick={onClick}>
           <GroupTable data={groups()} />
         </GroupPannel>
