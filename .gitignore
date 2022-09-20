@@ -8,3 +8,6 @@ dist
 ## notes
 memo.md
 artifacts
+
+# storybook
+build-storybook.log

@@ -13,13 +13,16 @@
     "build:ui": "vite build",
     "prebuild": "node -e 'fs.rmSync(`dist`, { recursive: true, force: true })'",
     "build": "concurrently -c yellow,blue -P \"npm:build:* -- {*}\" -- --minify",
-    "dev": "concurrently -k -c yellow,blue -P \"npm:build:* -- {*}\" -- --watch"
+    "dev": "concurrently -k -c yellow,blue -P \"npm:build:* -- {*}\" -- --watch",
+    "chromatic": "npx chromatic --project-token=dd912204d3c6"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/monstar-lab-group/ia-screen-spec.git"
   },
-  "author": "Jinma Yamashita",
+  "author": {
+    "name": "Jinma Yamashita"
+  },
   "bugs": {
     "url": "https://github.com/monstar-lab-group/ia-screen-spec/issues"
   },
@@ -44,6 +47,7 @@
     "@typescript-eslint/parser": "5.36.0",
     "autoprefixer": "10.4.8",
     "babel-loader": "8.2.5",
+    "chromatic": "6.9.0",
     "concurrently": "7.3.0",
     "esbuild": "0.15.1",
     "esbuild-register": "3.3.3",
@@ -59,5 +63,7 @@
     "vite": "3.0.5",
     "vite-plugin-singlefile": "0.11.1",
     "vite-plugin-solid": "2.3.0"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "ia-screen-spec@0.4.1"
 }
