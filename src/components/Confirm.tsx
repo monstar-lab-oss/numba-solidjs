@@ -7,7 +7,7 @@ import { Portal } from "solid-js/web";
 
 export type ConfirmOptions = {
   onConfirm: () => void;
-  onClose: () => void;
+  onClose?: () => void;
   body: JSX.Element;
   cancelButtonText: string;
   confirmButtonColor: Color;
