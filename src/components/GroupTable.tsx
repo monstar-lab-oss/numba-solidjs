@@ -7,7 +7,6 @@ import {
   createMemo,
   Show,
 } from "solid-js";
-import { Portal } from "solid-js/web";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
 import css from "./GroupTable.module.css";

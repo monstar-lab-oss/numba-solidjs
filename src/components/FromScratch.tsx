@@ -1,5 +1,4 @@
 import { Component, createMemo, Show } from "solid-js";
-import { Portal } from "solid-js/web";
 import { GroupPannel } from "./GroupPannel";
 import { BadgePannel } from "./BadgePannel";
 import { GroupTable } from "@/components/GroupTable";

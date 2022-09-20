@@ -1,7 +1,6 @@
 import { Component, JSX, For, createMemo, Show, createSignal } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
-import { Portal } from "solid-js/web";
 import type { Badge } from "@/types/Badge";
 import { Button } from "./Button";
 import { useStore } from "@/lib/hooks/useStore";
