@@ -2,7 +2,7 @@ import type { ButtonColor } from "@/types/Button";
 
 export type ConfirmOptions = {
   onConfirm: () => void;
-  onClose: () => void;
+  onClose?: () => void;
   show: boolean;
   body: string;
   cancelButtonText: string;
