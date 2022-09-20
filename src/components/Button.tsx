@@ -2,10 +2,10 @@ import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
 import css from "./Button.module.css";
-import type { ButtonColor } from "@/types/Button";
+import type { Color } from "@/types/Colors";
 
 export type Props = {
-  use?: ButtonColor;
+  use?: Color;
   children: JSX.Element;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
