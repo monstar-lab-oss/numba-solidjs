@@ -8,15 +8,15 @@
     @apply relative flex h-screen w-full max-w-2xl items-center justify-center p-4 md:h-auto;
   }
   .body {
-    @apply relative w-1/2 rounded-lg bg-white shadow-2xl;
+    @apply relative h-[110px] w-[250px] space-y-4 rounded-lg bg-white shadow-2xl;
   }
   .header {
-    @apply flex items-start justify-between rounded-t p-4;
+    @apply flex items-center justify-center px-2 pt-4 pb-1;
   }
   .text {
-    @apply text-base font-semibold text-gray-500;
+    @apply text-sm  text-gray-500;
   }
   .footer {
-    @apply flex items-center justify-end space-x-2 p-6;
+    @apply flex items-center justify-center space-x-2 p-1;
   }
 }

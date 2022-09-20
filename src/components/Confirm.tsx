@@ -19,7 +19,7 @@ export const Confirm: Component<Props> = (props) => {
               <div class={clsx({ [css.text]: true })}>{props.options.body}</div>
             </div>
             <div class={clsx({ [css.footer]: true })}>
-              <Button use="secondaryOutline" onClick={props.options.onClose}>
+              <Button use="primaryOutline" onClick={props.options.onClose}>
                 {props.options.cancelButtonText}
               </Button>
               <Button
