@@ -1,9 +1,11 @@
-import { Component, JSX, For, createMemo, Show } from "solid-js";
+import { Component, JSX, For, createMemo, Show, createSignal } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
+import { Portal } from "solid-js/web";
 import type { Badge } from "@/types/Badge";
 import { Button } from "./Button";
 import { useStore } from "@/lib/hooks/useStore";
+import { Confirm, ConfirmOptions } from "@/components/Confirm";
 
 export type Props = {
   data: Badge[];
@@ -18,16 +20,32 @@ export const BadgeTable: Component<Props> = (props) => {
     props.data.every((x) => !x.selected())
   );
 
+  const [show, setShow] = createSignal(false);
+  const [confirmOptions, setConfirmOptions] = createSignal<ConfirmOptions>(
+    {} as ConfirmOptions
+  );
+
   const onRemoveClick = (e: MouseEvent) => {
-    const selectedBageIds = props.data
+    const selectedBadgeIds = props.data
       .filter((x) => x.selected())
       .map(({ id }) => id);
 
-    const parentId = selectedGroupId();
-    if (!parentId) return;
+    setConfirmOptions({
+      onConfirm: () => {
+        const parentId = selectedGroupId();
+        if (!parentId) return;
+        removeBadge(parentId, selectedBadgeIds);
+        setShow(false);
+        e.stopImmediatePropagation();
+      },
+      onClose: () => setShow(false),
+      body: `Delete selected ${selectedBadgeIds.length} numbers?`,
+      confirmButtonColor: "dangerOutline",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+    });
 
-    removeBadge(parentId, selectedBageIds);
-    e.stopImmediatePropagation();
+    setShow(true);
   };
 
   const onToggleAllClick = () => {
@@ -47,6 +65,9 @@ export const BadgeTable: Component<Props> = (props) => {
 
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
+      <Show when={show()}>
+        <Confirm {...confirmOptions()} />
+      </Show>
       <Show
         when={props.data.length}
         fallback={() => (

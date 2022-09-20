@@ -1,37 +1,44 @@
 import type { Component, JSX } from "solid-js";
-import { ConfirmOptions } from "@/types/Confirm";
 import { Button } from "./Button";
 import { clsx } from "clsx";
 import css from "./Confirm.module.css";
+import type { Color } from "@/types/Colors";
+import { Portal } from "solid-js/web";
 
-export type Props = {
-  options: ConfirmOptions;
-} & JSX.HTMLAttributes<HTMLDivElement>;
+export type ConfirmOptions = {
+  onConfirm: () => void;
+  onClose: () => void;
+  body: JSX.Element;
+  cancelButtonText: string;
+  confirmButtonColor: Color;
+  confirmButtonText: string;
+};
+
+export type Props = ConfirmOptions & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const Confirm: Component<Props> = (props) => {
   return (
-    // FIXME: When use "Show" component , storybook got an error.
-    <div class={clsx({ hidden: !props.options.show })}>
+    <Portal>
       <div class={clsx({ [css.modal]: true })}>
-        <div class={clsx({ [css.modal_inner]: true })}>
+        <div class={clsx({ [css.modalInner]: true })}>
           <div class={clsx({ [css.body]: true })}>
             <div class={clsx({ [css.header]: true })}>
-              <div class={clsx({ [css.text]: true })}>{props.options.body}</div>
+              <div class={clsx({ [css.text]: true })}>{props.body}</div>
             </div>
             <div class={clsx({ [css.footer]: true })}>
-              <Button use="primaryOutline" onClick={props.options.onClose}>
-                {props.options.cancelButtonText}
+              <Button use="primaryOutline" onClick={props.onClose}>
+                {props.cancelButtonText}
               </Button>
               <Button
-                use={`${props.options.confirmButtonColor}`}
-                onClick={props.options.onConfirm}
+                use={`${props.confirmButtonColor}`}
+                onClick={props.onConfirm}
               >
-                {props.options.confirmButtonText}
+                {props.confirmButtonText}
               </Button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Portal>
   );
 };
