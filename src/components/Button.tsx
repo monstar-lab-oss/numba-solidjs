@@ -5,6 +5,7 @@ import css from "./Button.module.css";
 import type { Color } from "@/types/Colors";
 
 export type Props = {
+  // NOTE Changing the name of argument to `color` could be better than current name of argument `use`.
   use?: Color;
   children: JSX.Element;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
