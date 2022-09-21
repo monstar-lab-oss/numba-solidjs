@@ -32,4 +32,3 @@ jobs:
       - run: npm test
       - run: npm run type
       - run: npm run lint
-      - run: npm run chromatic

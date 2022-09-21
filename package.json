@@ -13,8 +13,7 @@
     "build:ui": "vite build",
     "prebuild": "node -e 'fs.rmSync(`dist`, { recursive: true, force: true })'",
     "build": "concurrently -c yellow,blue -P \"npm:build:* -- {*}\" -- --minify",
-    "dev": "concurrently -k -c yellow,blue -P \"npm:build:* -- {*}\" -- --watch",
-    "chromatic": "npx chromatic --project-token=dd912204d3c6"
+    "dev": "concurrently -k -c yellow,blue -P \"npm:build:* -- {*}\" -- --watch"
   },
   "repository": {
     "type": "git",
