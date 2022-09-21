@@ -1,17 +1,18 @@
-import {
-  Component,
-  JSX,
-  For,
-  splitProps,
-  createSignal,
-  createMemo,
-  Show,
-} from "solid-js";
+import { Confirm, ConfirmOptions } from "@/components/Confirm";
+import { useStore } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
+import {
+  Component,
+  createMemo,
+  createSignal,
+  For,
+  JSX,
+  Show,
+  splitProps,
+} from "solid-js";
+import { Portal } from "solid-js/web";
 import css from "./GroupTable.module.css";
-import { useStore } from "@/lib/hooks/useStore";
-import { Confirm, ConfirmOptions } from "@/components/Confirm";
 
 export type GroupSearchProps = {
   query: () => string;
@@ -78,7 +79,9 @@ export const GroupTable: Component<Props> = (props) => {
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
       <Show when={show()}>
+        <Portal>
           <Confirm {...confirmOptions()} />
+        </Portal>
       </Show>
       <Show
         when={props.data.length}
