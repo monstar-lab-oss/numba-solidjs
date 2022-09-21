@@ -1,6 +1,7 @@
 import type { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
+import { DEFAULT_ICON_SIZE } from "./constants";
 import css from "./Icon.module.css";
 
 export type Props = {
@@ -10,13 +11,12 @@ export type Props = {
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const Create: Component<Props> = (props) => {
-  const DEFAULT_SIZE = 24;
   return (
     <a onClick={props.onClick} role="button">
       <svg
         style={{
-          width: props.size || DEFAULT_SIZE,
-          height: props.size || DEFAULT_SIZE,
+          width: props.size || DEFAULT_ICON_SIZE,
+          height: props.size || DEFAULT_ICON_SIZE,
         }}
         class={clsx({
           [css.style]: true,

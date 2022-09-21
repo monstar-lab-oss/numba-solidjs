@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/html";
 import { userEvent, within } from "@storybook/testing-library";
-import { Props, Create } from "./Create";
+import { Create, Props } from "./Create";
 
 export default {
   title: "Components/Icons/Create",
