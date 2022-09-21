@@ -1,0 +1,28 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply flex h-full content-center items-center justify-center self-center rounded-full p-0.5 hover:cursor-pointer;
+  }
+  .disabled {
+    @apply fill-gray-500 opacity-40 hover:cursor-not-allowed;
+  }
+  .primary {
+    @apply fill-blue-500;
+  }
+  .danger {
+    @apply fill-red-500;
+  }
+  .secondary {
+    @apply fill-gray-500;
+  }
+  .primaryOutline {
+    @apply bg-blue-500 fill-white;
+  }
+  .dangerOutline {
+    @apply bg-red-500 fill-white;
+  }
+  .secondaryOutline {
+    @apply bg-gray-500 fill-white;
+  }
+}
