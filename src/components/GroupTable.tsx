@@ -11,6 +11,7 @@ import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
 import css from "./GroupTable.module.css";
 import { useStore } from "@/lib/hooks/useStore";
+import { Confirm, ConfirmOptions } from "@/components/Confirm";
 
 export type GroupSearchProps = {
   query: () => string;
@@ -40,7 +41,10 @@ export type Props = {
 export const GroupTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
   const [query, setQuery] = createSignal("");
-
+  const [show, setShow] = createSignal(false);
+  const [confirmOptions, setConfirmOptions] = createSignal<ConfirmOptions>(
+    {} as ConfirmOptions
+  );
   const [_, { selectedGroupId, setSelectedGroupId, removeGroup }] = useStore();
 
   const onSelectClick = (e: MouseEvent, id: string) => {
@@ -49,8 +53,20 @@ export const GroupTable: Component<Props> = (props) => {
   };
 
   const onRemoveClick = (e: MouseEvent, id: string) => {
-    removeGroup(id);
-    e.stopImmediatePropagation();
+    setConfirmOptions({
+      onConfirm: () => {
+        removeGroup(id);
+        setShow(false);
+        e.stopImmediatePropagation();
+      },
+      onClose: () => setShow(false),
+      body: `Delete this group?`,
+      confirmButtonColor: "dangerOutline",
+      confirmButtonText: "Delete",
+      cancelButtonText: "Cancel",
+    });
+
+    setShow(true);
   };
 
   const filteredData = createMemo(() => {
@@ -61,6 +77,9 @@ export const GroupTable: Component<Props> = (props) => {
 
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
+      <Show when={show()}>
+          <Confirm {...confirmOptions()} />
+      </Show>
       <Show
         when={props.data.length}
         fallback={() => (
