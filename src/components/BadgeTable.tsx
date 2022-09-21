@@ -1,10 +1,18 @@
-import { Component, JSX, For, createMemo, Show, createSignal } from "solid-js";
-import { splitProps } from "solid-js";
-import { clsx } from "clsx";
-import type { Badge } from "@/types/Badge";
-import { Button } from "./Button";
-import { useStore } from "@/lib/hooks/useStore";
 import { Confirm, ConfirmOptions } from "@/components/Confirm";
+import { useStore } from "@/lib/hooks/useStore";
+import type { Badge } from "@/types/Badge";
+import { clsx } from "clsx";
+import {
+  Component,
+  createMemo,
+  createSignal,
+  For,
+  JSX,
+  Show,
+  splitProps,
+} from "solid-js";
+import { Portal } from "solid-js/web";
+import { Button } from "./Button";
 
 export type Props = {
   data: Badge[];
@@ -65,7 +73,9 @@ export const BadgeTable: Component<Props> = (props) => {
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
       <Show when={show()}>
-        <Confirm {...confirmOptions()} />
+        <Portal>
+          <Confirm {...confirmOptions()} />
+        </Portal>
       </Show>
       <Show
         when={props.data.length}
