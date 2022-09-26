@@ -21,7 +21,7 @@ export const decorators = [
 
 export const parameters = {
   backgrounds: {
-    default: "figmagray",ちぇ
+    default: "figmagray",
     values: [
       {
         name: "figmagray",
