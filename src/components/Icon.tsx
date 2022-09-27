@@ -2,7 +2,16 @@ import type { Color } from "@/types/Colors";
 import type { Component, JSX } from "solid-js";
 import { lazy, splitProps } from "solid-js";
 
-export type Icon = "create" | "delete" | "help" | "search" | "textDelete";
+export const ICON_NAMES = [
+  "create",
+  "delete",
+  "help",
+  "search",
+  "textDelete",
+] as const;
+
+export type Icon = typeof ICON_NAMES[number];
+
 export type Props = {
   name: string;
   size?: number;
