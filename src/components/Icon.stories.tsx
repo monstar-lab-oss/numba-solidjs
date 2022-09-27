@@ -8,13 +8,15 @@ export default {
     children: "IconName",
   },
   argTypes: {
-    color: {
-      options: COLOR,
-      control: { type: "select" },
-    },
     name: {
       options: ICON_NAMES,
       control: { type: "select" },
+      defaultValue: "create",
+    },
+    color: {
+      options: COLOR,
+      control: { type: "select" },
+      defaultValue: "primary",
     },
   },
 } as Meta;
