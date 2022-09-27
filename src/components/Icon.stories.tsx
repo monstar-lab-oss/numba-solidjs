@@ -5,9 +5,9 @@ import { COLOR } from "../types/Colors";
 import { Icon as IconComponent, ICON_NAMES, Props } from "./Icon";
 
 export default {
-  title: "Components/IconName",
+  title: "Components/Icon",
   args: {
-    children: "IconName",
+    children: "Icon",
   },
   argTypes: {
     name: {
