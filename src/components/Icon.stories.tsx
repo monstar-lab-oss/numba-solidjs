@@ -68,6 +68,6 @@ IconClick.args = baseData;
 IconClick.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   // FIXME: WorkAround wait for component until rendered.
-  await sleep(1000);
+  await sleep(5000);
   await userEvent.click(canvas.getByRole("button"));
 };
