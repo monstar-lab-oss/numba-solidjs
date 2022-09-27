@@ -1,4 +1,6 @@
 import { Meta, Story } from "@storybook/html";
+import { userEvent, within } from "@storybook/testing-library";
+import { sleep } from "../lib/utils/sleep";
 import { COLOR } from "../types/Colors";
 import { Icon as IconComponent, ICON_NAMES, Props } from "./Icon";
 
@@ -22,7 +24,7 @@ export default {
 } as Meta;
 
 // @ts-expect-error FIXME: Should return Solid component
-const Template: Story<{ data: Props }> = (args) => <IconComponent {...args} />;
+const Template: Story<Props> = (args) => <IconComponent {...args} />;
 
 // @ts-expect-error FIXME: Should return Solid component
 const TemplateList: Story<{ data: Props[] }> = (args) => {
@@ -58,4 +60,14 @@ Colors.args = {
     ...baseData,
     color,
   })),
+};
+
+export const IconClick = Template.bind({});
+
+IconClick.args = baseData;
+IconClick.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  // FIXME: WorkAround wait for component until rendered.
+  await sleep(1000);
+  await userEvent.click(canvas.getByRole("button"));
 };

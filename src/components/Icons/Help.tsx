@@ -1,8 +1,8 @@
 import type { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { JSX } from "solid-js";
-import { DEFAULT_ICON_SIZE } from "./constants";
 import css from "./base.module.css";
+import { DEFAULT_ICON_SIZE } from "./constants";
 
 export type Props = {
   size?: number;
