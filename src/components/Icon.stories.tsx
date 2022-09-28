@@ -1,6 +1,4 @@
 import { Meta, Story } from "@storybook/html";
-import { userEvent, within } from "@storybook/testing-library";
-import { sleep } from "../lib/utils/sleep";
 import { COLOR } from "../types/Colors";
 import { Icon as IconComponent, ICON_NAMES, Props } from "./Icon";
 
