@@ -3,9 +3,9 @@ import { COLOR } from "./constants";
 import { Icon as IconComponent, ICON_NAMES, Props } from "./Icon";
 
 export default {
-  title: "Components/Icon",
+  title: "Components/IconButton",
   args: {
-    children: "Icon",
+    children: "IconButton",
   },
   argTypes: {
     name: {
@@ -24,40 +24,8 @@ export default {
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => <IconComponent {...args} />;
 
-// @ts-expect-error FIXME: Should return Solid component
-const TemplateList: Story<{ data: Props[] }> = (args) => {
-  return args.data.map((v) => (
-    <>
-      <IconComponent {...v} />
-      <br />
-    </>
-  ));
-};
-
-const baseData: Props = {
-  name: "create",
-  size: 24,
-  color: "primary",
-};
-
-export const Icon = Template.bind({});
-Icon.args;
-
-export const Icons = TemplateList.bind({});
-Icons.args = {
-  data: ICON_NAMES.map((name) => ({
-    ...baseData,
-    name,
-  })),
-};
-
-export const Colors = TemplateList.bind({});
-Colors.args = {
-  data: COLOR.map((color) => ({
-    ...baseData,
-    color,
-  })),
-};
+export const IconButton = Template.bind({});
+IconButton.args;
 
 // FIXME For now chromatic dose not support for lazy load components test.
 // export const IconClick = Template.bind({});

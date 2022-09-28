@@ -1,7 +1,7 @@
 import type { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
-import { lazy, splitProps } from "solid-js";
+import { lazy } from "solid-js";
 import { capitalize } from "../lib/utils/capitalize";
 import css from "./Icon.module.css";
 
@@ -25,10 +25,8 @@ export type Props = {
 export const DEFAULT_ICON_SIZE = 24;
 
 export const Icon: Component<Props> = (props) => {
-  const [local, attributes] = splitProps(props, ["name"]);
-
   const LazyComponent = lazy(
-    () => import(`./icons/${capitalize(local.name)}.tsx`)
+    () => import(`./icons/${capitalize(props.name)}.tsx`)
   );
 
   return (
