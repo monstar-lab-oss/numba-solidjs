@@ -62,12 +62,13 @@ Colors.args = {
   })),
 };
 
-export const IconClick = Template.bind({});
+// FIXME For now chromatic dose not support for lazy load components test.
+// export const IconClick = Template.bind({});
 
-IconClick.args = baseData;
-IconClick.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  // FIXME: WorkAround wait for component until rendered.
-  await sleep(5000);
-  await userEvent.click(canvas.getByRole("button"));
-};
+// IconClick.args = baseData;
+// IconClick.play = async ({ canvasElement }) => {
+//   const canvas = within(canvasElement);
+//   // FIXME: WorkAround wait for component until rendered.
+//   await sleep(5000);
+//   await userEvent.click(canvas.getByRole("button"));
+// };
