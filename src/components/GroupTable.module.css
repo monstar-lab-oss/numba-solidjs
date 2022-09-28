@@ -2,13 +2,13 @@
 
 @layer components {
   .style {
-    @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
+    @apply h-full w-full text-left text-xs text-gray-500 dark:text-gray-400;
   }
   .style thead {
     @apply bg-gray-100 text-xs capitalize text-gray-700 dark:bg-gray-700 dark:text-gray-400;
   }
   .style tbody tr {
-    @apply cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+    @apply min-h-[20px] cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;

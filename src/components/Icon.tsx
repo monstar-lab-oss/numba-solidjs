@@ -1,7 +1,9 @@
 import type { Color } from "@/types/Colors";
+import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { lazy, splitProps } from "solid-js";
 import { capitalize } from "../lib/utils/capitalize";
+import css from "./Icon.module.css";
 
 export const ICON_NAMES = [
   "create",
@@ -14,11 +16,13 @@ export const ICON_NAMES = [
 export type Icon = typeof ICON_NAMES[number];
 
 export type Props = {
-  name: string;
+  name: "create" | "delete" | "textDelete" | "help" | "search";
   size?: number;
   color?: Color;
   onClick?: () => void;
 } & JSX.HTMLAttributes<HTMLDivElement>;
+
+export const DEFAULT_ICON_SIZE = 24;
 
 export const Icon: Component<Props> = (props) => {
   const [local, attributes] = splitProps(props, ["name"]);
@@ -27,5 +31,30 @@ export const Icon: Component<Props> = (props) => {
     () => import(`./icons/${capitalize(local.name)}.tsx`)
   );
 
-  return <LazyComponent {...attributes} />;
+  return (
+    // FIXME Need refactor I wanna change button role to ButtonIcon
+    <a onClick={props.onClick} role="button">
+      <svg
+        style={{
+          width: props.size || DEFAULT_ICON_SIZE,
+          height: props.size || DEFAULT_ICON_SIZE,
+        }}
+        class={clsx({
+          [css.style]: true,
+          [css.disabled]: props.color === "disabled",
+          [css.primary]: props.color === "primary",
+          [css.danger]: props.color === "danger",
+          [css.secondary]: props.color === "secondary",
+          [css.primaryOutline]: props.color === "primaryOutline",
+          [css.dangerOutline]: props.color === "dangerOutline",
+          [css.secondaryOutline]: props.color === "secondaryOutline",
+        })}
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <LazyComponent />;
+      </svg>
+    </a>
+  );
 };

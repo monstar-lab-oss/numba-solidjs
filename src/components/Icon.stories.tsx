@@ -1,5 +1,5 @@
+import { COLOR } from "@/components/constants";
 import { Meta, Story } from "@storybook/html";
-import { COLOR } from "../types/Colors";
 import { Icon as IconComponent, ICON_NAMES, Props } from "./Icon";
 
 export default {
