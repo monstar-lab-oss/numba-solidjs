@@ -40,7 +40,7 @@ export type Props = {
 export const GroupTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
   const [query, setQuery] = createSignal("");
-  const [_, { selectedGroupId, setSelectedGroupId, removeGroup }] = useStore();
+  const [_, { selectedGroupId, setSelectedGroupId }] = useStore();
 
   const onSelectClick = (e: MouseEvent, id: string) => {
     setSelectedGroupId(selectedGroupId() !== id ? id : null);
