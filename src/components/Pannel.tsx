@@ -9,7 +9,7 @@ export type Props = {
 export const Pannel: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, []);
   return (
-    <div class={clsx({ "flex-1 p-4 first:border-r": true })} {...attributes}>
+    <div class={clsx({ "flex-1 first:border-r": true })} {...attributes}>
       {props.children}
     </div>
   );

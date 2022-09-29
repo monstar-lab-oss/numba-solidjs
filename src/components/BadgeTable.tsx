@@ -89,6 +89,9 @@ export const BadgeTable: Component<Props> = (props) => {
           <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="p-4">
+                <div>
+                  Selected groups
+                </div>
                 <div class="flex items-center">
                   <input
                     id="checkbox-all-search"

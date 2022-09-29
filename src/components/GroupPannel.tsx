@@ -19,11 +19,15 @@ export const GroupPannel: Component<Props> = (props) => {
 
   return (
     <Pannel>
-      <div class={clsx({ "grid grid-rows-1 gap-4": true })}>
-        <div class={clsx({ "flex justify-end": true })} {...attributes}>
+      <div class={clsx({ "grid grid-rows-1 gap-2": true })}>
+        <div
+          class={clsx({ "flex justify-end pt-2 pr-2": true })}
+          {...attributes}
+        >
           <Button
             onClick={props.onCreateClick}
             disabled={props.createButtonDisabled}
+            use="primary"
           >
             Create
           </Button>

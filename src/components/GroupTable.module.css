@@ -2,19 +2,27 @@
 
 @layer components {
   .style {
-    @apply h-full w-full text-left text-xs text-gray-500 dark:text-gray-400;
+    @apply block w-full table-auto overflow-y-scroll text-left text-xs text-gray-500 dark:text-gray-400;
   }
   .style thead {
     @apply bg-gray-100 text-xs capitalize text-gray-700 dark:bg-gray-700 dark:text-gray-400;
   }
+  .style thead th {
+    @apply w-full;
+  }
+
+  .style tbody {
+    @apply flex w-full flex-col items-center justify-between overflow-y-scroll;
+  }
+
   .style tbody tr {
-    @apply min-h-[20px] cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+    @apply min-h-[48px] w-full cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
   }
   .style tbody tr th {
-    @apply w-48 px-4 font-medium text-gray-900 dark:text-white;
+    @apply px-4 font-medium text-gray-900 dark:text-white;
   }
   .style tbody td {
     @apply flex items-center py-4 px-4;
