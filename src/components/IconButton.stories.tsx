@@ -1,6 +1,7 @@
 import { Meta, Story } from "@storybook/html";
 import { COLOR } from "./constants";
-import { Icon as IconComponent, ICON_NAMES, Props } from "./Icon";
+import { ICON_NAMES } from "./Icon";
+import { IconButton as IconButtonComponent, Props } from "./IconButton";
 
 export default {
   title: "Components/IconButton",
@@ -22,7 +23,7 @@ export default {
 } as Meta;
 
 // @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => <IconComponent {...args} />;
+const Template: Story<Props> = (args) => <IconButtonComponent {...args} />;
 
 export const IconButton = Template.bind({});
 IconButton.args;

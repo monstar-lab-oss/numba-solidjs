@@ -10,7 +10,7 @@ export type Props = {
 
 export const DEFAULT_ICON_SIZE = 24;
 
-export const ButtonIcon: Component<Props> = (props) => {
+export const IconButton: Component<Props> = (props) => {
   const [local, attributes] = splitProps(props, ["onClick"]);
 
   return (
