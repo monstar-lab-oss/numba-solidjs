@@ -1,22 +1,22 @@
 import {
-  UI_WIDTH,
-  UI_HEIGHT,
-  NUMBERING_GROUP_ID,
   NUMBERING_BADGE_GROUP_ID,
+  NUMBERING_GROUP_ID,
+  UI_HEIGHT,
+  UI_WIDTH,
 } from "@/constants";
-import type { Action } from "@/types/Actions";
 import { dispatch } from "@/lib/dispatch";
-import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
 import {
-  reduceAllNodes,
-  getGroupNodeById,
-  removeGroupNode,
-  removeBadgeNode,
-  setIndexNode,
   createGroup,
   createNumberGroup,
+  getGroupNodeById,
   isEnableCreategroup,
+  reduceAllNodes,
+  removeBadgeNode,
+  removeGroupNode,
+  setIndexNode,
 } from "@/lib/utils/figmaNodeHandle";
+import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
+import type { Action } from "@/types/Actions";
 
 function shouldMakeBadge(
   node: BaseNode
