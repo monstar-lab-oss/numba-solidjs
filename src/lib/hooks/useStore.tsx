@@ -1,18 +1,18 @@
-import {
-  createSignal,
-  createContext,
-  useContext,
-  ParentComponent,
-  Accessor,
-  onMount,
-  createMemo,
-  Setter,
-} from "solid-js";
-import type { Group } from "@/types/Group";
-import type { Badge } from "@/types/Badge";
-import { createStore } from "solid-js/store";
-import type { Action } from "@/types/Actions";
 import { dispatch } from "@/lib/dispatch";
+import type { Action } from "@/types/Actions";
+import type { Badge } from "@/types/Badge";
+import type { Group } from "@/types/Group";
+import {
+  Accessor,
+  createContext,
+  createMemo,
+  createSignal,
+  onMount,
+  ParentComponent,
+  Setter,
+  useContext,
+} from "solid-js";
+import { createStore } from "solid-js/store";
 
 const Context = createContext();
 
@@ -82,7 +82,12 @@ export const Provider: ParentComponent<Props> = (props) => {
     ids.forEach((id) =>
       setState("badges", [parentId], (bx) => bx.filter((b) => b.id !== id))
     );
-    dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
+
+    if (state.badges[parentId].length <= 0) {
+      removeGroup(parentId);
+    } else {
+      dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
+    }
   };
 
   onMount(() => {

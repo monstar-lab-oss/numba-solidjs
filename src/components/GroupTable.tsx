@@ -1,4 +1,3 @@
-import { Confirm, ConfirmOptions } from "@/components/Confirm";
 import { useStore } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
@@ -11,7 +10,6 @@ import {
   Show,
   splitProps,
 } from "solid-js";
-import { Portal } from "solid-js/web";
 import css from "./GroupTable.module.css";
 
 export type GroupSearchProps = {
@@ -42,32 +40,11 @@ export type Props = {
 export const GroupTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
   const [query, setQuery] = createSignal("");
-  const [show, setShow] = createSignal(false);
-  const [confirmOptions, setConfirmOptions] = createSignal<ConfirmOptions>(
-    {} as ConfirmOptions
-  );
-  const [_, { selectedGroupId, setSelectedGroupId, removeGroup }] = useStore();
+  const [_, { selectedGroupId, setSelectedGroupId }] = useStore();
 
   const onSelectClick = (e: MouseEvent, id: string) => {
     setSelectedGroupId(selectedGroupId() !== id ? id : null);
     e.stopImmediatePropagation();
-  };
-
-  const onRemoveClick = (e: MouseEvent, id: string) => {
-    setConfirmOptions({
-      onConfirm: () => {
-        removeGroup(id);
-        setShow(false);
-        e.stopImmediatePropagation();
-      },
-      onClose: () => setShow(false),
-      body: `Delete this group?`,
-      confirmButtonColor: "dangerOutline",
-      confirmButtonText: "Delete",
-      cancelButtonText: "Cancel",
-    });
-
-    setShow(true);
   };
 
   const filteredData = createMemo(() => {
@@ -78,11 +55,6 @@ export const GroupTable: Component<Props> = (props) => {
 
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
-      <Show when={show()}>
-        <Portal>
-          <Confirm {...confirmOptions()} />
-        </Portal>
-      </Show>
       <Show
         when={props.data.length}
         fallback={() => (
@@ -98,7 +70,6 @@ export const GroupTable: Component<Props> = (props) => {
               <th scope="col" class="p-4">
                 name
               </th>
-              <th scope="col" class="px-4"></th>
             </tr>
           </thead>
           <tbody>
@@ -118,11 +89,6 @@ export const GroupTable: Component<Props> = (props) => {
                   })}
                 >
                   <th scope="row">{item.name}</th>
-                  <td>
-                    <a href="#" onClick={(e) => onRemoveClick(e, item.id)}>
-                      Remove
-                    </a>
-                  </td>
                 </tr>
               )}
             </For>
