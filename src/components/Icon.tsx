@@ -26,7 +26,7 @@ export const DEFAULT_ICON_SIZE = 24;
 
 export const Icon: Component<Props> = (props) => {
   const LazyComponent = lazy(
-    () => import(`./icons/${capitalize(props.name)}.tsx`)
+    () => import(`./Icons/${capitalize(props.name)}.tsx`)
   );
 
   return (
