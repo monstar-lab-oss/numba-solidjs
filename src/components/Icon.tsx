@@ -17,7 +17,7 @@ export type Icon = typeof ICON_NAMES[number];
 
 export type Props = {
   name: "create" | "delete" | "textDelete" | "help" | "search";
-  color: Color;
+  color: Color | "white";
   size?: number;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
@@ -27,7 +27,6 @@ export const Icon: Component<Props> = (props) => {
   const LazyComponent = lazy(
     () => import(`./Icons/${capitalize(props.name)}.tsx`)
   );
-
   return (
     // FIXME Need refactor I wanna change button role to ButtonIcon
     <svg
@@ -41,6 +40,8 @@ export const Icon: Component<Props> = (props) => {
         [css.primary]: props.color === "primary",
         [css.danger]: props.color === "danger",
         [css.secondary]: props.color === "secondary",
+        // FIXME this is for IconButton Component so we need handle the color inside of IconButton
+        [css.white]: props.color === "white",
         [css.primaryOutline]: props.color === "primaryOutline",
         [css.dangerOutline]: props.color === "dangerOutline",
         [css.secondaryOutline]: props.color === "secondaryOutline",

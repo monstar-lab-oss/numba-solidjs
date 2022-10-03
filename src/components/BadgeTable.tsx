@@ -12,7 +12,7 @@ import {
   splitProps,
 } from "solid-js";
 import { Portal } from "solid-js/web";
-import { Button } from "./Button";
+import { IconButton } from "./IconButton";
 
 export type Props = {
   data: Badge[];
@@ -104,13 +104,13 @@ export const BadgeTable: Component<Props> = (props) => {
               </th>
               <th scope="col" class="px-4"></th>
               <th scope="col" class="px-4 text-right">
-                <Button
-                  use="danger"
+                <IconButton
+                  link
+                  name="delete"
+                  color="secondary"
                   onClick={onRemoveClick}
                   disabled={isDisabledRemove()}
-                >
-                  Remove
-                </Button>
+                />
               </th>
             </tr>
           </thead>
