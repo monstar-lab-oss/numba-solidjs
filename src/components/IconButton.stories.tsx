@@ -26,7 +26,10 @@ export default {
 const Template: Story<Props> = (args) => <IconButtonComponent {...args} />;
 
 export const IconButton = Template.bind({});
-IconButton.args;
+IconButton.args = {
+  iconName: "create",
+  IconColor: "primary",
+};
 
 // FIXME For now chromatic dose not support for lazy load components test.
 // export const IconClick = Template.bind({});
