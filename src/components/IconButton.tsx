@@ -8,13 +8,11 @@ import css from "./IconButton.module.css";
 
 export type Props = {
   children?: JSX.Element;
-  disabled?: boolean;
   buttonColor?: Color;
-  onClick?: ((e: MouseEvent) => void) | (() => void);
   link?: boolean;
   iconName: IconName;
-  IconColor: IconColor;
-} & JSX.HTMLAttributes<HTMLDivElement>;
+  iconColor: IconColor;
+} & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const DEFAULT_ICON_SIZE = 24;
 
