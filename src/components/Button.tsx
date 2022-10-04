@@ -11,6 +11,11 @@ export type Props = {
   children: JSX.Element;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
+const getButtonColor = (props: Props) => {
+  if (props.disabled) return "coloredDisabled";
+  return props.use || "";
+};
+
 export const Button: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["use", "children"]);
 
@@ -20,14 +25,7 @@ export const Button: Component<Props> = (props) => {
         [css.style]: true,
         [css.link]: props.link,
         [css.disabled]: props.disabled,
-        [css.coloredDisabled]: !props.link && props.disabled,
-        [css.primary]: !props.disabled && props.use === "primary",
-        [css.danger]: !props.disabled && props.use === "danger",
-        [css.secondary]: !props.disabled && props.use === "secondary",
-        [css.primaryOutline]: !props.disabled && props.use === "primaryOutline",
-        [css.dangerOutline]: !props.disabled && props.use === "dangerOutline",
-        [css.secondaryOutline]:
-          !props.disabled && props.use === "secondaryOutline",
+        [css[getButtonColor(props)]]: true,
       })}
       {...attributes}
     >

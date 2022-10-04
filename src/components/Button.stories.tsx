@@ -1,4 +1,4 @@
-import { Story, Meta } from "@storybook/html";
+import { Meta, Story } from "@storybook/html";
 import { Button, Props } from "./Button";
 
 export default {
@@ -49,4 +49,10 @@ DangerOutline.args = {
 export const SecondaryOutline = Template.bind({});
 SecondaryOutline.args = {
   use: "secondaryOutline",
+};
+
+export const Link = Template.bind({});
+Link.args = {
+  use: "primary",
+  link: true,
 };
