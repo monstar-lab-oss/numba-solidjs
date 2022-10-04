@@ -1,3 +1,4 @@
+import { Icon, Props as IconProps } from "@/components/Icon";
 import { useStore } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
@@ -12,23 +13,37 @@ import {
 } from "solid-js";
 import css from "./GroupTable.module.css";
 
+
+
+// NOTE: I want to create component as search component.
 export type GroupSearchProps = {
   query: () => string;
   setQuery: (_: string) => void;
 } & JSX.HTMLAttributes<HTMLFormElement>;
+
 const GroupSearch: Component<GroupSearchProps> = (props) => {
+  const IconOpt: IconProps = {
+    name: "search",
+    color: "secondary",
+  };
+
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <input
-        class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 text-sm leading-tight text-gray-600 shadow-sm focus:outline-none"
-        id="query"
-        value={props.query()}
-        type="text"
-        placeholder="Search"
-        onInput={(e) => {
-          props.setQuery(e.currentTarget.value);
-        }}
-      />
+      <div>
+        <div class="absolute m-auto px-1 pb-2 pt-1.5">
+          <Icon {...IconOpt} />
+        </div>
+        <input
+          class="focus:shadow-outline w-full appearance-none rounded border py-2 pr-3 pl-7 text-sm leading-tight text-gray-600 shadow-sm focus:outline-none"
+          id="query"
+          value={props.query()}
+          type="text"
+          placeholder="Search"
+          onInput={(e) => {
+            props.setQuery(e.currentTarget.value);
+          }}
+        />
+      </div>
     </form>
   );
 };
