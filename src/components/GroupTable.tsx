@@ -13,8 +13,6 @@ import {
 } from "solid-js";
 import css from "./GroupTable.module.css";
 
-
-
 // NOTE: I want to create component as search component.
 export type GroupSearchProps = {
   query: () => string;
@@ -28,7 +26,7 @@ const GroupSearch: Component<GroupSearchProps> = (props) => {
   };
 
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form onSubmit={(e) => e.preventDefault()} class="mb-3">
       <div>
         <div class="absolute m-auto px-1 pb-2 pt-1.5">
           <Icon {...IconOpt} />
@@ -81,7 +79,7 @@ export const GroupTable: Component<Props> = (props) => {
         <GroupSearch query={query} setQuery={setQuery} />
         <div class="overflow-auto">
           <table class={clsx({ [css.style]: true })}>
-            <tbody>
+            <tbody class="border-t">
               <For
                 each={filteredData()}
                 fallback={() => (

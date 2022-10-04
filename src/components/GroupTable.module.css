@@ -2,7 +2,7 @@
 
 @layer components {
   .style {
-    @apply block w-full table-auto overflow-y-scroll text-left text-xs text-gray-500 dark:text-gray-400;
+    @apply block h-[320px] w-full table-auto overflow-y-scroll text-left text-xs text-gray-500  dark:text-gray-400;
   }
   .style thead {
     @apply bg-gray-100 text-xs capitalize text-gray-700 dark:bg-gray-700 dark:text-gray-400;
