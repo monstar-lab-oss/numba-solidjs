@@ -1,7 +1,7 @@
 import { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
-import { splitProps } from "solid-js";
+import { Show, splitProps } from "solid-js";
 import { Button } from "./Button";
 import { Icon, IconColor, IconName } from "./Icon";
 import css from "./IconButton.module.css";
@@ -35,7 +35,9 @@ export const IconButton: Component<Props> = (props) => {
             color={iconAttributes.IconColor}
           />
         </div>
-        <div class={clsx({ [css.text]: true })}>{local.children}</div>
+        <Show when={!!local.children}>
+          <div class={clsx({ [css.text]: true })}>{local.children}</div>
+        </Show>
       </div>
     </Button>
   );

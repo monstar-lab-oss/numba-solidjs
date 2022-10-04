@@ -25,10 +25,26 @@ export default {
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => <IconButtonComponent {...args} />;
 
-export const IconButton = Template.bind({});
-IconButton.args = {
+export const Default = Template.bind({});
+Default.args = {
   iconName: "create",
   IconColor: "primary",
+  children: undefined,
+};
+
+export const Link = Template.bind({});
+Link.args = {
+  iconName: "create",
+  IconColor: "primary",
+  link: true,
+  children: undefined,
+};
+
+export const WithText = Template.bind({});
+WithText.args = {
+  iconName: "create",
+  IconColor: "primary",
+  children: "With text",
 };
 
 // FIXME For now chromatic dose not support for lazy load components test.
