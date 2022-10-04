@@ -1,17 +1,20 @@
 import { Color } from "@/types/Colors";
+import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
-import { Button, Props as ButtonProps } from "./Button";
-import { Icon, Props as IconProps } from "./Icon";
+import { Button } from "./Button";
+import { Icon, IconColor, IconName } from "./Icon";
+import css from "./IconButton.module.css";
 
 export type Props = {
-  children: JSX.Element;
+  children?: JSX.Element;
   disabled?: boolean;
   buttonColor?: Color;
-  onClick?: () => void;
-} & IconProps &
-  ButtonProps &
-  JSX.HTMLAttributes<HTMLDivElement>;
+  onClick?: ((e: MouseEvent) => void) | (() => void);
+  link?: boolean;
+  iconName: IconName;
+  IconColor: IconColor;
+} & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const DEFAULT_ICON_SIZE = 24;
 
@@ -24,11 +27,15 @@ export const IconButton: Component<Props> = (props) => {
 
   return (
     <Button {...buttonAttributes} use={props.buttonColor}>
-      <div class="flex content-center justify-between space-x-2">
+      <div class={clsx({ [css.style]: true })}>
         <div>
-          <Icon size={20} {...iconAttributes} />
+          <Icon
+            size={20}
+            name={iconAttributes.iconName}
+            color={iconAttributes.IconColor}
+          />
         </div>
-        <div class="self-center">{local.children}</div>
+        <div class={clsx({ [css.text]: true })}>{local.children}</div>
       </div>
     </Button>
   );

@@ -13,11 +13,12 @@ export const ICON_NAMES = [
   "textDelete",
 ] as const;
 
-export type Icon = typeof ICON_NAMES[number];
+export type IconName = typeof ICON_NAMES[number];
+export type IconColor = Color | "white";
 
 export type Props = {
-  name: "create" | "delete" | "textDelete" | "help" | "search";
-  color: Color | "white";
+  name: IconName;
+  color: IconColor;
   size?: number;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 

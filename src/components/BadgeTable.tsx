@@ -105,9 +105,10 @@ export const BadgeTable: Component<Props> = (props) => {
               <th scope="col" class="px-4"></th>
               <th scope="col" class="px-4 text-right">
                 <IconButton
-                  link
-                  name="delete"
-                  color="secondary"
+                  link={true}
+                  iconName="delete"
+                  IconColor="secondary"
+                  buttonColor="secondary"
                   onClick={onRemoveClick}
                   disabled={isDisabledRemove()}
                 />

@@ -25,8 +25,8 @@ export const GroupPannel: Component<Props> = (props) => {
           <IconButton
             onClick={props.onCreateClick}
             disabled={props.createButtonDisabled}
-            name="create"
-            color="white"
+            iconName="create"
+            IconColor="white"
             buttonColor="primary"
           >
             Create
