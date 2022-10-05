@@ -26,7 +26,7 @@ export const IconButton: Component<Props> = (props) => {
   );
 
   return (
-    <Button {...buttonAttributes} use={props.buttonColor}>
+    <Button {...buttonAttributes} color={props.buttonColor}>
       <div class={clsx({ [css.style]: true })}>
         <div>
           <Icon
