@@ -4,11 +4,20 @@ import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import css from "./Button.module.css";
 
-export type Props = {
+type Link = {
+  link: true;
+  color: undefined;
+};
+
+type Colored = {
+  link?: false;
   color?: Color;
-  link?: boolean;
+};
+
+export type Props = {
   children: JSX.Element;
-} & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
+} & (Link | Colored) &
+  JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const getButtonColor = (props: Props) => {
   if (!props.link && props.disabled) return "coloredDisabled";

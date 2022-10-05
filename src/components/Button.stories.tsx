@@ -58,6 +58,5 @@ SecondaryOutline.args = {
 
 export const Link = Template.bind({});
 Link.args = {
-  color: "primary",
   link: true,
 };
