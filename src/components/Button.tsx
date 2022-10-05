@@ -11,7 +11,7 @@ type Link = {
 
 type Colored = {
   link?: false;
-  color?: Color;
+  color: Color;
 };
 
 export type Props = {
