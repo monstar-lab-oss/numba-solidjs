@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
 import { Button } from "./Button";
-import { Icon, IconColor, IconName } from "./Icon";
+import { Icon, IconName } from "./Icon";
 import css from "./IconButton.module.css";
 
 export type Props = {
@@ -11,7 +11,7 @@ export type Props = {
   buttonColor?: Color;
   link?: boolean;
   iconName: IconName;
-  iconColor: IconColor;
+  iconColor: Color;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const DEFAULT_ICON_SIZE = 24;

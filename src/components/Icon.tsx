@@ -14,11 +14,10 @@ export const ICON_NAMES = [
 ] as const;
 
 export type IconName = typeof ICON_NAMES[number];
-export type IconColor = Color | "white";
 
 export type Props = {
   name: IconName;
-  color: IconColor;
+  color: Color;
   size?: number;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
