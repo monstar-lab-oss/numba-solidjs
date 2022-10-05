@@ -40,6 +40,16 @@ Link.args = {
   children: undefined,
 };
 
+export const Disabled = Template.bind({});
+Disabled.args = {
+  iconName: "create",
+  iconColor: "primary",
+  link: true,
+  disabled: true,
+  buttonColor: "white",
+  children: undefined,
+};
+
 export const WithText = Template.bind({});
 WithText.args = {
   iconName: "create",
