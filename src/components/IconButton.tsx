@@ -8,13 +8,11 @@ import css from "./IconButton.module.css";
 
 export type Props = {
   children?: JSX.Element;
-  disabled?: boolean;
   buttonColor?: Color;
-  onClick?: ((e: MouseEvent) => void) | (() => void);
   link?: boolean;
   iconName: IconName;
-  IconColor: IconColor;
-} & JSX.HTMLAttributes<HTMLDivElement>;
+  iconColor: IconColor;
+} & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const DEFAULT_ICON_SIZE = 24;
 
@@ -32,7 +30,7 @@ export const IconButton: Component<Props> = (props) => {
           <Icon
             size={20}
             name={iconAttributes.iconName}
-            color={iconAttributes.IconColor}
+            color={iconAttributes.iconColor}
           />
         </div>
         <Show when={!!local.children}>
