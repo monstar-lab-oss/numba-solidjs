@@ -36,6 +36,11 @@ Secondary.args = {
   color: "secondary",
 };
 
+export const White = Template.bind({});
+White.args = {
+  color: "white",
+};
+
 export const PrimaryOutline = Template.bind({});
 PrimaryOutline.args = {
   color: "primaryOutline",
