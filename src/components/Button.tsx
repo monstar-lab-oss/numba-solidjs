@@ -12,6 +12,10 @@ export type Props = {
 
 const getButtonColor = (props: Props) => {
   if (!props.link && props.disabled) return "coloredDisabled";
+
+  // NOTE: for now you can't choose the color when link is true
+  if (props.link) return "";
+
   return props.color || "";
 };
 
