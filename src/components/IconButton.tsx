@@ -30,7 +30,9 @@ export const IconButton: Component<Props> = (props) => {
           <Icon
             size={20}
             name={iconAttributes.iconName}
-            color={iconAttributes.iconColor}
+            color={
+              buttonAttributes.disabled ? "disabled" : iconAttributes.iconColor
+            }
           />
         </div>
         <Show when={!!local.children}>

@@ -11,7 +11,7 @@ export type Props = {
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const getButtonColor = (props: Props) => {
-  if (props.disabled) return "coloredDisabled";
+  if (!props.link && props.disabled) return "coloredDisabled";
   return props.color || "";
 };
 
