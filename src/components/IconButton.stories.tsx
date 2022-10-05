@@ -28,14 +28,14 @@ const Template: Story<Props> = (args) => <IconButtonComponent {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   iconName: "create",
-  IconColor: "primary",
+  iconColor: "primary",
   children: undefined,
 };
 
 export const Link = Template.bind({});
 Link.args = {
   iconName: "create",
-  IconColor: "primary",
+  iconColor: "primary",
   link: true,
   children: undefined,
 };
@@ -43,7 +43,7 @@ Link.args = {
 export const WithText = Template.bind({});
 WithText.args = {
   iconName: "create",
-  IconColor: "primary",
+  iconColor: "primary",
   children: "With text",
 };
 

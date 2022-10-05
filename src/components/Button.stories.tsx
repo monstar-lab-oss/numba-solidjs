@@ -18,41 +18,41 @@ Default.args = {};
 
 export const Primary = Template.bind({});
 Primary.args = {
-  use: "primary",
+  color: "primary",
 };
 
 export const Danger = Template.bind({});
 Danger.args = {
-  use: "danger",
+  color: "danger",
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  use: "disabled",
+  color: "disabled",
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  use: "secondary",
+  color: "secondary",
 };
 
 export const PrimaryOutline = Template.bind({});
 PrimaryOutline.args = {
-  use: "primaryOutline",
+  color: "primaryOutline",
 };
 
 export const DangerOutline = Template.bind({});
 DangerOutline.args = {
-  use: "dangerOutline",
+  color: "dangerOutline",
 };
 
 export const SecondaryOutline = Template.bind({});
 SecondaryOutline.args = {
-  use: "secondaryOutline",
+  color: "secondaryOutline",
 };
 
 export const Link = Template.bind({});
 Link.args = {
-  use: "primary",
+  color: "primary",
   link: true,
 };
