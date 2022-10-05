@@ -22,6 +22,9 @@
   .secondary {
     @apply border-gray-500 bg-gray-500 text-white;
   }
+  .white {
+    @apply border-white bg-white text-black;
+  }
   .primaryOutline {
     @apply border-blue-500 bg-transparent text-blue-500;
   }
