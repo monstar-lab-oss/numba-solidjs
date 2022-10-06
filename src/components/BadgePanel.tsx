@@ -7,14 +7,14 @@ export type Props = {
   children: JSX.Element;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
-export const BadgePannel: Component<Props> = (props) => {
+export const BadgePanel: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["children"]);
 
   return (
     <Panel>
       <div class={clsx({ "grid grid-rows-1 gap-4": true })}>
         {/* FIXME: Fixed height only now */}
-        <div class={clsx({ "flex h-8 justify-end": true })} {...attributes} />
+        <div class={clsx({ "flex h-[33px] justify-end": true })} {...attributes} />
         <div>{props.children}</div>
       </div>
     </Panel>

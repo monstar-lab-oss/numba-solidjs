@@ -10,7 +10,7 @@ export type Props = {
   children: JSX.Element;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
-export const GroupPannel: Component<Props> = (props) => {
+export const GroupPanel: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, [
     "onCreateClick",
     "createButtonDisabled",

@@ -1,6 +1,6 @@
 import { Component, createMemo, Show } from "solid-js";
-import { GroupPannel } from "./GroupPannel";
-import { BadgePannel } from "./BadgePannel";
+import { GroupPanel } from "./GroupPanel";
+import { BadgePanel } from "./BadgePanel";
 import { GroupTable } from "@/components/GroupTable";
 import { BadgeTable } from "@/components/BadgeTable";
 import { useStore } from "@/lib/hooks/useStore";
@@ -22,14 +22,14 @@ export const FromScratch: Component = () => {
     <>
       {/* FIXME: Fixed height only now */}
       <div class="flex h-[424px] items-stretch">
-        <GroupPannel createButtonDisabled={!enabled()} onCreateClick={onClick}>
+        <GroupPanel createButtonDisabled={!enabled()} onCreateClick={onClick}>
           <GroupTable data={groups()} />
-        </GroupPannel>
-        <BadgePannel>
+        </GroupPanel>
+        <BadgePanel>
           <Show when={selectedGroupId()}>
             <BadgeTable data={badges() || []} />
           </Show>
-        </BadgePannel>
+        </BadgePanel>
       </div>
     </>
   );
