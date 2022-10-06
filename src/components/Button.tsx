@@ -6,12 +6,12 @@ import css from "./Button.module.css";
 
 type Link = {
   link: true;
-  color: undefined;
+  color?: undefined;
 };
 
 type Colored = {
   link?: false;
-  color?: Color;
+  color: Color;
 };
 
 export type ButtonColor = Link | Colored;
