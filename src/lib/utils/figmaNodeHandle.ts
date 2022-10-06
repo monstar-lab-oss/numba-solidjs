@@ -1,10 +1,9 @@
-import { setColor } from "@/lib/utils/figmaRGBA";
 import {
   BADGE_TARGET_ID,
-  GROUP_NAME,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
 } from "@/constants";
+import { setColor } from "@/lib/utils/figmaRGBA";
 
 export function reduceAllNodes() {
   const numberingbadgeGroups = getNodesByType("GROUP")
@@ -124,7 +123,7 @@ export function createGroup(node: SceneNode) {
 
   const i = node.parent.children.findIndex((x) => node.id === x.id);
   const group = figma.group([node], node.parent, i);
-  group.name = `${GROUP_NAME}_${node.name}`;
+  group.name = node.name;
   group.setPluginData(NUMBERING_GROUP_ID, group.id);
 
   return group;

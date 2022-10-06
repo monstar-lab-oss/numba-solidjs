@@ -16,6 +16,9 @@
   .secondary {
     @apply fill-gray-500;
   }
+  .white {
+    @apply fill-white;
+  }
   .primaryOutline {
     @apply bg-blue-500 fill-white;
   }
