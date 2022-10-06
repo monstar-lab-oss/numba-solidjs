@@ -11,12 +11,14 @@ type Link = {
 
 type Colored = {
   link?: false;
-  color: Color;
+  color?: Color;
 };
+
+export type ButtonColor = Link | Colored;
 
 export type Props = {
   children: JSX.Element;
-} & (Link | Colored) &
+} & ButtonColor &
   JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const getButtonColor = (props: Props) => {

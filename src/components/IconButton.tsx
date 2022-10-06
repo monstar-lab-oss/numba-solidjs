@@ -2,7 +2,7 @@ import { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
-import { Button } from "./Button";
+import { Button, ButtonColor } from "./Button";
 import { Icon, IconName } from "./Icon";
 import css from "./IconButton.module.css";
 
@@ -14,17 +14,35 @@ export type Props = {
   iconColor: Color;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
+const getButtonConfig = (link?: boolean, color?: Color): ButtonColor => {
+  const res = {
+    link: link,
+    color: color,
+  } as ButtonColor;
+
+  if (link) {
+    res.color = undefined;
+  }
+
+  return res;
+};
+
 export const DEFAULT_ICON_SIZE = 24;
 
 export const IconButton: Component<Props> = (props) => {
   const [local, buttonAttributes, iconAttributes] = splitProps(
     props,
-    ["children"],
-    ["link", "onClick", "disabled"]
+    ["children", "link", "buttonColor"],
+    ["onClick", "disabled"]
   );
 
   return (
-    <Button {...buttonAttributes} color={props.buttonColor}>
+    <Button
+      {...{
+        ...buttonAttributes,
+        ...getButtonConfig(local.link, local.buttonColor),
+      }}
+    >
       <div class={clsx({ [css.style]: true })}>
         <div>
           <Icon
