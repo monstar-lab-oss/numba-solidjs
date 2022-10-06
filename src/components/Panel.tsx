@@ -6,7 +6,7 @@ export type Props = {
   children: JSX.Element;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
-export const Pannel: Component<Props> = (props) => {
+export const Panel: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, []);
   return (
     <div class={clsx({ "flex-1 first:border-r": true })} {...attributes}>

@@ -1,5 +1,5 @@
 import { IconButton } from "@/components/IconButton";
-import { Pannel } from "@/components/Pannel";
+import { Panel } from "@/components/Panel";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
@@ -18,9 +18,12 @@ export const GroupPannel: Component<Props> = (props) => {
   ]);
 
   return (
-    <Pannel>
-      <div class={clsx({ "grid grid-rows-1 gap-4": true })}>
-        <div class={clsx({ "flex  justify-between": true })} {...attributes}>
+    <Panel>
+      <div class={clsx({ "grid grid-rows-1 gap-2.5": true })}>
+        <div
+          class={clsx({ "flex  justify-between px-3 pt-2": true })}
+          {...attributes}
+        >
           <div class="self-center text-[12px] font-bold">Groups</div>
           <IconButton
             onClick={props.onCreateClick}
@@ -34,6 +37,6 @@ export const GroupPannel: Component<Props> = (props) => {
         </div>
         <div>{props.children}</div>
       </div>
-    </Pannel>
+    </Panel>
   );
 };
