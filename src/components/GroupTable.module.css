@@ -21,7 +21,7 @@
     @apply flex h-[48px] w-full flex-col items-center justify-between overflow-y-scroll;
   }
   .style tbody {
-    @apply flex h-[320px] w-full table-auto flex-col items-center justify-between overflow-y-scroll overflow-y-scroll;
+    @apply flex h-[320px] w-full table-auto flex-col items-center justify-between overflow-y-scroll;
   }
 
   .style tbody tr {
