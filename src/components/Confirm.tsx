@@ -24,11 +24,12 @@ export const Confirm: Component<Props> = (props) => {
             <div class={clsx({ [css.text]: true })}>{props.body}</div>
           </div>
           <div class={clsx({ [css.footer]: true })}>
-            <Button use="primaryOutline" onClick={props.onClose}>
+            {/* FIXME: Need refactor pass the props like more abstractly. */}
+            <Button color="primaryOutline" onClick={props.onClose}>
               {props.cancelButtonText}
             </Button>
             <Button
-              use={`${props.confirmButtonColor}`}
+              color={`${props.confirmButtonColor}`}
               onClick={props.onConfirm}
             >
               {props.confirmButtonText}

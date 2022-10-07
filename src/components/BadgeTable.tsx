@@ -117,7 +117,7 @@ export const BadgeTable: Component<Props> = (props) => {
                 <IconButton
                   link={true}
                   iconName="delete"
-                  IconColor="secondary"
+                  iconColor="secondary"
                   onClick={onRemoveClick}
                   disabled={isDisabledRemove()}
                 />

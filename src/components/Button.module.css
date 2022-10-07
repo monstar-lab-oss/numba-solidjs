@@ -8,7 +8,7 @@
     @apply border-none bg-transparent shadow-none;
   }
   .disabled {
-    @apply cursor-not-allowed  text-transparent  opacity-40;
+    @apply cursor-not-allowed opacity-40;
   }
   .coloredDisabled {
     @apply border-gray-500 bg-gray-500 text-white;
@@ -21,6 +21,9 @@
   }
   .secondary {
     @apply border-gray-500 bg-gray-500 text-white;
+  }
+  .white {
+    @apply border-white bg-white text-black;
   }
   .primaryOutline {
     @apply border-blue-500 bg-transparent text-blue-500;

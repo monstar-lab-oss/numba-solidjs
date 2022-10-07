@@ -4,15 +4,34 @@ import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import css from "./Button.module.css";
 
+type Link = {
+  link: true;
+  color?: undefined;
+};
+
+type Colored = {
+  link?: false;
+  color: Color;
+};
+
+export type ButtonColor = Link | Colored;
+
 export type Props = {
-  // NOTE Changing the name of argument to `color` could be better than current name of argument `use`.
-  use?: Color;
-  link?: boolean;
   children: JSX.Element;
-} & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
+} & ButtonColor &
+  JSX.ButtonHTMLAttributes<HTMLButtonElement>;
+
+const getButtonColor = (props: Props) => {
+  if (!props.link && props.disabled) return "coloredDisabled";
+
+  // NOTE: for now you can't choose the color when link is true
+  if (props.link) return "";
+
+  return props.color || "";
+};
 
 export const Button: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["use", "children"]);
+  const [, attributes] = splitProps(props, ["color", "children"]);
 
   return (
     <button
@@ -20,14 +39,7 @@ export const Button: Component<Props> = (props) => {
         [css.style]: true,
         [css.link]: props.link,
         [css.disabled]: props.disabled,
-        [css.coloredDisabled]: !props.link && props.disabled,
-        [css.primary]: !props.disabled && props.use === "primary",
-        [css.danger]: !props.disabled && props.use === "danger",
-        [css.secondary]: !props.disabled && props.use === "secondary",
-        [css.primaryOutline]: !props.disabled && props.use === "primaryOutline",
-        [css.dangerOutline]: !props.disabled && props.use === "dangerOutline",
-        [css.secondaryOutline]:
-          !props.disabled && props.use === "secondaryOutline",
+        [css[getButtonColor(props)]]: true,
       })}
       {...attributes}
     >
