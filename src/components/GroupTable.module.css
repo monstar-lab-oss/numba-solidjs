@@ -2,17 +2,26 @@
 
 @layer components {
   .style {
-    @apply block h-[320px] w-full table-auto overflow-y-scroll text-left text-xs text-gray-500  dark:text-gray-400;
-  }
-  .style thead {
-    @apply bg-gray-100 text-xs capitalize text-gray-700 dark:bg-gray-700 dark:text-gray-400;
-  }
-  .style thead th {
-    @apply w-full;
+    @apply w-full text-left text-xs text-gray-500  dark:text-gray-400;
   }
 
+  /* .style thead td {
+    @apply block w-full;
+  } */
+
+  .style thead tr {
+    @apply block w-full;
+  }
+  .style thead td {
+    @apply block w-full px-3;
+  }
+
+  .style thead {
+    /* FIXME: FIXME h-[48px] is adjust height with right panel. */
+    @apply flex h-[48px] w-full flex-col items-center justify-between overflow-y-scroll;
+  }
   .style tbody {
-    @apply flex w-full flex-col items-center justify-between overflow-y-scroll;
+    @apply flex h-[320px] w-full table-auto flex-col items-center justify-between overflow-y-scroll overflow-y-scroll;
   }
 
   .style tbody tr {

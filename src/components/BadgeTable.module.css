@@ -7,7 +7,6 @@
   .fallback {
     @apply text-sm text-gray-400;
   }
-
   .style table {
     @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
   }

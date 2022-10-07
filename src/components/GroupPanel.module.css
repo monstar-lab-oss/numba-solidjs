@@ -1,0 +1,14 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply grid grid-rows-1 gap-4;
+  }
+  .header {
+    /* FIXME: Fixed height only now */
+    @apply flex h-[33px] items-center justify-between px-3;
+  }
+  .title {
+    @apply ml-1 text-[12px] font-bold;
+  }
+}

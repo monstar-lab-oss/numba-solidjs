@@ -76,11 +76,15 @@ export const GroupTable: Component<Props> = (props) => {
           </span>
         )}
       >
-        <div class="px-3">
-          <GroupSearch query={query} setQuery={setQuery} />
-        </div>
-        <div class="overflow-auto">
+        <div>
           <table class={clsx({ [css.style]: true })}>
+            <thead>
+              <tr>
+                <td>
+                  <GroupSearch query={query} setQuery={setQuery} />
+                </td>
+              </tr>
+            </thead>
             <tbody class="border-t">
               <For
                 each={filteredData()}

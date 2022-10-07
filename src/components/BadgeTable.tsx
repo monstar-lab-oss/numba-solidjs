@@ -91,7 +91,7 @@ export const BadgeTable: Component<Props> = (props) => {
         )}
       >
         <table>
-          <thead class="">
+          <thead>
             <tr>
               <th colSpan={2} scope="col" class="p-4">
                 {/* TODO need split as checkbox component */}
