@@ -143,10 +143,10 @@ async function onRun() {
   });
 
   // Initialize store data at startup app
-  dispatch({
-    type: "UI/UPDATE_STORE",
-    payload: reduceAllNodes(),
-  });
+  // dispatch({
+  //   type: "UI/UPDATE_STORE",
+  //   payload: reduceAllNodes(),
+  // });
 
   const [currentNode] = figma.currentPage.selection;
 

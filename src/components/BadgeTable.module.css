@@ -4,34 +4,42 @@
   .style {
     @apply w-full;
   }
-  .fallback {
-    @apply text-sm text-gray-400 m-4;
-  }
   .style table {
     @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
   }
-  .style thead {
-    @apply text-xs text-gray-700  dark:text-gray-400;
+  .style thead tr {
+    @apply block w-full;
+  }
+  .style thead td {
+    @apply block w-full px-3;
   }
   .style thead {
-    @apply text-xs text-gray-700  dark:text-gray-400;
+    @apply flex  h-[49px] w-full flex-col items-center justify-between overflow-y-scroll border-b;
   }
   .style tbody {
-    @apply border-t;
+    @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll;
   }
-  .style tbody tr {
-    @apply border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+
+  .style tbody tr.item {
+    @apply h-[40px] w-full cursor-pointer flex-row border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+  }
+  .style tbody tr.selected_row {
+    @apply bg-gray-50;
+  }
+  .style tbody tr th {
+    @apply px-4 font-medium text-gray-900 dark:text-white;
   }
   .style tbody td {
-    @apply w-4 p-4;
+    @apply items-center py-4 px-4;
   }
-  .style tbody th {
-    @apply w-40 px-4 font-medium text-gray-900 dark:text-white;
+  .style tbody td a {
+    @apply font-medium text-red-500 hover:underline dark:text-red-400;
   }
-  .style tbody label {
+
+  .emptyMessage {
+    @apply px-4 py-2 text-xs text-gray-400;
+  }
+  .style tbody td label {
     @apply sr-only;
-  }
-  .iconContainer {
-    @apply px-4 text-right;
   }
 }

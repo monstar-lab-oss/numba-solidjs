@@ -67,7 +67,7 @@ export const GroupTable: Component<Props> = (props) => {
   });
 
   return (
-    <div class={clsx({ "w-full": true })} {...attributes}>
+    <div class={clsx({ [css.style]: true })} {...attributes}>
       <div>
         <table class={clsx({ [css.style]: true })}>
           <thead>

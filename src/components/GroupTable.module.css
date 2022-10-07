@@ -2,16 +2,17 @@
 
 @layer components {
   .style {
+    @apply w-full;
+  }
+  .style table {
     @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
   }
-
   .style thead tr {
     @apply block w-full;
   }
   .style thead td {
     @apply block w-full px-3;
   }
-
   .style thead {
     @apply flex w-full flex-col items-center justify-between overflow-y-scroll;
   }

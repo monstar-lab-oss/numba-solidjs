@@ -82,17 +82,11 @@ export const BadgeTable: Component<Props> = (props) => {
           <Confirm {...confirmOptions()} />
         </Portal>
       </Show>
-      <Show
-        when={props.data.length}
-        fallback={() => (
-          <span class={clsx({ [css.fallback]: true })}>
-            No numbers here yet.
-          </span>
-        )}
-      >
-        <table>
-          <thead>
-            <tr>
+
+      <table>
+        <thead>
+          <tr>
+            <Show when={props.data.length}>
               <th colSpan={2} scope="col" class="p-4">
                 {/* TODO need split as checkbox component */}
                 <div class="flex items-center">
@@ -122,15 +116,29 @@ export const BadgeTable: Component<Props> = (props) => {
                   disabled={isDisabledRemove()}
                 />
               </th>
-            </tr>
-          </thead>
-          <tbody>
+            </Show>
+          </tr>
+        </thead>
+
+        <tbody>
+          <Show
+            when={props.data.length}
+            fallback={() => (
+              <tr>
+                <td>
+                  <span class={clsx({ [css.fallback]: true })}>
+                    No numbers here yet.
+                  </span>
+                </td>
+              </tr>
+            )}
+          >
             <For each={props.data}>
               {(item) => (
-                <tr>
+                <tr class={clsx({ [css.item]: true })}>
                   <td>
                     {/* FIXME h-[10px] is not right way to adjust height of row, because I want to adjust about 30px. */}
-                    <div class="flex h-[10px] items-center">
+                    <div class="flex items-center">
                       <input
                         id="checkbox-table-search-1"
                         type="checkbox"
@@ -147,9 +155,9 @@ export const BadgeTable: Component<Props> = (props) => {
                 </tr>
               )}
             </For>
-          </tbody>
-        </table>
-      </Show>
+          </Show>
+        </tbody>
+      </table>
     </div>
   );
 };
