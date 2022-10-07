@@ -21,14 +21,7 @@ export const GroupPanel: Component<Props> = (props) => {
   return (
     <Panel>
       <div class={clsx({ [css.style]: true })}>
-        {/* <div class={clsx({ [css.header]: true })} {...attributes}> */}
-        {/* FIXME: Fixed height only now */}
-        <div
-          class={clsx({
-            "flex items-center justify-between px-3 pt-3": true,
-          })}
-          {...attributes}
-        >
+        <div class={clsx({ [css.header]: true })} {...attributes}>
           <div class={clsx({ [css.title]: true })}>Groups</div>
           <IconButton
             onClick={props.onCreateClick}
