@@ -19,6 +19,7 @@ export type Props = {
   name: IconName;
   color: Color;
   size?: number;
+  cursorNotAllowed?: boolean;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const DEFAULT_ICON_SIZE = 24;
@@ -45,6 +46,7 @@ export const Icon: Component<Props> = (props) => {
         [css.primaryOutline]: props.color === "primaryOutline",
         [css.dangerOutline]: props.color === "dangerOutline",
         [css.secondaryOutline]: props.color === "secondaryOutline",
+        [css.cursorNotAllowed]: props.cursorNotAllowed,
       })}
       viewBox="0 0 20 20"
       fill="none"

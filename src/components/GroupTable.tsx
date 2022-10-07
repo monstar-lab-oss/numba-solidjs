@@ -68,24 +68,24 @@ export const GroupTable: Component<Props> = (props) => {
 
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
-      <Show
-        when={props.data.length}
-        fallback={() => (
-          <span class={clsx({ [css.emptyMessage]: true })}>
-            {/* First select a frame/object you want to add numbering to 😄 */}
-            No groups in the list.
-          </span>
-        )}
-      >
-        <div>
-          <table class={clsx({ [css.style]: true })}>
-            <thead>
-              <tr>
-                <td>
-                  <GroupSearch query={query} setQuery={setQuery} />
-                </td>
-              </tr>
-            </thead>
+      <div>
+        <table class={clsx({ [css.style]: true })}>
+          <thead>
+            <tr>
+              <td>
+                <GroupSearch query={query} setQuery={setQuery} />
+              </td>
+            </tr>
+          </thead>
+          <Show
+            when={props.data.length}
+            fallback={() => (
+              <span class={clsx({ [css.emptyMessage]: true })}>
+                {/* First select a frame/object you want to add numbering to 😄 */}
+                No groups in the list.
+              </span>
+            )}
+          >
             <tbody class="border-t">
               <For
                 each={filteredData()}
@@ -107,9 +107,9 @@ export const GroupTable: Component<Props> = (props) => {
                 )}
               </For>
             </tbody>
-          </table>
-        </div>
-      </Show>
+          </Show>
+        </table>
+      </div>
     </div>
   );
 };
