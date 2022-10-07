@@ -72,7 +72,8 @@ export const GroupTable: Component<Props> = (props) => {
         when={props.data.length}
         fallback={() => (
           <span class={clsx({ [css.emptyMessage]: true })}>
-            First select a frame/object you want to add numbering to 😄
+            {/* First select a frame/object you want to add numbering to 😄 */}
+            No groups in the list.
           </span>
         )}
       >

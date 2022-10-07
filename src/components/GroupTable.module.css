@@ -2,7 +2,7 @@
 
 @layer components {
   .style {
-    @apply w-full text-left text-xs text-gray-500  dark:text-gray-400;
+    @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
   }
 
   .style thead tr {
@@ -36,6 +36,6 @@
   }
 
   .emptyMessage {
-    @apply inline-block rounded bg-gray-100 px-4 py-2 text-xs text-gray-400;
+    @apply px-4 py-2 text-xs text-gray-400;
   }
 }
