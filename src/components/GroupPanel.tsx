@@ -19,12 +19,15 @@ export const GroupPanel: Component<Props> = (props) => {
 
   return (
     <Panel>
-      <div class={clsx({ "grid grid-rows-1 gap-2.5": true })}>
+      <div class={clsx({ "grid grid-rows-1 gap-4": true })}>
+        {/* FIXME: Fixed height only now */}
         <div
-          class={clsx({ "flex  justify-between px-3 pt-2": true })}
+          class={clsx({
+            "flex h-[33px] items-center justify-between px-3": true,
+          })}
           {...attributes}
         >
-          <div class="self-center text-[12px] font-bold">Groups</div>
+          <div class="ml-1 text-[12px] font-bold">Groups</div>
           <IconButton
             onClick={props.onCreateClick}
             disabled={props.createButtonDisabled}
@@ -35,6 +38,7 @@ export const GroupPanel: Component<Props> = (props) => {
             Create
           </IconButton>
         </div>
+
         <div>{props.children}</div>
       </div>
     </Panel>

@@ -76,7 +76,9 @@ export const GroupTable: Component<Props> = (props) => {
           </span>
         )}
       >
-        <GroupSearch query={query} setQuery={setQuery} />
+        <div class="px-3">
+          <GroupSearch query={query} setQuery={setQuery} />
+        </div>
         <div class="overflow-auto">
           <table class={clsx({ [css.style]: true })}>
             <tbody class="border-t">

@@ -70,6 +70,10 @@ export const BadgeTable: Component<Props> = (props) => {
     () => !!props.data.length && props.data.every((x) => x.selected())
   );
 
+  const selectedItems = createMemo(() =>
+    props.data.filter((v) => v.selected())
+  );
+
   return (
     <div class={clsx({ "w-full": true })} {...attributes}>
       <Show when={show()}>
@@ -86,12 +90,10 @@ export const BadgeTable: Component<Props> = (props) => {
         )}
       >
         <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
-          <thead class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+          <thead class="text-xs text-gray-700  dark:text-gray-400">
             <tr>
-              <th scope="col" class="p-4">
-                <div>
-                  Selected groups
-                </div>
+              <th colSpan={2} scope="col" class="p-4">
+                {/* FIXME need split as checkbox component */}
                 <div class="flex items-center">
                   <input
                     id="checkbox-all-search"
@@ -100,12 +102,16 @@ export const BadgeTable: Component<Props> = (props) => {
                     onChange={() => onToggleAllClick()}
                     class="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                   />
-                  <label for="checkbox-all-search" class="sr-only">
-                    checkbox
+                  <label
+                    for="checkbox-all-search"
+                    class="ml-3 font-normal text-black"
+                  >
+                    {selectedItems().length > 0
+                      ? `${selectedItems().length} Selected`
+                      : "Select All"}
                   </label>
                 </div>
               </th>
-              <th scope="col" class="px-4"></th>
               <th scope="col" class="px-4 text-right">
                 <IconButton
                   link={true}
@@ -122,7 +128,8 @@ export const BadgeTable: Component<Props> = (props) => {
               {(item) => (
                 <tr class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
                   <td class="w-4 p-4">
-                    <div class="flex items-center">
+                    {/* FIXME h-[10px] is not right way to adjust height of row, because I want to adjust about 30px. */}
+                    <div class="flex h-[10px] items-center">
                       <input
                         id="checkbox-table-search-1"
                         type="checkbox"
