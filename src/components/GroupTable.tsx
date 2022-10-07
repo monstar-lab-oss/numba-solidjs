@@ -71,7 +71,7 @@ export const GroupTable: Component<Props> = (props) => {
       <Show
         when={props.data.length}
         fallback={() => (
-          <span class="inline-block rounded bg-gray-100 px-4 py-2 text-xs text-gray-400">
+          <span class={clsx({ [css.emptyMessage]: true })}>
             First select a frame/object you want to add numbering to 😄
           </span>
         )}

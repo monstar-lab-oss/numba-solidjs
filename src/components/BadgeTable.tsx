@@ -12,6 +12,7 @@ import {
   splitProps,
 } from "solid-js";
 import { Portal } from "solid-js/web";
+import css from "./BadgeTable.module.css";
 import { IconButton } from "./IconButton";
 
 export type Props = {
@@ -75,7 +76,7 @@ export const BadgeTable: Component<Props> = (props) => {
   );
 
   return (
-    <div class={clsx({ "w-full": true })} {...attributes}>
+    <div class={clsx({ [css.style]: true })} {...attributes}>
       <Show when={show()}>
         <Portal>
           <Confirm {...confirmOptions()} />
@@ -84,16 +85,16 @@ export const BadgeTable: Component<Props> = (props) => {
       <Show
         when={props.data.length}
         fallback={() => (
-          <span class="text-sm text-gray-400">
+          <span class={clsx({ [css.fallback]: true })}>
             Select object or layer to add numbers
           </span>
         )}
       >
-        <table class="w-full text-left text-xs text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700  dark:text-gray-400">
+        <table>
+          <thead class="">
             <tr>
               <th colSpan={2} scope="col" class="p-4">
-                {/* FIXME need split as checkbox component */}
+                {/* TODO need split as checkbox component */}
                 <div class="flex items-center">
                   <input
                     id="checkbox-all-search"
@@ -112,7 +113,7 @@ export const BadgeTable: Component<Props> = (props) => {
                   </label>
                 </div>
               </th>
-              <th scope="col" class="px-4 text-right">
+              <th scope="col" class={clsx({ [css.iconContainer]: true })}>
                 <IconButton
                   link={true}
                   iconName="delete"
@@ -123,11 +124,11 @@ export const BadgeTable: Component<Props> = (props) => {
               </th>
             </tr>
           </thead>
-          <tbody class="border-t">
+          <tbody>
             <For each={props.data}>
               {(item) => (
-                <tr class="border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600">
-                  <td class="w-4 p-4">
+                <tr>
+                  <td>
                     {/* FIXME h-[10px] is not right way to adjust height of row, because I want to adjust about 30px. */}
                     <div class="flex h-[10px] items-center">
                       <input
@@ -137,18 +138,12 @@ export const BadgeTable: Component<Props> = (props) => {
                         onChange={() => onToggleClick(item.id)}
                         class="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                       />
-                      <label for="checkbox-table-search-1" class="sr-only">
-                        checkbox
-                      </label>
+                      <label for="checkbox-table-search-1">checkbox</label>
                     </div>
                   </td>
-                  <th
-                    scope="row"
-                    class="w-40 px-4 font-medium text-gray-900 dark:text-white"
-                  >
+                  <th colSpan={2} scope="row">
                     {item.name}
                   </th>
-                  <td class="flex items-center py-4 px-4" />
                 </tr>
               )}
             </For>

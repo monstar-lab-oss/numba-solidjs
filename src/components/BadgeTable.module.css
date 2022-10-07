@@ -1,0 +1,38 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply w-full;
+  }
+  .fallback {
+    @apply text-sm text-gray-400;
+  }
+
+  .style table {
+    @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
+  }
+  .style thead {
+    @apply text-xs text-gray-700  dark:text-gray-400;
+  }
+  .style thead {
+    @apply text-xs text-gray-700  dark:text-gray-400;
+  }
+  .style tbody {
+    @apply border-t;
+  }
+  .style tbody tr {
+    @apply border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+  }
+  .style tbody td {
+    @apply w-4 p-4;
+  }
+  .style tbody th {
+    @apply w-40 px-4 font-medium text-gray-900 dark:text-white;
+  }
+  .style tbody label {
+    @apply sr-only;
+  }
+  .iconContainer {
+    @apply px-4 text-right;
+  }
+}
