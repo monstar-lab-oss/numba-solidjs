@@ -86,7 +86,7 @@ export const BadgeTable: Component<Props> = (props) => {
         when={props.data.length}
         fallback={() => (
           <span class={clsx({ [css.fallback]: true })}>
-            Select object or layer to add numbers
+            No numbers here yet.
           </span>
         )}
       >
