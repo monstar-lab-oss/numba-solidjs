@@ -15,7 +15,7 @@ export const BadgePanel: Component<Props> = (props) => {
       <div class={clsx({ "grid grid-rows-1 gap-4": true })}>
         {/* FIXME: Fixed height only now */}
         <div
-          class={clsx({ "flex h-[33px] justify-end": true })}
+          class={clsx({ "flex h-[46px] justify-end": true })}
           {...attributes}
         />
         <div>{props.children}</div>

@@ -25,7 +25,7 @@ export const GroupPanel: Component<Props> = (props) => {
         {/* FIXME: Fixed height only now */}
         <div
           class={clsx({
-            "flex h-[33px] items-center justify-between px-3 pt-3": true,
+            "flex items-center justify-between px-3 pt-3": true,
           })}
           {...attributes}
         >
