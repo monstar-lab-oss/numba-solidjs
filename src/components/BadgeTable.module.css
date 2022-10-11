@@ -19,7 +19,9 @@
   .style tbody {
     @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll;
   }
-
+  .style tbody tr {
+    @apply flex;
+  }
   .style tbody tr.item {
     @apply h-[40px] w-full cursor-pointer flex-row border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
   }
@@ -27,19 +29,18 @@
     @apply bg-gray-50;
   }
   .style tbody tr th {
-    @apply px-4 font-medium text-gray-900 dark:text-white;
+    @apply self-center px-4 font-medium text-gray-900 dark:text-white;
   }
-  .style tbody td {
-    @apply items-center py-4 px-4;
+  .style tbody tr td {
+    @apply self-center py-2 px-2;
   }
-  .style tbody td a {
+  .style tbody tr td a {
     @apply font-medium text-red-500 hover:underline dark:text-red-400;
   }
-
-  .emptyMessage {
-    @apply px-4 py-2 text-xs text-gray-400;
-  }
-  .style tbody td label {
+  .style tbody tr td label {
     @apply sr-only;
+  }
+  .fallback {
+    @apply w-full;
   }
 }

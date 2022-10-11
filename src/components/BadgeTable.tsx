@@ -124,11 +124,9 @@ export const BadgeTable: Component<Props> = (props) => {
           <Show
             when={props.data.length}
             fallback={() => (
-              <tr>
+              <tr class={clsx({ [css.fallback]: true })}>
                 <td>
-                  <span class={clsx({ [css.fallback]: true })}>
-                    No numbers here yet.
-                  </span>
+                  <div>No numbers here yet.</div>
                 </td>
               </tr>
             )}
