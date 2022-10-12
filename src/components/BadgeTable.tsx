@@ -107,14 +107,16 @@ export const BadgeTable: Component<Props> = (props) => {
                   </label>
                 </div>
               </th>
-              <th scope="col" class={clsx({ [css.iconContainer]: true })}>
-                <IconButton
-                  link={true}
-                  iconName="delete"
-                  iconColor="secondary"
-                  onClick={onRemoveClick}
-                  disabled={isDisabledRemove()}
-                />
+              <th scope="col">
+                <div class={clsx({ [css.iconContainer]: true })}>
+                  <IconButton
+                    link={true}
+                    iconName="delete"
+                    iconColor="secondary"
+                    onClick={onRemoveClick}
+                    disabled={isDisabledRemove()}
+                  />
+                </div>
               </th>
             </Show>
           </tr>

@@ -1,6 +1,6 @@
-import { Story, Meta } from "@storybook/html";
+import { Meta, Story } from "@storybook/html";
 import { Icon } from "./Icon";
-import { TextField, Props } from "./TextField";
+import { Props, TextField } from "./TextField";
 
 export default {
   title: "Components/TextField",
@@ -36,4 +36,11 @@ export const WithSuffix = Template.bind({});
 WithSuffix.args = {
   value: "100",
   suffixElement: "Kg",
+};
+
+export const WithBoth = Template.bind({});
+WithBoth.args = {
+  prefixElement: <Icon name="search" color="disabled" />,
+  suffixElement: <Icon name="textDelete" color="disabled" />,
+  value: "Search",
 };
