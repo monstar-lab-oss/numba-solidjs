@@ -135,7 +135,6 @@ export const BadgeTable: Component<Props> = (props) => {
               {(item) => (
                 <tr class={clsx({ [css.item]: true })}>
                   <td>
-                    {/* FIXME h-[10px] is not right way to adjust height of row, because I want to adjust about 30px. */}
                     <div class="flex items-center">
                       <input
                         id="checkbox-table-search-1"
