@@ -91,7 +91,7 @@ export const GroupTable: Component<Props> = (props) => {
                 each={filteredData()}
                 fallback={() => (
                   <tr>
-                    <td>Sorry, no matches found</td>
+                    <td>No objects found.</td>
                   </tr>
                 )}
               >

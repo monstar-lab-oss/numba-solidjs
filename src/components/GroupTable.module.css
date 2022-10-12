@@ -14,10 +14,10 @@
     @apply block w-full px-3;
   }
   .style thead {
-    @apply flex w-full flex-col items-center justify-between overflow-y-scroll;
+    @apply flex w-full flex-col items-center;
   }
   .style tbody {
-    @apply flex h-[315px] w-full table-auto flex-col items-center justify-between overflow-y-scroll;
+    @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll;
   }
 
   .style tbody tr {

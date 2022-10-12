@@ -87,7 +87,7 @@ export const BadgeTable: Component<Props> = (props) => {
         <thead>
           <tr>
             <Show when={props.data.length}>
-              <th colSpan={2} scope="col" class="p-4">
+              <th colSpan={2} scope="col" class="p-2">
                 {/* TODO need split as checkbox component */}
                 <div class="flex items-center">
                   <input
