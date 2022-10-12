@@ -1,6 +1,6 @@
-import { Story, Meta } from "@storybook/html";
+import { Meta, Story } from "@storybook/html";
+import { userEvent, within } from "@storybook/testing-library";
 import { Confirm, Props } from "./Confirm";
-import { within, userEvent } from "@storybook/testing-library";
 
 export default {
   title: "Components/Confirm",
@@ -59,6 +59,16 @@ Secondary.args = {
   body: "Confirm component",
   confirmButtonColor: "secondary",
   confirmButtonText: "Secondary",
+  cancelButtonText: "Cancel",
+};
+
+export const White = Template.bind({});
+White.args = {
+  onConfirm: () => console.log("OnConfirm fired !"),
+  onClose: () => console.log("OnClose fired !"),
+  body: "Confirm component",
+  confirmButtonColor: "white",
+  confirmButtonText: "White",
   cancelButtonText: "Cancel",
 };
 

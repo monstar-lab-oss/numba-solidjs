@@ -1,0 +1,10 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply flex content-center justify-between space-x-2;
+  }
+  .text {
+    @apply self-center;
+  }
+}

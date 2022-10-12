@@ -8,6 +8,8 @@ module.exports = {
     extend: {
       colors: {
         "figma-gray": "#e6e6e6",
+        // same color as `disabled` on components/constants.ts
+        "dark-gray": "#b2b2b2",
       },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],

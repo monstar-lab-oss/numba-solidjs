@@ -1,6 +1,7 @@
 import { Meta, Story } from "@storybook/html";
 import { COLOR } from "./constants";
-import { Icon as IconComponent, ICON_NAMES, Props } from "./Icon";
+import { ICON_NAMES } from "./Icon";
+import { IconButton as IconButtonComponent, Props } from "./IconButton";
 
 export default {
   title: "Components/IconButton",
@@ -22,10 +23,39 @@ export default {
 } as Meta;
 
 // @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => <IconComponent {...args} />;
+const Template: Story<Props> = (args) => <IconButtonComponent {...args} />;
 
-export const IconButton = Template.bind({});
-IconButton.args;
+export const Default = Template.bind({});
+Default.args = {
+  iconName: "create",
+  iconColor: "primary",
+  children: undefined,
+};
+
+export const Link = Template.bind({});
+Link.args = {
+  iconName: "create",
+  iconColor: "primary",
+  link: true,
+  children: undefined,
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  iconName: "create",
+  iconColor: "primary",
+  link: true,
+  disabled: true,
+  buttonColor: "white",
+  children: undefined,
+};
+
+export const WithText = Template.bind({});
+WithText.args = {
+  iconName: "create",
+  iconColor: "primary",
+  children: "With text",
+};
 
 // FIXME For now chromatic dose not support for lazy load components test.
 // export const IconClick = Template.bind({});

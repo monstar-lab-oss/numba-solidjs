@@ -1,0 +1,16 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply inline-flex min-h-max w-full items-center rounded border border-figma-gray bg-white px-2.5 py-1 font-sans text-xs leading-5 text-dark-gray focus-within:border-blue-500;
+  }
+  .style > input {
+    @apply h-6 w-full appearance-none border-0 bg-transparent placeholder:text-dark-gray focus:outline-none;
+  }
+  .prefix {
+    @apply pr-1.5;
+  }
+  .suffix {
+    @apply pl-1.5;
+  }
+}
