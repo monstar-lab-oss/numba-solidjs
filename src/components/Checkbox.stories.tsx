@@ -19,5 +19,6 @@ Default.args = {};
 export const Primary = Template.bind({});
 Primary.args = {
   color: "primary",
-  indeterminate: true,
+  //FIXME need add this attribute
+  // indeterminate: true,
 };
