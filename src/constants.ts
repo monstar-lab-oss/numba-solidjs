@@ -1,5 +1,6 @@
 export const UI_WIDTH = 592;
 export const UI_HEIGHT = 424;
+// TODO: Not decided yet, will revise as soon as it is decided.
 export const GROUP_NAME = "(group)○○○";
 
 // figma plugin keys
