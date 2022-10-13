@@ -1,8 +1,8 @@
-import { IconButton } from "@/components/IconButton";
-import { Pannel } from "@/components/Pannel";
-import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
+import { clsx } from "clsx";
+import { IconButton } from "@/components/IconButton";
+import { Pannel } from "@/components/Pannel";
 
 export type Props = {
   createButtonDisabled: boolean;

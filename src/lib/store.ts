@@ -1,5 +1,4 @@
 //FIXME: because unused, remove this file
-
 import equal from "fast-deep-equal";
 import { dispatch } from "@/lib/dispatch";
 import { Store } from "@/types/Store";

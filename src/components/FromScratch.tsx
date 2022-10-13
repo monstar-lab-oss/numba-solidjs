@@ -1,10 +1,10 @@
 import { Component, createMemo, Show } from "solid-js";
-import { GroupPannel } from "./GroupPannel";
-import { BadgePannel } from "./BadgePannel";
-import { GroupTable } from "@/components/GroupTable";
 import { BadgeTable } from "@/components/BadgeTable";
-import { useStore } from "@/lib/hooks/useStore";
+import { GroupTable } from "@/components/GroupTable";
 import { dispatch } from "@/lib/dispatch";
+import { useStore } from "@/lib/hooks/useStore";
+import { BadgePannel } from "./BadgePannel";
+import { GroupPannel } from "./GroupPannel";
 
 export const FromScratch: Component = () => {
   const [_, { selectedGroupId, enabled, groups, getBadgeByGroupId }] =
