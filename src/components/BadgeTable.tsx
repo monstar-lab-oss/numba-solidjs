@@ -129,6 +129,9 @@ export const BadgeTable: Component<Props> = (props) => {
               <tr class={clsx({ [css.fallback]: true })}>
                 <td>
                   <div>No numbers here yet.</div>
+                  <div>
+                    Click an object on the canvas and you get a number !
+                  </div>
                 </td>
               </tr>
             )}
