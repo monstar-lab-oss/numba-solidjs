@@ -1,9 +1,9 @@
-import css from "@/components/Icon.module.css";
-import { capitalize } from "@/lib/utils/capitalize";
 import type { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { lazy } from "solid-js";
+import { capitalize } from "@/lib/utils/capitalize";
+import css from "@/components/Icon.module.css";
 
 export const ICON_NAMES = [
   "create",
@@ -20,6 +20,7 @@ export type Props = {
   name: IconName;
   color: Color;
   size?: number;
+  cursorNotAllowed?: boolean;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const DEFAULT_ICON_SIZE = 24;
@@ -29,6 +30,7 @@ export const Icon: Component<Props> = (props) => {
     () => import(`@/components/Icons/${capitalize(props.name)}.tsx`)
   );
   return (
+    // FIXME Need refactor I wanna change button role to ButtonIcon
     <svg
       style={{
         width: props.size || DEFAULT_ICON_SIZE,
@@ -45,6 +47,7 @@ export const Icon: Component<Props> = (props) => {
         [css.primaryOutline]: props.color === "primaryOutline",
         [css.dangerOutline]: props.color === "dangerOutline",
         [css.secondaryOutline]: props.color === "secondaryOutline",
+        [css.cursorNotAllowed]: props.cursorNotAllowed,
       })}
       viewBox="0 0 20 20"
       fill="none"

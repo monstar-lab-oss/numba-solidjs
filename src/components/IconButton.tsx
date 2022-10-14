@@ -1,10 +1,10 @@
-import { Button, ButtonColor } from "@/components/Button";
-import { Icon, IconName } from "@/components/Icon";
-import css from "@/components/IconButton.module.css";
 import { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
+import { Button, ButtonColor } from "@/components/Button";
+import { Icon, IconName } from "@/components/Icon";
+import css from "@/components/IconButton.module.css";
 
 export type Props = {
   children?: JSX.Element;
@@ -49,6 +49,7 @@ export const IconButton: Component<Props> = (props) => {
             size={20}
             name={iconAttributes.iconName}
             color={iconAttributes.iconColor}
+            cursorNotAllowed={buttonAttributes.disabled}
           />
         </div>
         <Show when={!!local.children}>
