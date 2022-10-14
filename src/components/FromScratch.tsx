@@ -1,6 +1,6 @@
 import { Component, createMemo, Show } from "solid-js";
-import { GroupPanel } from "@/components/GroupPanel";
-import { BadgePanel } from "@/components/BadgePanel";
+import { GroupPanel } from "./GroupPanel";
+import { BadgePanel } from "./BadgePanel";
 import { GroupTable } from "@/components/GroupTable";
 import { BadgeTable } from "@/components/BadgeTable";
 import { useStore } from "@/lib/hooks/useStore";

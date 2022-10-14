@@ -3,7 +3,7 @@ import { Panel } from "@/components/Panel";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
-import css from "@/components/GroupPanel.module.css";
+import css from "./GroupPanel.module.css";
 
 export type Props = {
   createButtonDisabled: boolean;

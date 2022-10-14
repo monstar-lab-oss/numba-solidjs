@@ -2,8 +2,8 @@ import type { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { lazy } from "solid-js";
-import { capitalize } from "@/lib/utils/capitalize";
-import css from "@/components/Icon.module.css";
+import { capitalize } from "../lib/utils/capitalize";
+import css from "./Icon.module.css";
 
 export const ICON_NAMES = [
   "create",
@@ -27,7 +27,7 @@ export const DEFAULT_ICON_SIZE = 24;
 
 export const Icon: Component<Props> = (props) => {
   const LazyComponent = lazy(
-    () => import(`@/components/Icons/${capitalize(props.name)}.tsx`)
+    () => import(`./Icons/${capitalize(props.name)}.tsx`)
   );
   return (
     // FIXME Need refactor I wanna change button role to ButtonIcon

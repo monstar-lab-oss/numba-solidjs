@@ -1,9 +1,9 @@
-import { TextField } from "@/components//TextField";
-import { IconButton } from "@/components/IconButton";
 import { useStore } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
-import { Icon } from "@/components/Icon";
+import { Icon } from "./Icon";
+import { IconButton } from "./IconButton";
+import { TextField } from "./TextField";
 
 import {
   Component,
@@ -14,7 +14,7 @@ import {
   Show,
   splitProps,
 } from "solid-js";
-import css from "@/components/GroupTable.module.css";
+import css from "./GroupTable.module.css";
 
 // NOTE: I want to create component as search component.
 export type GroupSearchProps = {

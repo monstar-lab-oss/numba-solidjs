@@ -4,7 +4,7 @@ import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
-import { Icon } from "@/components/Icon";
+import { Icon } from "./Icon";
 
 export type Props = {
   children: JSX.Element;
