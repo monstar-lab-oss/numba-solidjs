@@ -1,5 +1,5 @@
 import { Meta, Story } from "@storybook/html";
-import { Button, Props } from "@/components/Button";
+import { Button, Props } from "./Button";
 
 export default {
   title: "Components/Button",
