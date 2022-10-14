@@ -2,7 +2,7 @@ import type { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
-import css from "./Button.module.css";
+import css from "@/components/Button.module.css";
 
 type Link = {
   link: true;

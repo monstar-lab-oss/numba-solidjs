@@ -1,8 +1,8 @@
 import type { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
-import { Button } from "./Button";
-import css from "./Confirm.module.css";
+import { Button } from "@/components/Button";
+import css from "@/components/Confirm.module.css";
 
 export type ConfirmOptions = {
   onConfirm: () => void;

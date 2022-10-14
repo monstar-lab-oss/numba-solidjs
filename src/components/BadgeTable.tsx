@@ -12,8 +12,8 @@ import {
   splitProps,
 } from "solid-js";
 import { Portal } from "solid-js/web";
-import css from "./BadgeTable.module.css";
-import { IconButton } from "./IconButton";
+import css from "@/components/BadgeTable.module.css";
+import { IconButton } from "@/components/IconButton";
 
 export type Props = {
   data: Badge[];

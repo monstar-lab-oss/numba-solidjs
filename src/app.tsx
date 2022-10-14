@@ -3,7 +3,7 @@
 import "@/components/index.css";
 import { render } from "solid-js/web";
 import { FromScratch } from "@/components/FromScratch";
-import { Provider } from "./lib/hooks/useStore";
+import { Provider } from "@/lib/hooks/useStore";
 
 const defaultValue = {
   enabled: false,

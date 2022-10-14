@@ -1,6 +1,6 @@
 import { Component, JSX, Show, splitProps } from "solid-js";
 import { clsx } from "clsx";
-import css from "./TextField.module.css";
+import css from "@/components/TextField.module.css";
 
 export type Props = {
   prefixElement?: JSX.Element;

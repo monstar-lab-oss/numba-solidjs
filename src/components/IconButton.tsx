@@ -2,9 +2,9 @@ import { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
-import { Button, ButtonColor } from "./Button";
-import { Icon, IconName } from "./Icon";
-import css from "./IconButton.module.css";
+import { Button, ButtonColor } from "@/components/Button";
+import { Icon, IconName } from "@/components/Icon";
+import css from "@/components/IconButton.module.css";
 
 export type Props = {
   children?: JSX.Element;
