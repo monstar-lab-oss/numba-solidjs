@@ -1,9 +1,9 @@
+import { Icon } from "@/components/Icon";
+import { IconButton } from "@/components/IconButton";
+import { TextField } from "@/components/TextField";
 import { useStore } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import { clsx } from "clsx";
-import { Icon } from "./Icon";
-import { IconButton } from "./IconButton";
-import { TextField } from "./TextField";
 
 import {
   Component,
