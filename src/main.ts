@@ -33,6 +33,7 @@ function shouldMakeBadge(
 }
 
 function onSelectionchange() {
+  
   const [currentNode] = figma.currentPage.selection;
 
   // Reflected in Store when operated at the Figma panel
@@ -137,7 +138,8 @@ async function onRun() {
   ]);
 
   figma.showUI(__html__, {
-    themeColors: true,
+    // NOTE: In the future we need implement dark mode style.
+    themeColors: false,
     width: UI_WIDTH,
     height: UI_HEIGHT,
   });
