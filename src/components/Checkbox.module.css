@@ -1,0 +1,50 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply flex items-center;
+  }
+  input[type="checkbox"] {
+    @apply h-4 w-4 rounded border-gray-300 bg-gray-100 text-orange-500 accent-orange-400 focus:ring-2 focus:ring-orange-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-orange-600;
+  }
+  input[type="checkbox"]:indeterminate {
+    @apply content-[""];
+  }
+  input[type="checkbox"]:indeterminate::before {
+    @apply h-4 w-4 rounded border-gray-300 bg-red-700 text-orange-500  accent-orange-400 content-[""] focus:ring-2 focus:ring-orange-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-orange-600;
+  }
+  input[type="checkbox"]:indeterminate::after {
+    @apply absolute top-[27px] left-[20px] h-2 w-2 border-x-0 border-t-2 border-b-0 content-[""];
+  }
+
+  label {
+    @apply pl-2 text-gray-500;
+  }
+  .disabled {
+    @apply cursor-not-allowed opacity-40;
+  }
+  .coloredDisabled {
+    @apply border-gray-500 bg-gray-500 text-white;
+  }
+  .primary {
+    @apply border-blue-500 bg-blue-500 text-white;
+  }
+  .danger {
+    @apply border-red-500 bg-red-500 text-white;
+  }
+  .secondary {
+    @apply border-gray-500 bg-gray-500 text-white;
+  }
+  .white {
+    @apply border-white bg-white text-black;
+  }
+  .primaryOutline {
+    @apply border-blue-500 bg-transparent text-blue-500;
+  }
+  .dangerOutline {
+    @apply border-red-500 bg-transparent text-red-500;
+  }
+  .secondaryOutline {
+    @apply border-gray-500 bg-transparent text-gray-500;
+  }
+}
