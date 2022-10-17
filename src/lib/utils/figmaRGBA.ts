@@ -13,8 +13,8 @@ export function figmaRGBA(rgba: {
   return color;
 }
 
-export function setColor({ r = 0, g = 0, b = 0, a = 1 }) {
-  return <SolidPaint>{
+export function setColor({ r = 0, g = 0, b = 0, a = 1 }): SolidPaint {
+  return {
     type: "SOLID",
     color: figmaRGBA({ r, g, b, a }),
     opacity: a,

@@ -1,7 +1,7 @@
-import type { Color } from "@/types/Colors";
-import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { lazy } from "solid-js";
+import { clsx } from "clsx";
+import type { Color } from "@/types/Colors";
 import { capitalize } from "../lib/utils/capitalize";
 import css from "./Icon.module.css";
 
