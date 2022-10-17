@@ -33,7 +33,6 @@ function shouldMakeBadge(
 }
 
 function onSelectionchange() {
-  
   const [currentNode] = figma.currentPage.selection;
 
   // Reflected in Store when operated at the Figma panel
