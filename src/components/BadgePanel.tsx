@@ -1,9 +1,9 @@
-import type { Component, JSX } from "solid-js";
-import { Show, splitProps } from "solid-js";
-import { clsx } from "clsx";
 import { Panel } from "@/components/Panel";
 import { useStore } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
+import { clsx } from "clsx";
+import type { Component, JSX } from "solid-js";
+import { Show, splitProps } from "solid-js";
 import { Icon } from "./Icon";
 
 export type Props = {
