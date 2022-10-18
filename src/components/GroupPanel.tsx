@@ -1,8 +1,8 @@
-import { IconButton } from "@/components/IconButton";
-import { Panel } from "@/components/Panel";
-import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
+import { clsx } from "clsx";
+import { IconButton } from "@/components/IconButton";
+import { Panel } from "@/components/Panel";
 import css from "./GroupPanel.module.css";
 
 export type Props = {

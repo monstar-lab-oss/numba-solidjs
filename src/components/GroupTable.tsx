@@ -1,10 +1,3 @@
-import { Icon } from "@/components/Icon";
-import { IconButton } from "@/components/IconButton";
-import { TextField } from "@/components/TextField";
-import { useStore } from "@/lib/hooks/useStore";
-import type { Group } from "@/types/Group";
-import { clsx } from "clsx";
-
 import {
   Component,
   createMemo,
@@ -14,6 +7,12 @@ import {
   Show,
   splitProps,
 } from "solid-js";
+import { clsx } from "clsx";
+import { Icon } from "@/components/Icon";
+import { IconButton } from "@/components/IconButton";
+import { TextField } from "@/components/TextField";
+import { useStore } from "@/lib/hooks/useStore";
+import type { Group } from "@/types/Group";
 import css from "./GroupTable.module.css";
 
 // NOTE: I want to create component as search component.

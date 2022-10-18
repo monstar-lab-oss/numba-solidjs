@@ -1,7 +1,7 @@
-import { Color } from "@/types/Colors";
-import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
+import { clsx } from "clsx";
+import { Color } from "@/types/Colors";
 import { Button, ButtonColor } from "./Button";
 import { Icon, IconName } from "./Icon";
 import css from "./IconButton.module.css";

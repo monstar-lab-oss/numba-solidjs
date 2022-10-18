@@ -32,3 +32,6 @@ jobs:
       - run: npm test
       - run: npm run type
       - run: npm run lint
+
+      - name: Prettier
+        run: npm run prettier
