@@ -1,6 +1,6 @@
-import type { Color } from "@/types/Colors";
-import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
+import { clsx } from "clsx";
+import type { Color } from "@/types/Colors";
 import { Button } from "./Button";
 import css from "./Confirm.module.css";
 

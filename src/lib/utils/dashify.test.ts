@@ -1,6 +1,6 @@
-import { dashify } from "./dashify";
 import { test } from "uvu";
 import * as assert from "uvu/assert";
+import { dashify } from "./dashify";
 
 test("dashify", () => {
   assert.type(dashify, "function");

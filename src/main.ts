@@ -137,7 +137,8 @@ async function onRun() {
   ]);
 
   figma.showUI(__html__, {
-    themeColors: true,
+    // NOTE: In the future we need implement dark mode style.
+    themeColors: false,
     width: UI_WIDTH,
     height: UI_HEIGHT,
   });

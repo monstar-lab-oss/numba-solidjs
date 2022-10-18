@@ -1,19 +1,17 @@
-import { Icon, Props as IconProps } from "@/components/Icon";
-import { useStore } from "@/lib/hooks/useStore";
-import type { Group } from "@/types/Group";
-import { clsx } from "clsx";
 import {
   Component,
-  createMemo,
-  createSignal,
   For,
   JSX,
   Show,
+  createMemo,
+  createSignal,
   splitProps,
 } from "solid-js";
+import { clsx } from "clsx";
+import { Icon, Props as IconProps } from "@/components/Icon";
+import { useStore } from "@/lib/hooks/useStore";
+import type { Group } from "@/types/Group";
 import css from "./GroupTable.module.css";
-
-
 
 // NOTE: I want to create component as search component.
 export type GroupSearchProps = {

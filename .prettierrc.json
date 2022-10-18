@@ -1,0 +1,14 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": false,
+  "importOrder": [
+    "^solid-js(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^@type/(.*)$",
+    "^@(.*)$",
+    "^[./]"
+  ],
+  "importOrderCaseInsensitive": true
+}

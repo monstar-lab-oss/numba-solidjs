@@ -1,7 +1,3 @@
-import { dispatch } from "@/lib/dispatch";
-import type { Action } from "@/types/Actions";
-import type { Badge } from "@/types/Badge";
-import type { Group } from "@/types/Group";
 import {
   Accessor,
   createContext,
@@ -13,6 +9,10 @@ import {
   useContext,
 } from "solid-js";
 import { createStore } from "solid-js/store";
+import { dispatch } from "@/lib/dispatch";
+import type { Action } from "@/types/Actions";
+import type { Badge } from "@/types/Badge";
+import type { Group } from "@/types/Group";
 
 const Context = createContext();
 
