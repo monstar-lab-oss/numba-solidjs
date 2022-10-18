@@ -1,8 +1,8 @@
 {
-  "name": "ia-screen-spec",
+  "name": "numba",
   "private": true,
   "version": "0.7.0",
-  "description": "Figma plugin for screen definition document",
+  "description": "Figma plugin for easy numbering with 1-click",
   "scripts": {
     "type": "tsc --noEmit",
     "test": "uvu -r esbuild-register ./src/lib/utils \".*.test.ts\"",
