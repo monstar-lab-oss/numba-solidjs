@@ -1,8 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const defaultTheme = require("tailwindcss/defaultTheme");
 
-const formReset = require("@tailwindcss/forms")
-
 module.exports = {
   content: ["./src/index.html", "./src/**/*.{ts,tsx}"],
   darkMode: "class",
@@ -19,8 +17,9 @@ module.exports = {
     },
   },
   plugins: [
-    formReset({
+    /* tslint:disable no-var-requires */
+    require("@tailwindcss/forms")({
       strategy: "class",
-    })
+    }),
   ],
 };
