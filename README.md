@@ -32,7 +32,7 @@ npm run build
 
 ### Update to new versions
 
-Please refer to the [Release-Assets](How-to-Develop#Release-Assets) page for this and other information.
+Please refer to the [Release-Assets](/wiki/How-to-Develop#Release-Assets) page for this and other information.
 
 ## Architecture
 
