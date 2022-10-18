@@ -21,9 +21,10 @@
     "type": "git",
     "url": "git+https://github.com/monstar-lab-group/ia-screen-spec.git"
   },
-  "author": {
-    "name": "Jinma Yamashita"
-  },
+  "contributors": [
+    "Jinma Yamashita",
+    "Yuta Hidaka"
+  ],
   "bugs": {
     "url": "https://github.com/monstar-lab-group/ia-screen-spec/issues"
   },
