@@ -1,7 +1,7 @@
 // import type { Color } from "@/types/Colors";
-import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
+import { clsx } from "clsx";
 import css from "./Checkbox.module.css";
 
 export type CheckBoxColor = "primary" | "danger" | "secondary";
