@@ -1,56 +1,40 @@
-import type { Color } from "@/types/Colors";
+// import type { Color } from "@/types/Colors";
 import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import css from "./Checkbox.module.css";
 
+export type CheckBoxColor = "primary" | "danger" | "secondary";
+
 export type Props = {
-  color?: Color;
+  // color?: Color;
+  // NOTE: in the future we might add color based on types/Colors.
+  color?: CheckBoxColor;
   indeterminate?: boolean;
-  label?: string;
-  srOnly?: boolean;
 } & JSX.InputHTMLAttributes<HTMLInputElement>;
 
 export const Checkbox: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["color", "indeterminate", "label"]);
-  // let ref: HTMLInputElement | ((el: HTMLInputElement) => void) | undefined =
-  //   null;
-
-  // onMount(() => {
-  //   ref.indeterminate = !!props.indeterminate;
-  // });
-
+  const [, attributes] = splitProps(props, ["color", "indeterminate"]);
   return (
-    <div
+    <input
       class={clsx({
         [css.style]: true,
-        // [css.primary]: props.color === "primary",
-        // [css.danger]: props.color === "danger",
-        // [css.secondary]: props.color === "secondary",
+        [css.primary]: props.color === "primary",
+        [css.danger]: props.color === "danger",
+        [css.secondary]: props.color === "secondary",
+        // NOTE: so far we not consider white checkbox.
+        // [css.white]: props.color === "white",
+        // NOTE: checkbox outline color dose not supported
         // [css.primaryOutline]: props.color === "primaryOutline",
         // [css.dangerOutline]: props.color === "dangerOutline",
         // [css.secondaryOutline]: props.color === "secondaryOutline",
       })}
-    >
-      <input
-        id="checkbox"
-        type="checkbox"
-        class={clsx({
-          [css.style]: true,
-        })}
-        {...attributes}
-        // NOTE if I do below it shows error so I use ref
-        // indeterminate={!!props.indeterminate}
-        ref={(el) => (el.indeterminate = !!props.indeterminate)}
-      />
-      <label
-        for="checkbox"
-        class={clsx({
-          "sr-only": props.srOnly,
-        })}
-      >
-        {!!props.label ? props.label : "checkbox"}
-      </label>
-    </div>
+      id="checkbox"
+      type="checkbox"
+      {...attributes}
+      // NOTE if I do below it shows error so I use ref
+      // indeterminate={!!props.indeterminate}
+      ref={(el) => (el.indeterminate = !!props.indeterminate)}
+    />
   );
 };
