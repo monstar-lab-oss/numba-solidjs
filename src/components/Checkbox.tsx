@@ -31,8 +31,6 @@ export const Checkbox: Component<Props> = (props) => {
       id="checkbox"
       type="checkbox"
       {...attributes}
-      // NOTE if I do below it shows error so I use ref
-      // indeterminate={!!props.indeterminate}
     />
   );
 };
