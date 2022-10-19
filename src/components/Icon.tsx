@@ -11,6 +11,7 @@ export const ICON_NAMES = [
   "help",
   "search",
   "textDelete",
+  "arrow",
 ] as const;
 
 export type IconName = typeof ICON_NAMES[number];

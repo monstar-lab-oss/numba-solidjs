@@ -2,7 +2,8 @@ import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
 import { IconButton } from "@/components/IconButton";
-import { Pannel } from "@/components/Pannel";
+import { Panel } from "@/components/Panel";
+import css from "./GroupPanel.module.css";
 
 export type Props = {
   createButtonDisabled: boolean;
@@ -10,7 +11,7 @@ export type Props = {
   children: JSX.Element;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
-export const GroupPannel: Component<Props> = (props) => {
+export const GroupPanel: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, [
     "onCreateClick",
     "createButtonDisabled",
@@ -18,10 +19,10 @@ export const GroupPannel: Component<Props> = (props) => {
   ]);
 
   return (
-    <Pannel>
-      <div class={clsx({ "grid grid-rows-1 gap-4": true })}>
-        <div class={clsx({ "flex  justify-between": true })} {...attributes}>
-          <div class="self-center text-[12px] font-bold">Groups</div>
+    <Panel>
+      <div class={clsx({ [css.style]: true })}>
+        <div class={clsx({ [css.header]: true })} {...attributes}>
+          <div class={clsx({ [css.title]: true })}>Groups</div>
           <IconButton
             onClick={props.onCreateClick}
             disabled={props.createButtonDisabled}
@@ -32,8 +33,9 @@ export const GroupPannel: Component<Props> = (props) => {
             Create
           </IconButton>
         </div>
+
         <div>{props.children}</div>
       </div>
-    </Pannel>
+    </Panel>
   );
 };

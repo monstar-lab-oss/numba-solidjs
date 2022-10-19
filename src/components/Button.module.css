@@ -5,7 +5,7 @@
     @apply inline-flex h-8 cursor-pointer items-center justify-center whitespace-nowrap rounded border border-gray-200 bg-white px-3 text-xs font-medium text-gray-600 shadow-sm;
   }
   .link {
-    @apply border-none bg-transparent shadow-none;
+    @apply h-full border-none bg-transparent shadow-none;
   }
   .disabled {
     @apply cursor-not-allowed opacity-40;
