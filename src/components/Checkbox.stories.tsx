@@ -5,7 +5,6 @@ import {
   Props,
 } from "./Checkbox";
 
-
 const color = ["primary", "danger", "secondary"] as CheckBoxColor[];
 
 export default {
