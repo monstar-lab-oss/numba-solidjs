@@ -49,7 +49,6 @@ export const IconButton: Component<Props> = (props) => {
             size={20}
             name={iconAttributes.iconName}
             color={iconAttributes.iconColor}
-            cursorNotAllowed={buttonAttributes.disabled}
           />
         </div>
         <Show when={!!local.children}>
