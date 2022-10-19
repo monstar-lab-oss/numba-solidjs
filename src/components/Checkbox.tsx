@@ -1,4 +1,3 @@
-// import type { Color } from "@/types/Colors";
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";

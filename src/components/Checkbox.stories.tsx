@@ -5,7 +5,6 @@ import {
   Props,
 } from "./Checkbox";
 
-// import { COLOR } from "./constants";
 
 const color = ["primary", "danger", "secondary"] as CheckBoxColor[];
 
@@ -17,7 +16,6 @@ export default {
   argTypes: {
     color: {
       options: color,
-      // options: COLOR,
       control: { type: "select" },
       defaultValue: "primary",
     },
