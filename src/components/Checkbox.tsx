@@ -14,7 +14,7 @@ export type Props = {
 } & JSX.InputHTMLAttributes<HTMLInputElement>;
 
 export const Checkbox: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["color", "indeterminate"]);
+  const [, attributes] = splitProps(props, ["color"]);
   return (
     <input
       class={clsx({
@@ -34,7 +34,6 @@ export const Checkbox: Component<Props> = (props) => {
       {...attributes}
       // NOTE if I do below it shows error so I use ref
       // indeterminate={!!props.indeterminate}
-      ref={(el) => (el.indeterminate = !!props.indeterminate)}
     />
   );
 };
