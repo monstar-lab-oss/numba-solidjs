@@ -17,7 +17,6 @@ export default {
   argTypes: {
     color: {
       options: color,
-      // options: COLOR,
       control: { type: "select" },
       defaultValue: "primary",
     },
