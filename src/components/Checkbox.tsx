@@ -28,7 +28,6 @@ export const Checkbox: Component<Props> = (props) => {
         // [css.dangerOutline]: props.color === "dangerOutline",
         // [css.secondaryOutline]: props.color === "secondaryOutline",
       })}
-      id="checkbox"
       type="checkbox"
       {...attributes}
     />
