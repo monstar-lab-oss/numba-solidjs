@@ -9,6 +9,7 @@ import {
   useContext,
 } from "solid-js";
 import { createStore } from "solid-js/store";
+import { GROUP_NAME } from "@/constants";
 import { dispatch } from "@/lib/dispatch";
 import type { Action } from "@/types/Actions";
 import type { Badge } from "@/types/Badge";
@@ -35,7 +36,12 @@ export const Provider: ParentComponent<Props> = (props) => {
     groups: props.value.groups || [],
     badges: props.value.badges || {},
   });
-  const groups = createMemo(() => state.groups);
+  const groups = createMemo(() =>
+    state.groups.map((v) => ({
+      ...v,
+      name: v.name.replace(`${GROUP_NAME}_`, ""),
+    }))
+  );
 
   const removeGroup = (id: Group["id"]) => {
     setState("groups", (gs) => gs.filter((g) => g.id !== id));

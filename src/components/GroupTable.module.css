@@ -2,24 +2,41 @@
 
 @layer components {
   .style {
-    @apply h-full w-full text-left text-xs text-gray-500 dark:text-gray-400;
+    @apply w-full;
+  }
+  .style table {
+    @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
+  }
+  .style thead tr {
+    @apply block w-full;
+  }
+  .style thead td {
+    @apply block w-full px-3;
   }
   .style thead {
-    @apply bg-gray-100 text-xs capitalize text-gray-700 dark:bg-gray-700 dark:text-gray-400;
+    @apply flex w-full flex-col items-center;
   }
+  .style tbody {
+    @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll;
+  }
+
   .style tbody tr {
-    @apply min-h-[20px] cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+    @apply min-h-[49px] w-full cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
   }
   .style tbody tr th {
-    @apply w-48 px-4 font-medium text-gray-900 dark:text-white;
+    @apply px-4 font-medium text-gray-900 dark:text-white;
   }
   .style tbody td {
     @apply flex items-center py-4 px-4;
   }
   .style tbody td a {
     @apply font-medium text-red-500 hover:underline dark:text-red-400;
+  }
+
+  .emptyMessage {
+    @apply px-4 py-2 text-xs text-gray-400;
   }
 }

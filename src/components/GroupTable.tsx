@@ -1,14 +1,16 @@
 import {
   Component,
+  createMemo,
+  createSignal,
   For,
   JSX,
   Show,
-  createMemo,
-  createSignal,
   splitProps,
 } from "solid-js";
 import { clsx } from "clsx";
-import { Icon, Props as IconProps } from "@/components/Icon";
+import { Icon } from "@/components/Icon";
+import { IconButton } from "@/components/IconButton";
+import { TextField } from "@/components/TextField";
 import { useStore } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import css from "./GroupTable.module.css";
@@ -20,28 +22,26 @@ export type GroupSearchProps = {
 } & JSX.HTMLAttributes<HTMLFormElement>;
 
 const GroupSearch: Component<GroupSearchProps> = (props) => {
-  const IconOpt: IconProps = {
-    name: "search",
-    color: "secondary",
-  };
-
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
-      <div>
-        <div class="absolute m-auto px-1 pb-2 pt-1.5">
-          <Icon {...IconOpt} />
-        </div>
-        <input
-          class="focus:shadow-outline w-full appearance-none rounded border py-2 pr-3 pl-7 text-sm leading-tight text-gray-600 shadow-sm focus:outline-none"
-          id="query"
-          value={props.query()}
-          type="text"
-          placeholder="Search"
-          onInput={(e) => {
-            props.setQuery(e.currentTarget.value);
-          }}
-        />
-      </div>
+    <form onSubmit={(e) => e.preventDefault()} class="mb-3">
+      <TextField
+        id="query"
+        value={props.query()}
+        type="text"
+        placeholder="Search"
+        onInput={(e) => {
+          props.setQuery(e.currentTarget.value);
+        }}
+        prefixElement={<Icon name="search" color="disabled" />}
+        suffixElement={
+          <IconButton
+            iconName="textDelete"
+            iconColor="secondary"
+            link
+            onClick={() => props.setQuery("")}
+          />
+        }
+      />
     </form>
   );
 };
@@ -67,30 +67,30 @@ export const GroupTable: Component<Props> = (props) => {
   });
 
   return (
-    <div class={clsx({ "w-full": true })} {...attributes}>
-      <Show
-        when={props.data.length}
-        fallback={() => (
-          <span class="inline-block rounded bg-gray-100 px-4 py-2 text-xs text-gray-400">
-            First select a frame/object you want to add numbering to 😄
-          </span>
-        )}
-      >
-        <GroupSearch query={query} setQuery={setQuery} />
-        <table class={clsx({ [css.style]: true })}>
-          <thead>
-            <tr class="h-12">
-              <th scope="col" class="p-4">
-                name
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+    <div class={clsx({ [css.style]: true })} {...attributes}>
+      <table class={clsx({ [css.style]: true })}>
+        <thead>
+          <tr>
+            <td>
+              <GroupSearch query={query} setQuery={setQuery} />
+            </td>
+          </tr>
+        </thead>
+        <Show
+          when={props.data.length}
+          fallback={() => (
+            <span class={clsx({ [css.emptyMessage]: true })}>
+              {/* First select a frame/object you want to add numbering to 😄 */}
+              No groups in the list.
+            </span>
+          )}
+        >
+          <tbody class="border-t">
             <For
               each={filteredData()}
               fallback={() => (
                 <tr>
-                  <td>Sorry, no matches found</td>
+                  <td>No objects found.</td>
                 </tr>
               )}
             >
@@ -106,8 +106,8 @@ export const GroupTable: Component<Props> = (props) => {
               )}
             </For>
           </tbody>
-        </table>
-      </Show>
+        </Show>
+      </table>
     </div>
   );
 };

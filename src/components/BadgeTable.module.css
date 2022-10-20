@@ -1,0 +1,43 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply w-full;
+  }
+  .style table {
+    @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
+  }
+  .style thead tr {
+    @apply flex w-full justify-between;
+  }
+  .style thead {
+    @apply flex  h-[47.5px] w-full flex-col items-center justify-between overflow-y-scroll border-b;
+  }
+  .style tbody {
+    @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll;
+  }
+  .style tbody tr {
+    @apply flex;
+  }
+  .style tbody tr.item {
+    @apply h-[40px] w-full cursor-pointer flex-row border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+  }
+  .style tbody tr.selected_row {
+    @apply bg-gray-50;
+  }
+  .style tbody tr th {
+    @apply self-center px-4 font-medium text-gray-900 dark:text-white;
+  }
+  .style tbody tr td {
+    @apply self-center py-2 px-2;
+  }
+  .style tbody tr td a {
+    @apply font-medium text-red-500 hover:underline dark:text-red-400;
+  }
+  .style tbody tr td label {
+    @apply sr-only;
+  }
+  .fallback {
+    @apply w-full;
+  }
+}

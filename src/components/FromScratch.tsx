@@ -3,8 +3,8 @@ import { BadgeTable } from "@/components/BadgeTable";
 import { GroupTable } from "@/components/GroupTable";
 import { dispatch } from "@/lib/dispatch";
 import { useStore } from "@/lib/hooks/useStore";
-import { BadgePannel } from "./BadgePannel";
-import { GroupPannel } from "./GroupPannel";
+import { BadgePanel } from "./BadgePanel";
+import { GroupPanel } from "./GroupPanel";
 
 export const FromScratch: Component = () => {
   const [_, { selectedGroupId, enabled, groups, getBadgeByGroupId }] =
@@ -22,14 +22,14 @@ export const FromScratch: Component = () => {
     <>
       {/* FIXME: Fixed height only now */}
       <div class="flex h-[424px] items-stretch">
-        <GroupPannel createButtonDisabled={!enabled()} onCreateClick={onClick}>
+        <GroupPanel createButtonDisabled={!enabled()} onCreateClick={onClick}>
           <GroupTable data={groups()} />
-        </GroupPannel>
-        <BadgePannel>
+        </GroupPanel>
+        <BadgePanel>
           <Show when={selectedGroupId()}>
             <BadgeTable data={badges() || []} />
           </Show>
-        </BadgePannel>
+        </BadgePanel>
       </div>
     </>
   );
