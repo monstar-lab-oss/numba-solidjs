@@ -1,7 +1,9 @@
 import {
   BADGE_TARGET_ID,
+  GROUP_NAME,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
+  NUMBERING_GROUP_NAME,
 } from "@/constants";
 import { setColor } from "@/lib/utils/figmaRGBA";
 
@@ -123,7 +125,7 @@ export function createGroup(node: SceneNode) {
 
   const i = node.parent.children.findIndex((x) => node.id === x.id);
   const group = figma.group([node], node.parent, i);
-  group.name = node.name;
+  group.name = `${GROUP_NAME}${node.name}`;
   group.setPluginData(NUMBERING_GROUP_ID, group.id);
 
   return group;
@@ -138,12 +140,8 @@ export function createNumberGroup({
 }) {
   const badgeNode = setIndexNode(1, targetNode);
   const group = figma.group([badgeNode], parentNode);
-  // TODO: temporary code Removal
-  group.name = parentNode.name
-    .split("○")
-    .filter((x) => x)
-    .join("numbering");
 
+  group.name = NUMBERING_GROUP_NAME;
   group.setPluginData(NUMBERING_BADGE_GROUP_ID, group.id);
 
   return group;
