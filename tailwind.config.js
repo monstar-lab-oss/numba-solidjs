@@ -9,7 +9,13 @@ module.exports = {
       colors: {
         "figma-gray": "#e6e6e6",
         // same color as `disabled` on components/constants.ts
-        "dark-gray": "#b2b2b2",
+        "numba-blue": "",
+        "numba-red": "",
+        "numba-white-gray": "#f3f3f3",
+        "numba-gray": "#e6e6e6",
+        "numba-dark-gray": "#b2b2b2",
+        "numba-black": "#000000",
+        "numba-white": "#FFFFFF",
       },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
