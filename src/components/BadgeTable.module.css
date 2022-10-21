@@ -5,7 +5,7 @@
     @apply w-full;
   }
   .style table {
-    @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
+    @apply w-full text-left text-xs text-numba-dark-gray;
   }
   .style thead tr {
     @apply flex w-full justify-between;
@@ -20,19 +20,19 @@
     @apply flex;
   }
   .style tbody tr.item {
-    @apply h-[40px] w-full cursor-pointer flex-row border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+    @apply h-[40px] w-full cursor-pointer flex-row border-b bg-white hover:bg-gray-50;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
   }
   .style tbody tr th {
-    @apply self-center px-4 font-medium text-gray-900 dark:text-white;
+    @apply self-center px-4 font-medium text-gray-900 ;
   }
   .style tbody tr td {
     @apply self-center py-2 px-2;
   }
   .style tbody tr td a {
-    @apply font-medium text-red-500 hover:underline dark:text-red-400;
+    @apply font-medium text-numba-red hover:underline;
   }
   .style tbody tr td label {
     @apply sr-only;

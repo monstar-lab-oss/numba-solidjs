@@ -2,7 +2,7 @@
 
 @layer components {
   .style {
-    @apply inline-flex min-h-max w-full items-center rounded border border-figma-gray bg-white px-2.5 py-1 font-sans text-xs leading-5 text-numba-dark-gray focus-within:border-blue-500;
+    @apply inline-flex min-h-max w-full items-center rounded border border-figma-gray bg-white px-2.5 py-1 font-sans text-xs leading-5 text-numba-dark-gray focus-within:border-numba-blue;
   }
   .style > input {
     @apply h-6 w-full appearance-none border-0 bg-transparent placeholder:text-numba-dark-gray focus:outline-none;
