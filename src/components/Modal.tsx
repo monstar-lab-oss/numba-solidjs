@@ -1,5 +1,5 @@
-import { clsx } from "clsx";
 import type { Component, JSX } from "solid-js";
+import { clsx } from "clsx";
 import css from "./Modal.module.css";
 
 export type Props = {
