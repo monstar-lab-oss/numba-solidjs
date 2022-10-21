@@ -9,8 +9,8 @@ module.exports = {
       colors: {
         "figma-gray": "#e6e6e6",
         // same color as `disabled` on components/constants.ts
-        "numba-blue": "",
-        "numba-red": "",
+        "numba-blue": "#0082ff",
+        "numba-red": "#ff0000",
         "numba-white-gray": "#f3f3f3",
         "numba-gray": "#e6e6e6",
         "numba-dark-gray": "#b2b2b2",
