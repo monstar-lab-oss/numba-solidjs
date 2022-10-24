@@ -9,7 +9,6 @@ export type Props = {
   // color?: Color;
   // NOTE: in the future we might add color based on types/Colors.
   color?: CheckBoxColor;
-  indeterminate?: boolean;
 } & JSX.InputHTMLAttributes<HTMLInputElement>;
 
 export const Checkbox: Component<Props> = (props) => {
