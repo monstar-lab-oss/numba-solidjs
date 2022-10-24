@@ -20,7 +20,7 @@
     @apply border-numba-red bg-numba-red text-numba-white;
   }
   .secondary {
-    @apply border-numba-dark-gray bg-numba-dark-gray text-white;
+    @apply border-numba-black bg-numba-black text-white;
   }
   .white {
     @apply border-numba-white bg-numba-white text-black;
@@ -32,6 +32,6 @@
     @apply border-numba-red bg-transparent text-numba-red;
   }
   .secondaryOutline {
-    @apply border-numba-dark-gray bg-transparent text-numba-dark-gray;
+    @apply border-numba-black bg-transparent text-numba-black;
   }
 }

@@ -14,7 +14,7 @@
     @apply fill-numba-red;
   }
   .secondary {
-    @apply fill-numba-dark-gray;
+    @apply fill-numba-black;
   }
   .white {
     @apply fill-white;
@@ -26,6 +26,6 @@
     @apply bg-numba-red fill-white;
   }
   .secondaryOutline {
-    @apply bg-numba-dark-gray fill-white;
+    @apply bg-numba-black fill-white;
   }
 }
