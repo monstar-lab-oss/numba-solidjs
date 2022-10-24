@@ -14,6 +14,7 @@ module.exports = {
         "numba-white-gray": "#f3f3f3",
         "numba-gray": "#e6e6e6",
         "numba-dark-gray": "#b2b2b2",
+        // NOTE: we use the color black as secondary color
         "numba-black": "#000000",
         "numba-white": "#FFFFFF",
       },
