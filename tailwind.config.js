@@ -1,5 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const defaultTheme = require("tailwindcss/defaultTheme");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const forms = require("@tailwindcss/forms");
 
 module.exports = {
   content: ["./src/index.html", "./src/**/*.{ts,tsx}"],
@@ -16,5 +18,10 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // NOTE: We added this plugin middle if develop, So we just apply only specific components.
+    forms({
+      strategy: "class",
+    }),
+  ],
 };

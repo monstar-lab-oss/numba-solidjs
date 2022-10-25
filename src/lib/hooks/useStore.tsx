@@ -39,7 +39,7 @@ export const Provider: ParentComponent<Props> = (props) => {
   const groups = createMemo(() =>
     state.groups.map((v) => ({
       ...v,
-      name: v.name.replace(`${GROUP_NAME}_`, ""),
+      name: v.name.replace(GROUP_NAME, ""),
     }))
   );
 
