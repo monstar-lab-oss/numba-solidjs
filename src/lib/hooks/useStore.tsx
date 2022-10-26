@@ -39,7 +39,7 @@ export const Provider: ParentComponent<Props> = (props) => {
   const groups = createMemo(() =>
     state.groups.map((v) => ({
       ...v,
-      name: v.name.replace(`${GROUP_NAME}_`, ""),
+      name: v.name.replace(GROUP_NAME, ""),
     }))
   );
 
@@ -50,7 +50,12 @@ export const Provider: ParentComponent<Props> = (props) => {
 
   // badges
   const getBadgeByGroupId = (id?: Group["id"]) => {
-    return id ? state.badges[id] : [];
+    if (!id) return [];
+
+    const tmp = [...state.badges[id]];
+    tmp.sort((a, b) => Number(a.name) - Number(b.name));
+
+    return tmp;
   };
 
   const createBadgeWithSelectedState = ({

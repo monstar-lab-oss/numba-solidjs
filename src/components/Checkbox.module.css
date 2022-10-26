@@ -1,0 +1,16 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply form-checkbox flex items-center focus:ring-transparent;
+  }
+  .primary {
+    @apply border-gray-300 text-blue-500 outline-0 ring-transparent checked:border-blue-300 checked:bg-blue-500 indeterminate:bg-blue-500 checked:hover:bg-blue-600 indeterminate:hover:bg-blue-600;
+  }
+  .danger {
+    @apply border-gray-300 text-red-500 outline-0 ring-transparent checked:border-red-300  checked:bg-red-500 indeterminate:bg-red-500   checked:hover:bg-red-600  indeterminate:hover:bg-red-600;
+  }
+  .secondary {
+    @apply border-gray-300 text-gray-500 outline-0 ring-transparent checked:border-gray-300 checked:bg-gray-500 indeterminate:bg-gray-500 checked:hover:bg-gray-600 indeterminate:hover:bg-gray-600;
+  }
+}
