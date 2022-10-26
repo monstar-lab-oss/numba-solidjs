@@ -9,6 +9,8 @@ export type Props = {
   // color?: Color;
   // NOTE: in the future we might add color based on types/Colors.
   color?: CheckBoxColor;
+  // FIXME: indeterminate must be in HTMLInputElement but we've got error when this component called
+  indeterminate?: boolean;
 } & JSX.InputHTMLAttributes<HTMLInputElement>;
 
 export const Checkbox: Component<Props> = (props) => {
