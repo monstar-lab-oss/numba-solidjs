@@ -50,7 +50,7 @@ export const Provider: ParentComponent<Props> = (props) => {
 
   // badges
   const getBadgeByGroupId = (id?: Group["id"]) => {
-    if (!id) return [];
+    if (!id || !state.badges[id]) return [];
 
     const tmp = [...state.badges[id]];
     tmp.sort((a, b) => Number(a.name) - Number(b.name));
