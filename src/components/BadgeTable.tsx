@@ -102,7 +102,7 @@ export const BadgeTable: Component<Props> = (props) => {
                   />
                   <label
                     for="checkbox-all-search"
-                    class="ml-3 font-normal text-black"
+                    class="ml-3 font-normal text-numba-black"
                   >
                     {selectedItems().length > 0
                       ? `${selectedItems().length} Selected`

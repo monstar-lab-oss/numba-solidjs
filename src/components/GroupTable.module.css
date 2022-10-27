@@ -27,7 +27,7 @@
     @apply bg-gray-50;
   }
   .style tbody tr th {
-    @apply px-4 font-medium text-gray-900;
+    @apply px-4 font-medium text-numba-black;
   }
   .style tbody td {
     @apply flex items-center py-4 px-4;
