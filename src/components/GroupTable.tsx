@@ -22,6 +22,22 @@ export type GroupSearchProps = {
 } & JSX.HTMLAttributes<HTMLFormElement>;
 
 const GroupSearch: Component<GroupSearchProps> = (props) => {
+  const [deleteIcon, setDeleteIcon] = createSignal<JSX.Element | null>(null);
+
+  const icon = (
+    <IconButton
+      iconName="textDelete"
+      iconColor="secondary"
+      link
+      onClick={() => setQuery("")}
+    />
+  );
+
+  const setQuery = (text: string) => {
+    props.setQuery(text);
+    setDeleteIcon(!!text ? icon : null);
+  };
+
   return (
     <form onSubmit={(e) => e.preventDefault()} class="mb-3">
       <TextField
@@ -29,18 +45,9 @@ const GroupSearch: Component<GroupSearchProps> = (props) => {
         value={props.query()}
         type="text"
         placeholder="Search"
-        onInput={(e) => {
-          props.setQuery(e.currentTarget.value);
-        }}
+        onInput={(e) => setQuery(e.currentTarget.value)}
         prefixElement={<Icon name="search" color="disabled" />}
-        suffixElement={
-          <IconButton
-            iconName="textDelete"
-            iconColor="secondary"
-            link
-            onClick={() => props.setQuery("")}
-          />
-        }
+        suffixElement={deleteIcon()}
       />
     </form>
   );
