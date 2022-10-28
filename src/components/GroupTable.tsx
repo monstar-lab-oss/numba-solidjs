@@ -35,7 +35,7 @@ const GroupSearch: Component<GroupSearchProps> = (props) => {
 
   const setQuery = (text: string) => {
     props.setQuery(text);
-    setDeleteIcon(!!text ? icon : null);
+    setDeleteIcon(text === "" ? icon : null);
   };
 
   return (
