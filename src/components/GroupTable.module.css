@@ -5,7 +5,7 @@
     @apply w-full;
   }
   .style table {
-    @apply w-full text-left text-xs text-gray-500 dark:text-gray-400;
+    @apply w-full text-left text-xs text-numba-dark-gray;
   }
   .style thead tr {
     @apply block w-full;
@@ -21,22 +21,21 @@
   }
 
   .style tbody tr {
-    @apply min-h-[49px] w-full cursor-pointer border-b bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600;
+    @apply min-h-[49px] w-full cursor-pointer border-b bg-white hover:bg-gray-50;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
   }
   .style tbody tr th {
-    @apply px-4 font-medium text-gray-900 dark:text-white;
+    @apply px-4 font-medium text-numba-black;
   }
   .style tbody td {
     @apply flex items-center py-4 px-4;
   }
   .style tbody td a {
-    @apply font-medium text-red-500 hover:underline dark:text-red-400;
+    @apply font-medium text-numba-red hover:underline;
   }
-
   .emptyMessage {
-    @apply px-4 py-2 text-xs text-gray-400;
+    @apply px-4 py-2 text-xs text-numba-dark-gray;
   }
 }

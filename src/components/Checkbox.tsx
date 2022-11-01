@@ -19,7 +19,7 @@ export const Checkbox: Component<Props> = (props) => {
     <input
       class={clsx({
         [css.style]: true,
-        [css.primary]: props.color === "primary",
+        [css.primary]: props.color === "primary" || !props.color,
         [css.danger]: props.color === "danger",
         [css.secondary]: props.color === "secondary",
         // NOTE: so far we not consider white checkbox.
