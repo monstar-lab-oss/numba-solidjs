@@ -75,10 +75,8 @@ function onMessage(action: Action) {
       if (!currentNode || rest.length)
         return figma.notify("Please select a single node.");
 
-      const group = createGroup(currentNode);
-      group && (figma.currentPage.selection = [group]);
-
-      figma.currentPage.selection = [];
+      createGroup(currentNode);
+      figma.currentPage.selection = [currentNode]
       return;
     }
 
@@ -94,7 +92,6 @@ function onMessage(action: Action) {
         parentNode: getGroupNodeById(payload),
       });
 
-      figma.currentPage.selection = [getGroupNodeById(payload)];
       return;
     }
 
@@ -124,7 +121,6 @@ function onMessage(action: Action) {
       const badgeNode = setIndexNode(idx, currentNode);
       badgeGroup.insertChild(0, badgeNode);
 
-      figma.currentPage.selection = [getGroupNodeById(payload.parentId)];
       return;
     }
     // TODO: select badge or group, scroll view
