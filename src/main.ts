@@ -76,7 +76,7 @@ function onMessage(action: Action) {
         return figma.notify("Please select a single node.");
 
       createGroup(currentNode);
-      figma.currentPage.selection = [currentNode]
+      figma.currentPage.selection = [currentNode];
       return;
     }
 
