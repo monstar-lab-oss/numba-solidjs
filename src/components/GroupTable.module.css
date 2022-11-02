@@ -21,7 +21,7 @@
   }
 
   .style tbody tr {
-    /* NOTE: mr-1.5 is for inner shadow if not add it, shadow hide bihind the tr */
+    /* NOTE: mr-1.5 is for inner shadow, if not add it shadow hides behind the tr */
     @apply min-h-[49px] w-full cursor-pointer border-b bg-transparent hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600 mr-1;
   }
   .style tbody tr.selected_row {
