@@ -50,6 +50,8 @@ export const Provider: ParentComponent<Props> = (props) => {
 
   // badges
   const getBadgeByGroupId = (id?: Group["id"]) => {
+    // FIXME: 根本的にはGroup作成時のmain<->storeの仕組みについて見直す必要がありそう
+    // Ref. https://github.com/monstar-lab-group/numba/pull/105#discussion_r1007785714
     if (!id || !state.badges[id]) return [];
 
     const tmp = [...state.badges[id]];
