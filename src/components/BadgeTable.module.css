@@ -41,4 +41,7 @@
   .fallback {
     @apply w-full;
   }
+  .iconContainer {
+    @apply mx-2
+  }
 }
