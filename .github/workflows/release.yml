@@ -29,7 +29,7 @@ jobs:
           git push origin $TAG_NAME
       - name: Build
         run: |
-          npm ci
+          npm ci --legacy-peer-deps
           npm run build
           zip ${{ github.event.repository.name }}-${{ steps.tag.outputs.tag_name }} dist/* manifest.json
       - name: Publish a release

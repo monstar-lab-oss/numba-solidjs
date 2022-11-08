@@ -31,7 +31,7 @@ export const BadgePanel: Component<Props> = (props) => {
             <div>
               <Icon name="arrow" color="secondary" />
             </div>
-            <div class="items-center text-xs text-gray-400">
+            <div class="items-center text-xs text-numba-dark-gray">
               You select a group and click "Create button" first.
             </div>
           </div>

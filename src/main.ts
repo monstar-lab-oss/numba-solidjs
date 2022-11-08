@@ -1,4 +1,5 @@
 import {
+  MAX_BADGE_ALLOWED,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   UI_HEIGHT,
@@ -74,10 +75,8 @@ function onMessage(action: Action) {
       if (!currentNode || rest.length)
         return figma.notify("Please select a single node.");
 
-      const group = createGroup(currentNode);
-      group && (figma.currentPage.selection = [group]);
-
-      figma.currentPage.selection = [];
+      createGroup(currentNode);
+      figma.currentPage.selection = [currentNode];
       return;
     }
 
@@ -93,7 +92,6 @@ function onMessage(action: Action) {
         parentNode: getGroupNodeById(payload),
       });
 
-      figma.currentPage.selection = [getGroupNodeById(payload)];
       return;
     }
 
@@ -107,13 +105,22 @@ function onMessage(action: Action) {
         })
         .find((x) => x.getPluginData(NUMBERING_BADGE_GROUP_ID)) as GroupNode;
 
+      if (badgeGroup.children.length + 1 > MAX_BADGE_ALLOWED) {
+        figma.notify(
+          `Sorry we were unavailable to use the number over ${MAX_BADGE_ALLOWED}.`,
+          {
+            error: true,
+          }
+        );
+        return;
+      }
+
       const idx = getMissingSerialNumber(
         badgeGroup.children.map((x) => Number(x.name))
       );
       const badgeNode = setIndexNode(idx, currentNode);
       badgeGroup.insertChild(0, badgeNode);
 
-      figma.currentPage.selection = [getGroupNodeById(payload.parentId)];
       return;
     }
     // TODO: select badge or group, scroll view

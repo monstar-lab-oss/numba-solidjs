@@ -9,6 +9,7 @@ import {
 } from "solid-js";
 import { Portal } from "solid-js/web";
 import { clsx } from "clsx";
+import { Checkbox } from "@/components/Checkbox";
 import { Confirm, ConfirmOptions } from "@/components/Confirm";
 import { useStore } from "@/lib/hooks/useStore";
 import type { Badge } from "@/types/Badge";
@@ -22,7 +23,7 @@ export type Props = {
 export const BadgeTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
 
-  const [_, { removeBadge, selectedGroupId }] = useStore();
+  const [_, { removeBadge, selectedGroupId, setSelectedGroupId }] = useStore();
 
   const isDisabledRemove = createMemo(() =>
     props.data.every((x) => !x.selected())
@@ -43,6 +44,7 @@ export const BadgeTable: Component<Props> = (props) => {
         const parentId = selectedGroupId();
         if (!parentId) return;
         removeBadge(parentId, selectedBadgeIds);
+        setSelectedGroupId(null);
         setShow(false);
         e.stopImmediatePropagation();
       },
@@ -90,16 +92,18 @@ export const BadgeTable: Component<Props> = (props) => {
               <th colSpan={2} scope="col" class="p-2">
                 {/* TODO need split as checkbox component */}
                 <div class="flex items-center">
-                  <input
+                  <Checkbox
                     id="checkbox-all-search"
-                    type="checkbox"
                     checked={isSelectAll()}
                     onChange={() => onToggleAllClick()}
-                    class="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                    indeterminate={
+                      selectedItems().length > 0 &&
+                      props.data.length !== selectedItems().length
+                    }
                   />
                   <label
                     for="checkbox-all-search"
-                    class="ml-3 font-normal text-black"
+                    class="ml-3 font-normal text-numba-black"
                   >
                     {selectedItems().length > 0
                       ? `${selectedItems().length} Selected`
@@ -141,12 +145,10 @@ export const BadgeTable: Component<Props> = (props) => {
                 <tr class={clsx({ [css.item]: true })}>
                   <td>
                     <div class="flex items-center">
-                      <input
+                      <Checkbox
                         id="checkbox-table-search-1"
-                        type="checkbox"
                         checked={item.selected()}
                         onChange={() => onToggleClick(item.id)}
-                        class="h-4 w-4 cursor-pointer rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                       />
                       {/* FIXME this label with class 'sr-only' occurred unexpected scroll effect.  */}
                       {/* <label for="checkbox-table-search-1">checkbox</label> */}

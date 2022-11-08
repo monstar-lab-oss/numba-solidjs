@@ -8,7 +8,7 @@
     @apply flex items-center justify-center px-2 pt-4 pb-1;
   }
   .text {
-    @apply text-sm  text-gray-500;
+    @apply text-sm  text-numba-dark-gray;
   }
   .footer {
     @apply flex items-center justify-center space-x-2 p-1;
