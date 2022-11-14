@@ -11,19 +11,21 @@ import { Portal } from "solid-js/web";
 import { clsx } from "clsx";
 import { Checkbox } from "@/components/Checkbox";
 import { Confirm, ConfirmOptions } from "@/components/Confirm";
-import { useStore } from "@/lib/hooks/useStore";
+import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Badge } from "@/types/Badge";
 import css from "./BadgeTable.module.css";
 import { IconButton } from "./IconButton";
 
 export type Props = {
   data: Badge[];
+  useStore: () => UseStoreType;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const BadgeTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
 
-  const [_, { removeBadge, selectedGroupId, setSelectedGroupId }] = useStore();
+  const [_, { removeBadge, selectedGroupId, setSelectedGroupId }] =
+    props.useStore();
 
   const isDisabledRemove = createMemo(() =>
     props.data.every((x) => !x.selected())
