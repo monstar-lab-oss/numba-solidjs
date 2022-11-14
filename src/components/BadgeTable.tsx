@@ -23,7 +23,7 @@ export type Props = {
 export const BadgeTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
 
-  const [_, { removeBadge, selectedGroupId }] = useStore();
+  const [_, { removeBadge, selectedGroupId, setSelectedGroupId }] = useStore();
 
   const isDisabledRemove = createMemo(() =>
     props.data.every((x) => !x.selected())
@@ -44,6 +44,7 @@ export const BadgeTable: Component<Props> = (props) => {
         const parentId = selectedGroupId();
         if (!parentId) return;
         removeBadge(parentId, selectedBadgeIds);
+        setSelectedGroupId(null);
         setShow(false);
         e.stopImmediatePropagation();
       },
