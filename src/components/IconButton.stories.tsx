@@ -1,8 +1,10 @@
 import { COLOR } from "@/components/constants";
 import { ICON_NAMES } from "@/components/Icon";
-import { IconButton as IconButtonComponent, Props } from "@/components/IconButton";
+import {
+  IconButton as IconButtonComponent,
+  Props,
+} from "@/components/IconButton";
 import { Meta, Story } from "@storybook/html";
-
 
 export default {
   title: "Components/IconButton",
