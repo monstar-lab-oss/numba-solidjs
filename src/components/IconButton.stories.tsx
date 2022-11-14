@@ -5,7 +5,7 @@ import { Meta, Story } from "@storybook/html";
 
 
 export default {
-  title: "Components/IconButton",
+  title: "Components/IconButtons",
   args: {
     children: "IconButton",
   },
