@@ -6,6 +6,7 @@ import {
   NUMBERING_GROUP_NAME,
 } from "@/constants";
 import { setColor } from "@/lib/utils/figmaRGBA";
+import { UpdateStorePayload } from "@/types/Actions";
 
 export function reduceAllNodes() {
   const numberingbadgeGroups = getNodesByType("GROUP")
@@ -41,7 +42,7 @@ export function reduceAllNodes() {
   return {
     numberingGroups,
     numberingbadgeGroups,
-  };
+  } as UpdateStorePayload;
 }
 export function getNodesByType<T extends "INSTANCE" | "GROUP">(type: T) {
   // Currently using `findAllWithCriteria`, should I use `findChildren` ?

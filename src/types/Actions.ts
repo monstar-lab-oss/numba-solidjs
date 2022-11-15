@@ -3,14 +3,17 @@ import type { Group } from "@/types/Group";
 
 type NodeId = string;
 
+export type UpdateStorePayload = {
+  selectedGroupID?: string | null;
+  numberingGroups: Group[];
+  numberingbadgeGroups: Record<string, Badge[]>;
+};
+
 // refs. https://github.com/redux-utilities/flux-standard-action
 export type Action =
   | {
       type: "UI/UPDATE_STORE";
-      payload: {
-        numberingGroups: Group[];
-        numberingbadgeGroups: Record<string, Badge[]>;
-      };
+      payload: UpdateStorePayload;
     }
   | {
       type: "UI/TOGGLE_CREATE_GROUP_BUTTON";
