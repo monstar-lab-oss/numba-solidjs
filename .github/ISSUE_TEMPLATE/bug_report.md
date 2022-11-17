@@ -7,6 +7,10 @@ assignees: ''
 
 ---
 
+**テストケースの番号**
+
+...
+
 **詳細内容**
 
 A clear and concise description of what the bug is.
