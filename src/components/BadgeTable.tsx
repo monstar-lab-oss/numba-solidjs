@@ -162,7 +162,7 @@ export const BadgeTable: Component<Props> = (props) => {
                     scope="row"
                     onClick={() => setSelectedBadgeID(item.id)}
                   >
-                    <div>{item.name} , {item.selected()+""}, {props.data.length}</div>
+                    <div>{item.name}</div>
                   </th>
                 </tr>
               )}
