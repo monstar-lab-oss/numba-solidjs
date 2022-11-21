@@ -1,8 +1,9 @@
-import { Component, createMemo, Show } from "solid-js";
 import { BadgeTable } from "@/components/BadgeTable";
 import { GroupTable } from "@/components/GroupTable";
 import { dispatch } from "@/lib/dispatch";
 import { useStore } from "@/lib/hooks/useStore";
+import type { Badge } from "@/types/Badge";
+import { Component, Show } from "solid-js";
 import { BadgePanel } from "./BadgePanel";
 import { GroupPanel } from "./GroupPanel";
 
@@ -12,11 +13,11 @@ export const FromScratch: Component = () => {
 
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
 
-  const badges = createMemo(() => {
+  const badges = () => {
     const groupId = selectedGroupId();
     if (!groupId) return [];
     return getBadgeByGroupId(groupId);
-  });
+  }
 
   return (
     <>
@@ -27,7 +28,7 @@ export const FromScratch: Component = () => {
         </GroupPanel>
         <BadgePanel>
           <Show when={selectedGroupId()}>
-            <BadgeTable data={badges() || []} />
+            <BadgeTable data={badges() || []}/>
           </Show>
         </BadgePanel>
       </div>

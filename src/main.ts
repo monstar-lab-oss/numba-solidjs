@@ -3,7 +3,7 @@ import {
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   UI_HEIGHT,
-  UI_WIDTH,
+  UI_WIDTH
 } from "@/constants";
 import { dispatch } from "@/lib/dispatch";
 import {
@@ -14,7 +14,7 @@ import {
   reduceAllNodes,
   removeBadgeNode,
   removeGroupNode,
-  setIndexNode,
+  setIndexNode
 } from "@/lib/utils/figmaNodeHandle";
 import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
 import type { Action } from "@/types/Actions";
@@ -38,6 +38,7 @@ function onSelectionchange() {
 
   // Reflected in Store when operated at the Figma panel
   // TODO: Very expensive logic, see useStore.tsx L115
+  // badge selected state 
   dispatch({
     type: "UI/UPDATE_STORE",
     payload: reduceAllNodes(),
@@ -64,10 +65,15 @@ function onMessage(action: Action) {
 
   switch (type) {
     case "APP/SELECT_NODE":
-      if (!payload) return (figma.currentPage.selection = []);
+      if (!payload.id) return (figma.currentPage.selection = []);
 
-      figma.currentPage.selection = [getGroupNodeById(payload)];
-      figma.viewport.scrollAndZoomIntoView([getGroupNodeById(payload)]);
+      figma.currentPage.selection = [
+        // FIXME: We can aggregate these argument
+        getGroupNodeById(payload.id, payload.type),
+      ];
+      figma.viewport.scrollAndZoomIntoView([
+        getGroupNodeById(payload.id, payload.type),
+      ]);
       return;
     case "APP/CREATE_GROUP": {
       const [currentNode, ...rest] = figma.currentPage.selection;
@@ -89,7 +95,7 @@ function onMessage(action: Action) {
 
       createNumberGroup({
         targetNode: currentNode,
-        parentNode: getGroupNodeById(payload),
+        parentNode: getGroupNodeById(payload, "GROUP"),
       });
 
       return;
@@ -99,7 +105,7 @@ function onMessage(action: Action) {
       const [currentNode] = figma.currentPage.selection;
       if (!currentNode) return;
 
-      const badgeGroup = getGroupNodeById(payload.parentId)
+      const badgeGroup = getGroupNodeById(payload.parentId, "GROUP")
         .findAllWithCriteria({
           types: ["GROUP"],
         })

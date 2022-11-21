@@ -1,3 +1,8 @@
+import { GROUP_NAME } from "@/constants";
+import { dispatch } from "@/lib/dispatch";
+import type { Action } from "@/types/Actions";
+import type { Badge } from "@/types/Badge";
+import type { Group } from "@/types/Group";
 import {
   Accessor,
   createContext,
@@ -6,14 +11,9 @@ import {
   onMount,
   ParentComponent,
   Setter,
-  useContext,
+  useContext
 } from "solid-js";
 import { createStore } from "solid-js/store";
-import { GROUP_NAME } from "@/constants";
-import { dispatch } from "@/lib/dispatch";
-import type { Action } from "@/types/Actions";
-import type { Badge } from "@/types/Badge";
-import type { Group } from "@/types/Group";
 
 const Context = createContext();
 
@@ -60,12 +60,14 @@ export const Provider: ParentComponent<Props> = (props) => {
     return tmp;
   };
 
-  const createBadgeWithSelectedState = ({
+  const createBadgeWithSelectedState = (groupID: string, {
     id,
     name,
     targetId,
   }: Pick<Badge, "id" | "name" | "targetId">) => {
-    const [selected, setSelected] = createSignal(false);
+    const badge = state.badges[groupID]?.find((v) => v.id === id)
+    const [selected, setSelected] = createSignal(!!badge?.selected());
+
     return {
       id,
       name,
@@ -87,7 +89,7 @@ export const Provider: ParentComponent<Props> = (props) => {
     name: Badge["name"];
     targetId: string;
   }) => {
-    const b: Badge = createBadgeWithSelectedState({ id, name, targetId });
+    const b: Badge = createBadgeWithSelectedState(parentId, { id, name, targetId });
     setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
   };
 
@@ -119,7 +121,7 @@ export const Provider: ParentComponent<Props> = (props) => {
             const badges = Object.keys(badgesRaw).reduce((acc, key) => {
               return Object.assign(acc, {
                 [key]: badgesRaw[key].map((x) =>
-                  createBadgeWithSelectedState(x)
+                  createBadgeWithSelectedState(key, x)
                 ),
               });
             }, {});
@@ -176,7 +178,13 @@ export const Provider: ParentComponent<Props> = (props) => {
       selectedGroupId,
       setSelectedGroupId: (id: string | null) => {
         _setSelectedGroupId(id);
-        dispatch({ type: "APP/SELECT_NODE", payload: id });
+        dispatch({ type: "APP/SELECT_NODE", payload: { id, type: "GROUP" } });
+      },
+      setSelectedBadgeID: (id: string | null) => {
+        dispatch({
+          type: "APP/SELECT_NODE",
+          payload: { id, type: "INSTANCE" },
+        });
       },
       groups,
       removeGroup,
@@ -196,6 +204,7 @@ export function useStore() {
       enabled: Accessor<boolean>;
       selectedGroupId: Accessor<string | null>;
       setSelectedGroupId: Setter<string | null>;
+      setSelectedBadgeID: Setter<string | null>;
       setEnabled: Setter<boolean>;
       groups: Accessor<Group[]>;
       createGroup: ({ id, name }: { id: string; name: string }) => void;

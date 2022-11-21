@@ -1,5 +1,6 @@
 import type { Badge } from "@/types/Badge";
 import type { Group } from "@/types/Group";
+import { NodeType } from "@/types/Node";
 
 type NodeId = string;
 
@@ -25,7 +26,7 @@ export type Action =
     }
   | {
       type: "APP/SELECT_NODE";
-      payload: NodeId | null;
+      payload: { id: NodeId | null; type: NodeType };
     }
   | {
       type: "APP/CREATE_GROUP";

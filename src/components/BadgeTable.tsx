@@ -1,3 +1,8 @@
+import { Checkbox } from "@/components/Checkbox";
+import { Confirm, ConfirmOptions } from "@/components/Confirm";
+import { useStore } from "@/lib/hooks/useStore";
+import type { Badge } from "@/types/Badge";
+import { clsx } from "clsx";
 import {
   Component,
   createMemo,
@@ -5,14 +10,9 @@ import {
   For,
   JSX,
   Show,
-  splitProps,
+  splitProps
 } from "solid-js";
 import { Portal } from "solid-js/web";
-import { clsx } from "clsx";
-import { Checkbox } from "@/components/Checkbox";
-import { Confirm, ConfirmOptions } from "@/components/Confirm";
-import { useStore } from "@/lib/hooks/useStore";
-import type { Badge } from "@/types/Badge";
 import css from "./BadgeTable.module.css";
 import { IconButton } from "./IconButton";
 
@@ -21,9 +21,12 @@ export type Props = {
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const BadgeTable: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["data"]);
+  const [, attributes] = splitProps(props, ["data", "onChange"]);
 
-  const [_, { removeBadge, selectedGroupId, setSelectedGroupId }] = useStore();
+  const [
+    _,
+    { removeBadge, selectedGroupId, setSelectedGroupId, setSelectedBadgeID },
+  ] = useStore();
 
   const isDisabledRemove = createMemo(() =>
     props.data.every((x) => !x.selected())
@@ -154,8 +157,12 @@ export const BadgeTable: Component<Props> = (props) => {
                       {/* <label for="checkbox-table-search-1">checkbox</label> */}
                     </div>
                   </td>
-                  <th colSpan={2} scope="row">
-                    {item.name}
+                  <th
+                    colSpan={2}
+                    scope="row"
+                    onClick={() => setSelectedBadgeID(item.id)}
+                  >
+                    <div>{item.name} , {item.selected()+""}, {props.data.length}</div>
                   </th>
                 </tr>
               )}
