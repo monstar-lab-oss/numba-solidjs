@@ -2,7 +2,6 @@ import { BadgeTable } from "@/components/BadgeTable";
 import { GroupTable } from "@/components/GroupTable";
 import { dispatch } from "@/lib/dispatch";
 import { useStore } from "@/lib/hooks/useStore";
-import type { Badge } from "@/types/Badge";
 import { Component, Show } from "solid-js";
 import { BadgePanel } from "./BadgePanel";
 import { GroupPanel } from "./GroupPanel";
