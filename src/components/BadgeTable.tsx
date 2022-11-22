@@ -21,7 +21,7 @@ export type Props = {
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const BadgeTable: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["data", "onChange"]);
+  const [, attributes] = splitProps(props, ["data"]);
 
   const [
     _,
