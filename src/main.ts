@@ -3,7 +3,7 @@ import {
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   UI_HEIGHT,
-  UI_WIDTH
+  UI_WIDTH,
 } from "@/constants";
 import { dispatch } from "@/lib/dispatch";
 import {
@@ -14,7 +14,7 @@ import {
   reduceAllNodes,
   removeBadgeNode,
   removeGroupNode,
-  setIndexNode
+  setIndexNode,
 } from "@/lib/utils/figmaNodeHandle";
 import { getMissingSerialNumber } from "@/lib/utils/getMissingSerialNumber";
 import type { Action } from "@/types/Actions";
@@ -38,7 +38,7 @@ function onSelectionchange() {
 
   // Reflected in Store when operated at the Figma panel
   // TODO: Very expensive logic, see useStore.tsx L115
-  // badge selected state 
+  // badge selected state
   dispatch({
     type: "UI/UPDATE_STORE",
     payload: reduceAllNodes(),

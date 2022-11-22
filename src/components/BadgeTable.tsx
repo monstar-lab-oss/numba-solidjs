@@ -1,8 +1,3 @@
-import { Checkbox } from "@/components/Checkbox";
-import { Confirm, ConfirmOptions } from "@/components/Confirm";
-import { useStore } from "@/lib/hooks/useStore";
-import type { Badge } from "@/types/Badge";
-import { clsx } from "clsx";
 import {
   Component,
   createMemo,
@@ -10,9 +5,14 @@ import {
   For,
   JSX,
   Show,
-  splitProps
+  splitProps,
 } from "solid-js";
 import { Portal } from "solid-js/web";
+import { clsx } from "clsx";
+import { Checkbox } from "@/components/Checkbox";
+import { Confirm, ConfirmOptions } from "@/components/Confirm";
+import { useStore } from "@/lib/hooks/useStore";
+import type { Badge } from "@/types/Badge";
 import css from "./BadgeTable.module.css";
 import { IconButton } from "./IconButton";
 

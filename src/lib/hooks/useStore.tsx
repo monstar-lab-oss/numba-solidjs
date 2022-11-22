@@ -1,8 +1,3 @@
-import { GROUP_NAME } from "@/constants";
-import { dispatch } from "@/lib/dispatch";
-import type { Action } from "@/types/Actions";
-import type { Badge } from "@/types/Badge";
-import type { Group } from "@/types/Group";
 import {
   Accessor,
   createContext,
@@ -11,9 +6,14 @@ import {
   onMount,
   ParentComponent,
   Setter,
-  useContext
+  useContext,
 } from "solid-js";
 import { createStore } from "solid-js/store";
+import { GROUP_NAME } from "@/constants";
+import { dispatch } from "@/lib/dispatch";
+import type { Action } from "@/types/Actions";
+import type { Badge } from "@/types/Badge";
+import type { Group } from "@/types/Group";
 
 const Context = createContext();
 
@@ -60,12 +60,11 @@ export const Provider: ParentComponent<Props> = (props) => {
     return tmp;
   };
 
-  const createBadgeWithSelectedState = (groupID: string, {
-    id,
-    name,
-    targetId,
-  }: Pick<Badge, "id" | "name" | "targetId">) => {
-    const badge = state.badges[groupID]?.find((v) => v.id === id)
+  const createBadgeWithSelectedState = (
+    groupID: string,
+    { id, name, targetId }: Pick<Badge, "id" | "name" | "targetId">
+  ) => {
+    const badge = state.badges[groupID]?.find((v) => v.id === id);
     const [selected, setSelected] = createSignal(!!badge?.selected());
 
     return {
@@ -89,7 +88,11 @@ export const Provider: ParentComponent<Props> = (props) => {
     name: Badge["name"];
     targetId: string;
   }) => {
-    const b: Badge = createBadgeWithSelectedState(parentId, { id, name, targetId });
+    const b: Badge = createBadgeWithSelectedState(parentId, {
+      id,
+      name,
+      targetId,
+    });
     setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
   };
 

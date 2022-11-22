@@ -3,7 +3,7 @@ import {
   GROUP_NAME,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
-  NUMBERING_GROUP_NAME
+  NUMBERING_GROUP_NAME,
 } from "@/constants";
 import { setColor } from "@/lib/utils/figmaRGBA";
 import { NodeType } from "@/types/Node";
