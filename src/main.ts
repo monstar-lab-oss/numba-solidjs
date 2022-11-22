@@ -79,7 +79,7 @@ function onMessage(action: Action) {
 
       // FIXME: If I use spread syntax I got `Unexpected token ...` so I do this for now.
       const res = reduceAllNodes();
-      res["selectedGroupID"] = group ? group.id : "";
+      res["selectedGroupID"] = group?.id;
 
       figma.currentPage.selection = [currentNode];
       dispatch({
