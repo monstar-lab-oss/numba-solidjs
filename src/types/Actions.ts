@@ -4,7 +4,7 @@ import type { Group } from "@/types/Group";
 type NodeId = string;
 
 export type UpdateStorePayload = {
-  selectedGroupID?: string | null;
+  selectedGroupID?: string;
   numberingGroups: Group[];
   numberingbadgeGroups: Record<string, Badge[]>;
 };
