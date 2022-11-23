@@ -75,8 +75,17 @@ function onMessage(action: Action) {
       if (!currentNode || rest.length)
         return figma.notify("Please select a single node.");
 
-      createGroup(currentNode);
+      const group = createGroup(currentNode);
+
+      // FIXME: If I use spread syntax I got `Unexpected token ...` so I do this for now.
+      const res = reduceAllNodes();
+      res["selectedGroupID"] = group?.id;
+
       figma.currentPage.selection = [currentNode];
+      dispatch({
+        type: "UI/UPDATE_STORE",
+        payload: res,
+      });
       return;
     }
 
@@ -90,6 +99,11 @@ function onMessage(action: Action) {
       createNumberGroup({
         targetNode: currentNode,
         parentNode: getGroupNodeById(payload),
+      });
+
+      dispatch({
+        type: "UI/UPDATE_STORE",
+        payload: reduceAllNodes(),
       });
 
       return;
@@ -120,6 +134,11 @@ function onMessage(action: Action) {
       );
       const badgeNode = setIndexNode(idx, currentNode);
       badgeGroup.insertChild(0, badgeNode);
+
+      dispatch({
+        type: "UI/UPDATE_STORE",
+        payload: reduceAllNodes(),
+      });
 
       return;
     }
