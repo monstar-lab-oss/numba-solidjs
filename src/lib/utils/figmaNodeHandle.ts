@@ -6,6 +6,7 @@ import {
   NUMBERING_GROUP_NAME,
 } from "@/constants";
 import { setColor } from "@/lib/utils/figmaRGBA";
+import { UpdateStorePayload } from "@/types/Actions";
 import { NodeType } from "@/types/Node";
 
 export function reduceAllNodes() {
@@ -42,7 +43,7 @@ export function reduceAllNodes() {
   return {
     numberingGroups,
     numberingbadgeGroups,
-  };
+  } as UpdateStorePayload;
 }
 export function getNodesByType<T extends NodeType>(type: T) {
   // Currently using `findAllWithCriteria`, should I use `findChildren` ?
@@ -94,14 +95,16 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
   componentNode.resize(24, 24);
   componentNode.cornerRadius = 24;
   componentNode.layoutMode = "HORIZONTAL";
+  componentNode.strokeAlign = "INSIDE";
 
   // TODO: Maybe we need a user custom color feature.
+  componentNode.strokes = [setColor({ r: 0, g: 0, b: 0 })];
   componentNode.fills = [setColor({ r: 221, g: 221, b: 221 })];
 
   const textNode = figma.createText();
   textNode.fontSize = 12;
   textNode.characters = `${index}`;
-  textNode.fills = [setColor({ r: 255, g: 255, b: 255 })];
+  textNode.fills = [setColor({ r: 0, g: 0, b: 0 })];
   textNode.resize(24, 24);
   textNode.textAlignHorizontal = "CENTER";
   textNode.fontName = { family: "Inter", style: "Bold" };
