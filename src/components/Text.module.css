@@ -1,0 +1,22 @@
+@tailwind components;
+
+@layer components {
+  .sizeSmall {
+    @apply text-[10px];
+  }
+  .sizeMedium {
+    @apply text-[12px];
+  }
+  .sizeLarge {
+    @apply text-[14px];
+  }
+  .weightRegular {
+    @apply font-normal;
+  }
+  .weightMedium {
+    @apply font-medium;
+  }
+  .weightBold {
+    @apply font-bold;
+  }
+}
