@@ -103,6 +103,11 @@ export const Provider: ParentComponent<Props> = (props) => {
     }
   };
 
+  const setSelectedGroupId = (id: string | null) => {
+    _setSelectedGroupId(id);
+    dispatch({ type: "APP/SELECT_NODE", payload: id });
+  };
+
   onMount(() => {
     window.addEventListener(
       "message",
@@ -129,6 +134,11 @@ export const Provider: ParentComponent<Props> = (props) => {
               groups: payload.numberingGroups,
               badges,
             }));
+
+            // NOTE: I want to set only UI side if set to Figma side the numbering is going to be wrong place.
+            if (payload.selectedGroupID)
+              _setSelectedGroupId(payload.selectedGroupID);
+
             return;
           }
 
@@ -174,10 +184,7 @@ export const Provider: ParentComponent<Props> = (props) => {
       enabled,
       setEnabled,
       selectedGroupId,
-      setSelectedGroupId: (id: string | null) => {
-        _setSelectedGroupId(id);
-        dispatch({ type: "APP/SELECT_NODE", payload: id });
-      },
+      setSelectedGroupId,
       groups,
       removeGroup,
       getBadgeByGroupId,
