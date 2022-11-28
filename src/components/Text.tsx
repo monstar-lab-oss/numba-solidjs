@@ -22,7 +22,6 @@ export const Text: Component<Props> = (props) => {
   return (
     <div
       class={clsx({
-        [css.style]: true,
         [css[props.size ?? "sizeMedium"]]: true,
         [css[props.weight ?? "weightMedium"]]: true,
       })}
