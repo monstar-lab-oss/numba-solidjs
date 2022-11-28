@@ -110,14 +110,11 @@ export const Provider: ParentComponent<Props> = (props) => {
 
   const setSelectedGroupId = (id: string | null) => {
     _setSelectedGroupId(id);
-    dispatch({ type: "APP/SELECT_NODE", payload: { id, type: "GROUP" } });
+    dispatch({ type: "APP/SELECT_GROUP", payload: id });
   };
 
   const setSelectedBadgeID = (id: string | null) => {
-    dispatch({
-      type: "APP/SELECT_NODE",
-      payload: { id, type: "INSTANCE" },
-    });
+    dispatch({ type: "APP/SELECT_BADGE", payload: id });
   };
 
   onMount(() => {

@@ -64,15 +64,26 @@ function onMessage(action: Action) {
   const { type, payload } = action;
 
   switch (type) {
-    case "APP/SELECT_NODE":
-      if (!payload.id) return (figma.currentPage.selection = []);
+    case "APP/SELECT_GROUP":
+      if (!payload) return (figma.currentPage.selection = []);
 
       figma.currentPage.selection = [
         // FIXME: We can aggregate these argument
-        getGroupNodeById(payload.id, payload.type),
+        getGroupNodeById(payload, "GROUP"),
       ];
       figma.viewport.scrollAndZoomIntoView([
-        getGroupNodeById(payload.id, payload.type),
+        getGroupNodeById(payload, "GROUP"),
+      ]);
+      return;
+    case "APP/SELECT_BADGE":
+      if (!payload) return (figma.currentPage.selection = []);
+
+      figma.currentPage.selection = [
+        // FIXME: We can aggregate these argument
+        getGroupNodeById(payload, "INSTANCE"),
+      ];
+      figma.viewport.scrollAndZoomIntoView([
+        getGroupNodeById(payload, "INSTANCE"),
       ]);
       return;
     case "APP/CREATE_GROUP": {
