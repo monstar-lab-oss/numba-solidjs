@@ -1,4 +1,6 @@
 const Solid = require("vite-plugin-solid");
+const { mergeConfig } = require('vite');
+const path = require("path");
 
 module.exports = {
   stories: [
@@ -21,7 +23,11 @@ module.exports = {
   },
   async viteFinal(config) {
     config.plugins.unshift(Solid({ hot: false }));
-    return config;
+    return mergeConfig(config, {
+      resolve: {
+        alias: { '@': path.resolve(path.dirname(__dirname), "src")},
+      },
+    });
   },
   // https://storybook.js.org/docs/react/addons/writing-presets#previewmanager-templates
   previewHead: (head) => `
