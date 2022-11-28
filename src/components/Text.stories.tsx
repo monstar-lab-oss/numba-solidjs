@@ -1,10 +1,17 @@
-import { Props, Text } from "@/components/Text";
+import { FONT_SIZES, FONT_WEIGHT, Props, Text } from "@/components/Text";
 import { Meta, Story } from "@storybook/html";
 
 export default {
   title: "Components/Text",
-  args: {
-    placeholder: "Placeholder",
+  argTypes: {
+    size: {
+      options: FONT_SIZES,
+      control: { type: "select" },
+    },
+    weight: {
+      options: FONT_WEIGHT,
+      control: { type: "select" },
+    },
   },
 } as Meta;
 
