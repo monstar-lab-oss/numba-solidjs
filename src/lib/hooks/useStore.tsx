@@ -195,29 +195,32 @@ export const Provider: ParentComponent<Props> = (props) => {
   return <Context.Provider value={store}>{props.children}</Context.Provider>;
 };
 
-export function useStore() {
+// FIXME: Need move to type file.
+export type UseStoreType = [
+  Store,
+  {
+    enabled: Accessor<boolean>;
+    selectedGroupId: Accessor<string | null>;
+    setSelectedGroupId: Setter<string | null>;
+    setEnabled: Setter<boolean>;
+    groups: Accessor<Group[]>;
+    createGroup: ({ id, name }: { id: string; name: string }) => void;
+    removeGroup: (id: Group["id"]) => void;
+    getBadgeByGroupId: (id?: Group["id"]) => Badge[];
+    createBadge: ({
+      parentId,
+      id,
+      name,
+    }: {
+      parentId: Group["id"];
+      id: Badge["id"];
+      name: Badge["name"];
+    }) => void;
+    removeBadge: (parentId: Group["id"], ids: Badge["id"][]) => void;
+  }
+];
+
+export function useStore(): UseStoreType {
   // TODO: Simplify the return type of useStore.
-  return useContext(Context) as [
-    Store,
-    {
-      enabled: Accessor<boolean>;
-      selectedGroupId: Accessor<string | null>;
-      setSelectedGroupId: Setter<string | null>;
-      setEnabled: Setter<boolean>;
-      groups: Accessor<Group[]>;
-      createGroup: ({ id, name }: { id: string; name: string }) => void;
-      removeGroup: (id: Group["id"]) => void;
-      getBadgeByGroupId: (id?: Group["id"]) => Badge[];
-      createBadge: ({
-        parentId,
-        id,
-        name,
-      }: {
-        parentId: Group["id"];
-        id: Badge["id"];
-        name: Badge["name"];
-      }) => void;
-      removeBadge: (parentId: Group["id"], ids: Badge["id"][]) => void;
-    }
-  ];
+  return useContext(Context) as UseStoreType;
 }

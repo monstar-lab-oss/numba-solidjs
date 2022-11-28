@@ -23,11 +23,11 @@ export const FromScratch: Component = () => {
       {/* FIXME: Fixed height only now */}
       <div class="flex h-[424px] items-stretch">
         <GroupPanel createButtonDisabled={!enabled()} onCreateClick={onClick}>
-          <GroupTable data={groups()} />
+          <GroupTable data={groups()} useStore={useStore} />
         </GroupPanel>
-        <BadgePanel>
+        <BadgePanel useStore={useStore}>
           <Show when={selectedGroupId()}>
-            <BadgeTable data={badges() || []} />
+            <BadgeTable data={badges() || []} useStore={useStore} />
           </Show>
         </BadgePanel>
       </div>

@@ -2,12 +2,13 @@ import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
 import { clsx } from "clsx";
 import { Panel } from "@/components/Panel";
-import { useStore } from "@/lib/hooks/useStore";
+import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import { Icon } from "./Icon";
 
 export type Props = {
   children: JSX.Element;
+  useStore: () => UseStoreType;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 const getSelectedGroupName = (
@@ -21,7 +22,7 @@ const getSelectedGroupName = (
 
 export const BadgePanel: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["children"]);
-  const [_, { groups, selectedGroupId }] = useStore();
+  const [_, { groups, selectedGroupId }] = props.useStore();
   return (
     <Panel>
       <Show

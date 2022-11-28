@@ -11,7 +11,7 @@ import { clsx } from "clsx";
 import { Icon } from "@/components/Icon";
 import { IconButton } from "@/components/IconButton";
 import { TextField } from "@/components/TextField";
-import { useStore } from "@/lib/hooks/useStore";
+import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import css from "./GroupTable.module.css";
 
@@ -48,12 +48,13 @@ const GroupSearch: Component<GroupSearchProps> = (props) => {
 
 export type Props = {
   data: Group[];
+  useStore: () => UseStoreType;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const GroupTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
   const [query, setQuery] = createSignal("");
-  const [_, { selectedGroupId, setSelectedGroupId }] = useStore();
+  const [_, { selectedGroupId, setSelectedGroupId }] = props.useStore();
 
   const onSelectClick = (e: MouseEvent, id: string) => {
     setSelectedGroupId(selectedGroupId() !== id ? id : null);
