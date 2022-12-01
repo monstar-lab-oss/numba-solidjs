@@ -27,7 +27,7 @@ const dispatch = ({ type, payload }: Action) => {
 };
 
 const createBadges = (howMany = 1) => {
-  let res: any[] = [];
+  const res: any[] = [];
 
   if (howMany < 1) return [];
 
@@ -167,7 +167,7 @@ GroupFilled.args = {
 };
 
 const useStoreManyGroupAndBadges = (): UseStoreType => {
-  let g: any[] = [];
+  const g: any[] = [];
   for (let i = 0; i < 100; i++) {
     g.push({
       id: "472:10835" + i,
