@@ -9,7 +9,6 @@ import { Meta, Story } from "@storybook/html";
 import { BadgePanel } from "./BadgePanel";
 import { GroupPanel } from "./GroupPanel";
 
-
 export default {
   title: "Components/FromScratch",
   args: {
@@ -211,7 +210,6 @@ ManyGroupAndBadges.args = {
   badges: () => ManyGroupAndBadgesBadges,
 };
 
-
 // LongBadgeName
 const useStoreLongName = (): UseStoreType => {
   const g: any[] = [];
@@ -247,7 +245,10 @@ const useStoreLongName = (): UseStoreType => {
 
 export const LongName = Template.bind({});
 
-const LongNameBadges = createBadges(2, "Long name of badge could be break layout");
+const LongNameBadges = createBadges(
+  2,
+  "Long name of badge could be break layout"
+);
 setSelectedProp(LongNameBadges);
 
 LongName.args = {
