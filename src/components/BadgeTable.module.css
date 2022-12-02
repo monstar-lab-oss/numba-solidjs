@@ -20,14 +20,13 @@
     @apply flex;
   }
   .style tbody tr.item {
-    @apply h-[40px] w-full cursor-pointer flex-row border-b bg-white hover:bg-gray-50;
+    @apply w-full cursor-pointer flex-row border-b bg-white hover:bg-gray-50;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
   }
-  .style tbody tr th {
-    /* NOTE: Fixed width for prevent broken layout. */
-    @apply self-center px-4 font-medium text-numba-black truncate w-64;
+  .style tbody tr th div{
+    @apply min-h-[32px] font-medium text-numba-black  px-4 truncate w-64 flex items-center;
   }
   .style tbody tr td {
     @apply self-center py-2 px-2;

@@ -102,7 +102,9 @@ export const GroupTable: Component<Props> = (props) => {
                     [css.selected_row]: selectedGroupId() === item.id,
                   })}
                 >
-                  <th scope="row">{item.name}</th>
+                  <th scope="row">
+                    <div>{item.name}</div>
+                  </th>
                 </tr>
               )}
             </For>

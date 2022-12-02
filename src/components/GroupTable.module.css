@@ -22,13 +22,13 @@
 
   .style tbody tr {
     /* NOTE: mr-1.5 is for inner shadow, if not add it shadow hides behind the tr */
-    @apply min-h-[49px] w-full cursor-pointer border-b bg-transparent hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600 mr-1;
+    @apply w-full cursor-pointer border-b bg-transparent hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600 mr-1;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
   }
-  .style tbody tr th {
-    @apply px-4 py-2 font-medium text-numba-black;
+  .style tbody tr th div {
+    @apply min-h-[48px] font-medium text-numba-black px-4 py-2;
   }
   .style tbody td {
     @apply flex items-center py-4 px-4;

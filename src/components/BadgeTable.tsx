@@ -157,7 +157,7 @@ export const BadgeTable: Component<Props> = (props) => {
                     </div>
                   </td>
                   <th colSpan={2} scope="row">
-                    {item.name}
+                    <div>{item.name}</div>
                   </th>
                 </tr>
               )}
