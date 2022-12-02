@@ -12,6 +12,7 @@ export type Props = {
   link?: boolean;
   iconName: IconName;
   iconColor: Color;
+  iconSize?: number;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const getButtonConfig = (link?: boolean, color?: Color): ButtonColor => {
@@ -26,8 +27,6 @@ const getButtonConfig = (link?: boolean, color?: Color): ButtonColor => {
 
   return res;
 };
-
-export const DEFAULT_ICON_SIZE = 24;
 
 export const IconButton: Component<Props> = (props) => {
   const [local, buttonAttributes, iconAttributes] = splitProps(
@@ -46,7 +45,7 @@ export const IconButton: Component<Props> = (props) => {
       <div class={clsx({ [css.style]: true })}>
         <div>
           <Icon
-            size={20}
+            size={iconAttributes.iconSize}
             name={iconAttributes.iconName}
             color={iconAttributes.iconColor}
           />
