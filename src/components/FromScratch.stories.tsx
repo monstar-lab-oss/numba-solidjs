@@ -9,6 +9,7 @@ import { Meta, Story } from "@storybook/html";
 import { BadgePanel } from "./BadgePanel";
 import { GroupPanel } from "./GroupPanel";
 
+
 export default {
   title: "Components/FromScratch",
   args: {
@@ -26,7 +27,7 @@ const dispatch = ({ type, payload }: Action) => {
   console.log("dispatch fired, ------> type: ", type, " payload : ", payload);
 };
 
-const createBadges = (howMany = 1) => {
+const createBadges = (howMany = 1, name = "") => {
   const res: any[] = [];
 
   if (howMany < 1) return [];
@@ -37,7 +38,7 @@ const createBadges = (howMany = 1) => {
 
     res.push({
       id: "472:11218" + i,
-      name: `${i + 1}`,
+      name: `${name}${i + 1}`,
       color: "BLUE",
       targetId: "423:12560" + i,
       // selected,
@@ -85,6 +86,7 @@ const Template: Story<Props> = (args) => {
   );
 };
 
+// Default
 const useStore = (): UseStoreType => {
   return [
     // @ts-expect-error FIXME: Should pass tslint.
@@ -107,6 +109,7 @@ const useStore = (): UseStoreType => {
 export const Default = Template.bind({});
 Default.args = { useStore: useStore, badges: () => [] };
 
+// CreateDisabled
 const useStoreDisabled = (): UseStoreType => {
   return [
     // @ts-expect-error FIXME: Should pass tslint.
@@ -129,6 +132,7 @@ const useStoreDisabled = (): UseStoreType => {
 export const CreateDisabled = Template.bind({});
 CreateDisabled.args = { useStore: useStoreDisabled, badges: () => [] };
 
+// GroupFilled
 const useStoreGroupFilled = (): UseStoreType => {
   const [groups, setGroups] = createSignal([
     {
@@ -166,6 +170,7 @@ GroupFilled.args = {
   badges: () => GroupFilledBadgeList,
 };
 
+// ManyGroupAndBadges
 const useStoreManyGroupAndBadges = (): UseStoreType => {
   const g: any[] = [];
   for (let i = 0; i < 100; i++) {
@@ -204,4 +209,48 @@ setSelectedProp(ManyGroupAndBadgesBadges);
 ManyGroupAndBadges.args = {
   useStore: useStoreManyGroupAndBadges,
   badges: () => ManyGroupAndBadgesBadges,
+};
+
+
+// LongBadgeName
+const useStoreLongName = (): UseStoreType => {
+  const g: any[] = [];
+  for (let i = 0; i < 100; i++) {
+    g.push({
+      id: "472:10835" + i,
+      name:
+        "Long group name could be break layout !!!!!!!!!!!!! Long group name could be break layout !!!!!!!!!!!!! Long group name could be break layout !!!!!!!!!!!!!" +
+        i,
+      children: ["423:12558", "472:11220"],
+    });
+  }
+
+  const [groups, setGroups] = createSignal(g);
+  return [
+    // @ts-expect-error FIXME: Should pass tslint.
+    {},
+    {
+      groups,
+      enabled: () => true,
+      selectedGroupId: () => "472:10835",
+      // @ts-expect-error FIXME: Should pass tslint.
+      getBadgeByGroupId: () => "",
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedGroupId: () => console.log("setSelectedGroupId"),
+      createGroup: () => console.log("createGroup"),
+      removeGroup: () => setGroups([]),
+      createBadge: () => console.log("createBadge"),
+      removeBadge: () => console.log("removeBadge"),
+    },
+  ];
+};
+
+export const LongName = Template.bind({});
+
+const LongNameBadges = createBadges(2, "Long name of badge could be break layout");
+setSelectedProp(LongNameBadges);
+
+LongName.args = {
+  useStore: useStoreLongName,
+  badges: () => LongNameBadges,
 };
