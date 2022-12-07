@@ -1,10 +1,11 @@
 import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
 import { clsx } from "clsx";
+import { Icon } from "@/components/Icon";
 import { Panel } from "@/components/Panel";
+import { Text } from "@/components/Text";
 import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
-import { Icon } from "./Icon";
 
 export type Props = {
   children: JSX.Element;
@@ -29,11 +30,13 @@ export const BadgePanel: Component<Props> = (props) => {
         when={groups().length > 0}
         fallback={() => (
           <div class="m-4 flex">
-            <div>
-              <Icon name="arrow" color="secondary" />
+            <div class="flex self-center">
+              <Icon name="arrow" color="darkGray" />
             </div>
-            <div class="items-center text-xs text-numba-dark-gray">
-              You select a group and click "Create button" first.
+            <div class="flex self-center">
+              <Text color="darkGray" size="sizeSmall">
+                You select a group and click "Create button" first.
+              </Text>
             </div>
           </div>
         )}
@@ -46,9 +49,13 @@ export const BadgePanel: Component<Props> = (props) => {
             })}
             {...attributes}
           >
-            <div class="w-full self-center truncate pl-3">
+            <Text
+              size="sizeLarge"
+              weight="weightBold"
+              class="w-full self-center truncate pl-3"
+            >
               {getSelectedGroupName(groups(), selectedGroupId())}
-            </div>
+            </Text>
           </div>
           <div>{props.children}</div>
         </div>

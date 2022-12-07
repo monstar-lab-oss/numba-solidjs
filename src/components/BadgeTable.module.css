@@ -5,45 +5,49 @@
     @apply w-full;
   }
   .style table {
-    @apply w-full text-left text-xs text-numba-dark-gray;
+    @apply w-full text-left text-xs;
   }
   .style thead tr {
     @apply flex w-full justify-between;
   }
   .style thead {
-    @apply flex  h-[47.5px] w-full flex-col items-center justify-between overflow-y-scroll border-b;
+    @apply flex  h-[48px] w-full flex-col items-center justify-between overflow-y-scroll;
   }
   .style tbody {
-    @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll;
+    @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
   }
-  .style tbody tr {
-    @apply flex;
+  .item tr {
+    @apply flex border-b;
+  }
+  .style tbody tr th{
+    @apply p-0;
   }
   .style tbody tr.item {
-    @apply w-full cursor-pointer flex-row border-b bg-white hover:bg-gray-50;
+    @apply w-full cursor-pointer flex-row bg-white hover:bg-gray-50;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
   }
-  .style tbody tr th div{
-    @apply min-h-[32px] font-medium text-numba-black  pl-4 truncate w-64 flex items-center;
+  .text{
+    @apply font-medium truncate w-64;
+  }
+  .textWrapper{
+    /* FIXME: actual size is 32px but border use 1px so I reduce 1px */
+    @apply h-[31px] flex items-center;
   }
   .style tbody tr th div p{
     @apply truncate;
   }
   .style tbody tr td {
-    @apply self-center py-2 px-2;
-  }
-  .style tbody tr td a {
-    @apply font-medium text-numba-red hover:underline;
+    @apply self-center py-0 px-2;
   }
   .style tbody tr td label {
     @apply sr-only;
   }
   .fallback {
-    @apply w-full;
+    @apply w-full p-3;
   }
   .iconContainer {
-    @apply mx-2
+    @apply mx-4
   }
 }

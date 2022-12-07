@@ -2,7 +2,7 @@
 
 @layer components {
   .style {
-    @apply inline-flex h-8 cursor-pointer items-center justify-center whitespace-nowrap rounded border px-3 text-xs font-medium shadow-sm;
+    @apply inline-flex h-8 cursor-pointer items-center justify-center whitespace-nowrap rounded border px-3 text-[12px] font-medium shadow-sm;
   }
   .link {
     @apply h-full border-none bg-transparent shadow-none px-0;
@@ -24,6 +24,9 @@
   }
   .white {
     @apply border-numba-white bg-numba-white text-numba-black;
+  }
+  .darkGray {
+    @apply border-numba-dark-gray bg-numba-dark-gray text-numba-white;
   }
   .primaryOutline {
     @apply border-numba-blue bg-transparent text-numba-blue;

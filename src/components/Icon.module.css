@@ -19,6 +19,9 @@
   .white {
     @apply fill-white;
   }
+  .darkGray {
+    @apply fill-numba-dark-gray;
+  }
   .primaryOutline {
     @apply bg-numba-blue fill-white;
   }

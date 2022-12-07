@@ -28,6 +28,12 @@ export const Icon: Component<Props> = (props) => {
   const LazyComponent = lazy(
     () => import(`./Icons/${capitalize(props.name)}.tsx`)
   );
+  const adjustPosition = (icon: IconName): string => {
+    // FIXME: arrow svg data not in center. So I need adjust in view box.
+    if (icon === "arrow") return "0 -2 20 20";
+
+    return "0 0 20 20";
+  };
   return (
     // FIXME Need refactor I wanna change button role to ButtonIcon
     <svg
@@ -37,17 +43,9 @@ export const Icon: Component<Props> = (props) => {
       }}
       class={clsx({
         [css.style]: true,
-        [css.disabled]: props.color === "disabled",
-        [css.primary]: props.color === "primary",
-        [css.danger]: props.color === "danger",
-        [css.secondary]: props.color === "secondary",
-        // FIXME this is for IconButton Component so we need handle the color inside of IconButton
-        [css.white]: props.color === "white",
-        [css.primaryOutline]: props.color === "primaryOutline",
-        [css.dangerOutline]: props.color === "dangerOutline",
-        [css.secondaryOutline]: props.color === "secondaryOutline",
+        [css[props.color]]: true,
       })}
-      viewBox="0 0 20 20"
+      viewBox={adjustPosition(props.name)}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

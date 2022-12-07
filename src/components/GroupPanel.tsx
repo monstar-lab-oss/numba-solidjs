@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { IconButton } from "@/components/IconButton";
 import { Panel } from "@/components/Panel";
 import css from "./GroupPanel.module.css";
+import { Text } from "./Text";
 
 export type Props = {
   createButtonDisabled: boolean;
@@ -22,7 +23,13 @@ export const GroupPanel: Component<Props> = (props) => {
     <Panel>
       <div class={clsx({ [css.style]: true })}>
         <div class={clsx({ [css.header]: true })} {...attributes}>
-          <div class={clsx({ [css.title]: true })}>Groups</div>
+          <Text
+            size="sizeLarge"
+            weight="weightBold"
+            class={clsx({ [css.title]: true })}
+          >
+            Groups
+          </Text>
           <IconButton
             onClick={props.onCreateClick}
             disabled={props.createButtonDisabled}

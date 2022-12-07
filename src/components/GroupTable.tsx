@@ -10,6 +10,7 @@ import {
 import { clsx } from "clsx";
 import { Icon } from "@/components/Icon";
 import { IconButton } from "@/components/IconButton";
+import { Text } from "@/components/Text";
 import { TextField } from "@/components/TextField";
 import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
@@ -80,10 +81,13 @@ export const GroupTable: Component<Props> = (props) => {
         <Show
           when={props.data.length}
           fallback={() => (
-            <span class={clsx({ [css.emptyMessage]: true })}>
-              {/* First select a frame/object you want to add numbering to 😄 */}
+            <Text
+              size="sizeSmall"
+              color="darkGray"
+              class={clsx({ [css.emptyMessage]: true })}
+            >
               No groups in the list.
-            </span>
+            </Text>
           )}
         >
           <tbody class="border-t">
@@ -91,7 +95,11 @@ export const GroupTable: Component<Props> = (props) => {
               each={filteredData()}
               fallback={() => (
                 <tr>
-                  <td>Oops! No groups found.</td>
+                  <td>
+                    <Text size="sizeSmall" color="darkGray">
+                      Oops! No groups found.
+                    </Text>
+                  </td>
                 </tr>
               )}
             >
@@ -103,7 +111,7 @@ export const GroupTable: Component<Props> = (props) => {
                   })}
                 >
                   <th scope="row">
-                    <div>{item.name}</div>
+                    <Text size="sizeSmall">{item.name}</Text>
                   </th>
                 </tr>
               )}

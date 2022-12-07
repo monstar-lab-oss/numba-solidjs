@@ -4,6 +4,7 @@ import type { Color } from "@/types/Colors";
 import { Button } from "./Button";
 import css from "./Confirm.module.css";
 import { Modal } from "./Modal";
+import { Text } from "./Text";
 
 export type ConfirmOptions = {
   onConfirm: () => void;
@@ -32,7 +33,7 @@ export const Confirm: Component<Props> = (props) => {
             color={`${props.confirmButtonColor}`}
             onClick={props.onConfirm}
           >
-            {props.confirmButtonText}
+            <Text size="sizeMedium">{props.confirmButtonText}</Text>
           </Button>
         </div>
       </div>

@@ -248,12 +248,12 @@ ManyGroupAndBadges.args = {
   badges: () => ManyGroupAndBadgesBadges,
 };
 
-// LongBadgeName
+// LongName
 const useStoreLongName = (): UseStoreType => {
   const g: any[] = [];
   for (let i = 0; i < 100; i++) {
     g.push({
-      id: "472:10835" + i,
+      id: `472:10835${i === 0 ? "" : i}`,
       name:
         "Long group name could be break layout !!!!!!!!!!!!! Long group name could be break layout !!!!!!!!!!!!! Long group name could be break layout !!!!!!!!!!!!!" +
         i,
