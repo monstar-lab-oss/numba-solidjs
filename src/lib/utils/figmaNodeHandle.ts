@@ -1,12 +1,7 @@
-import {
-  BADGE_TARGET_ID,
-  GROUP_NAME,
-  NUMBERING_BADGE_GROUP_ID,
-  NUMBERING_GROUP_ID,
-  NUMBERING_GROUP_NAME,
-} from "@/constants";
+import { BADGE_TARGET_ID, GROUP_NAME, NUMBERING_BADGE_GROUP_ID, NUMBERING_GROUP_ID, NUMBERING_GROUP_NAME } from "@/constants";
 import { setColor } from "@/lib/utils/figmaRGBA";
 import { UpdateStorePayload } from "@/types/Actions";
+
 
 export function reduceAllNodes() {
   const numberingbadgeGroups = getNodesByType("GROUP")
@@ -89,7 +84,10 @@ export function removeBadgeNode(id: string) {
 }
 
 export function setIndexNode(index: number, targetNode: SceneNode) {
+  if (targetNode.getPluginData("numba-object") === "1") return;
+
   const componentNode = figma.createComponent();
+  componentNode.setPluginData("numba-object", "1");
   componentNode.name = `${index}`;
   componentNode.resize(24, 24);
   componentNode.cornerRadius = 24;
