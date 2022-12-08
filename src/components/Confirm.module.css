@@ -2,7 +2,7 @@
 
 @layer components {
   .body {
-    @apply relative h-[110px] w-[250px] space-y-4 rounded-[2px] bg-white shadow-2xl;
+    @apply relative h-[110px] w-[250px] space-y-4 rounded-[2px] bg-white;
   }
   .header {
     @apply flex items-center justify-center px-2 pt-4 pb-1;
