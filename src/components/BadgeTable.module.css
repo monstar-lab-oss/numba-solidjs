@@ -19,11 +19,8 @@
   .style tbody tr th{
     @apply p-0;
   }
-  .style tbody tr{
-    @apply border-b;
-  }
   .style tbody tr.item {
-    @apply w-full cursor-pointer flex-row bg-white hover:bg-gray-50;
+    @apply w-full cursor-pointer flex-row bg-white hover:bg-gray-50 border-b;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
