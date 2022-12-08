@@ -20,7 +20,10 @@
     @apply flex border-b;
   }
   .style tbody tr th{
-    @apply p-0;
+    @apply p-0 border-b;
+  }
+  .style tbody tr td{
+    @apply border-b;
   }
   .style tbody tr.item {
     @apply w-full cursor-pointer flex-row bg-white hover:bg-gray-50;
@@ -32,8 +35,7 @@
     @apply font-medium truncate w-64;
   }
   .textWrapper{
-    /* FIXME: actual size is 32px but border use 1px so I reduce 1px */
-    @apply h-[31px] flex items-center;
+    @apply h-[32px] flex items-center;
   }
   .style tbody tr th div p{
     @apply truncate;
