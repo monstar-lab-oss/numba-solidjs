@@ -5,7 +5,6 @@ import type { Color } from "@/types/Colors";
 import { capitalize } from "../lib/utils/capitalize";
 import css from "./Icon.module.css";
 
-
 export const ICON_NAMES = [
   "create",
   "delete",
