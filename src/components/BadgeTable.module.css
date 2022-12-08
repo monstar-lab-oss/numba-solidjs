@@ -16,13 +16,10 @@
   .style tbody {
     @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
   }
-  .item tr {
-    @apply flex border-b;
-  }
   .style tbody tr th{
-    @apply p-0 border-b;
+    @apply p-0;
   }
-  .style tbody tr td{
+  .style tbody tr{
     @apply border-b;
   }
   .style tbody tr.item {
