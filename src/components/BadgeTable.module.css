@@ -35,7 +35,8 @@
     @apply font-medium truncate w-64;
   }
   .textWrapper{
-    @apply h-[32px] flex items-center;
+    /* FIXME: actual size is 32px but border use 1px so I reduce 1px */
+    @apply h-[31px] flex items-center;
   }
   .style tbody tr th div p{
     @apply truncate;
