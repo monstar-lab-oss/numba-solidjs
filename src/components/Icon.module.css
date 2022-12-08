@@ -5,7 +5,7 @@
     @apply flex h-full content-center items-center justify-center self-center rounded-full p-0.5;
   }
   .disabled {
-    @apply fill-numba-dark-gray opacity-40;
+    @apply fill-numba-gray;
   }
   .primary {
     @apply fill-numba-blue;

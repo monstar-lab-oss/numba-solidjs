@@ -31,7 +31,7 @@ export const BadgePanel: Component<Props> = (props) => {
         fallback={() => (
           <div class="m-4 flex">
             <div class="flex self-center">
-              <Icon name="arrow" color="darkGray" />
+              <Icon name="arrowLeft" color="darkGray" />
             </div>
             <div class="flex self-center">
               <Text color="darkGray" size="sizeSmall">

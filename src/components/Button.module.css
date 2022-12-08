@@ -8,7 +8,7 @@
     @apply h-full border-none bg-transparent shadow-none px-0;
   }
   .disabled {
-    @apply cursor-not-allowed opacity-40;
+    @apply cursor-not-allowed;
   }
   .coloredDisabled {
     @apply border-numba-gray bg-numba-gray text-numba-white;
