@@ -5,6 +5,7 @@ export const UI_HEIGHT = 424;
 export const MAX_BADGE_ALLOWED = 999;
 export const GROUP_NAME = `(${APP_NAME})`;
 export const NUMBERING_GROUP_NAME = `${GROUP_NAME}numbering`;
+export const NUMBERED_BY_NUMBA = "NUMBERED_BY_NUMBA";
 
 // figma plugin keys
 export const NUMBERING_GROUP_ID = "NUMBERING_GROUP_ID";
