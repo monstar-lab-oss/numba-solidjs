@@ -76,10 +76,11 @@ function onMessage(action: Action) {
         return figma.notify("Please select a single node.");
 
       const group = createGroup(currentNode);
+      if (!group) return;
 
       // FIXME: If I use spread syntax I got `Unexpected token ...` so I do this for now.
       const res = reduceAllNodes();
-      res["selectedGroupID"] = group?.id;
+      res["selectedGroupID"] = group.id;
 
       figma.currentPage.selection = [currentNode];
       dispatch({
