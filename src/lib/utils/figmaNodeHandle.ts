@@ -1,10 +1,10 @@
 import {
   BADGE_TARGET_ID,
   GROUP_NAME,
-  NUMBERED_BY_NUMBA,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   NUMBERING_GROUP_NAME,
+  RELATED_NUMBA,
 } from "@/constants";
 import { setColor } from "@/lib/utils/figmaRGBA";
 import { UpdateStorePayload } from "@/types/Actions";
@@ -80,7 +80,7 @@ export function removeGroupNode(id: string) {
   // TODO: should we iterator? is children of group node is only one?
   const i = parent.children.findIndex((x) => groupNode.id === x.id);
   groupNode.children.forEach((x) => {
-    x.setPluginData(NUMBERED_BY_NUMBA, "");
+    x.setPluginData(RELATED_NUMBA, "");
     parent.insertChild(i, x);
   });
 }
@@ -118,6 +118,8 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 
   const instanceNode = componentNode.createInstance();
   instanceNode.setPluginData(BADGE_TARGET_ID, targetNode.id);
+  textNode.setPluginData(RELATED_NUMBA, "1");
+  componentNode.setPluginData(RELATED_NUMBA, "1");
 
   // refs. https://forum.figma.com/t/known-bug-getting-x-y-coordinates-of-rectangles-within-frames-but-not-groups/7012
   const newNode = targetNode.absoluteTransform;
@@ -136,7 +138,7 @@ export function createGroup(node: SceneNode) {
   const group = figma.group([node], node.parent, i);
   group.name = `${GROUP_NAME}${node.name}`;
   group.setPluginData(NUMBERING_GROUP_ID, group.id);
-  node.setPluginData(NUMBERED_BY_NUMBA, "1");
+  node.setPluginData(RELATED_NUMBA, "1");
 
   return group;
 }
@@ -180,6 +182,6 @@ const isCreatedByNUMBA = (node: SceneNode) => {
   return (
     node.getPluginData(NUMBERING_GROUP_ID) !== "" ||
     node.getPluginData(BADGE_TARGET_ID) !== "" ||
-    node.getPluginData(NUMBERED_BY_NUMBA) !== ""
+    node.getPluginData(RELATED_NUMBA) !== ""
   );
 };
