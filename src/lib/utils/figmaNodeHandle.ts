@@ -53,7 +53,7 @@ export function getNodesByType<T extends NodeType>(type: T) {
   });
 }
 
-export function getGroupNodeById(id: string, type: NodeType) {
+export function getNode(id: string, type: NodeType) {
   const node = getNodesByType(type).find((g) => g.id === id);
   if (!node) throw new Error(`NO ${type} NODE!`);
   return node as GroupNode;
@@ -67,7 +67,7 @@ export function setGroup(node: SceneNode, name: string) {
 }
 
 export function removeGroupNode(id: string) {
-  const groupNode = getGroupNodeById(id, "GROUP");
+  const groupNode = getNode(id, "GROUP");
   const parent = groupNode.parent;
   if (!parent) return;
 

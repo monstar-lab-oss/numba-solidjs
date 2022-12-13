@@ -9,7 +9,7 @@ import { dispatch } from "@/lib/dispatch";
 import {
   createGroup,
   createNumberGroup,
-  getGroupNodeById,
+  getNode,
   isEnableCreategroup,
   reduceAllNodes,
   removeBadgeNode,
@@ -69,22 +69,18 @@ function onMessage(action: Action) {
 
       figma.currentPage.selection = [
         // FIXME: We can aggregate these argument
-        getGroupNodeById(payload, "GROUP"),
+        getNode(payload, "GROUP"),
       ];
-      figma.viewport.scrollAndZoomIntoView([
-        getGroupNodeById(payload, "GROUP"),
-      ]);
+      figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
       return;
     case "APP/SELECT_BADGE":
       if (!payload) return (figma.currentPage.selection = []);
 
       figma.currentPage.selection = [
         // FIXME: We can aggregate these argument
-        getGroupNodeById(payload, "INSTANCE"),
+        getNode(payload, "INSTANCE"),
       ];
-      figma.viewport.scrollAndZoomIntoView([
-        getGroupNodeById(payload, "INSTANCE"),
-      ]);
+      figma.viewport.scrollAndZoomIntoView([getNode(payload, "INSTANCE")]);
       return;
     case "APP/CREATE_GROUP": {
       const [currentNode, ...rest] = figma.currentPage.selection;
@@ -115,7 +111,7 @@ function onMessage(action: Action) {
 
       createNumberGroup({
         targetNode: currentNode,
-        parentNode: getGroupNodeById(payload, "GROUP"),
+        parentNode: getNode(payload, "GROUP"),
       });
 
       dispatch({
@@ -130,7 +126,7 @@ function onMessage(action: Action) {
       const [currentNode] = figma.currentPage.selection;
       if (!currentNode) return;
 
-      const badgeGroup = getGroupNodeById(payload.parentId, "GROUP")
+      const badgeGroup = getNode(payload.parentId, "GROUP")
         .findAllWithCriteria({
           types: ["GROUP"],
         })
