@@ -47,7 +47,9 @@ export const IconButton: Component<Props> = (props) => {
           <Icon
             size={iconAttributes.iconSize}
             name={iconAttributes.iconName}
-            color={iconAttributes.iconColor}
+            color={
+              buttonAttributes.disabled ? "disabled" : iconAttributes.iconColor
+            }
           />
         </div>
         <Show when={!!local.children}>
