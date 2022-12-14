@@ -12,6 +12,7 @@ export const ICON_NAMES = [
   "search",
   "textDelete",
   "arrowLeft",
+  "arrowLeftNUMBA",
   "arrowRight",
 ] as const;
 
