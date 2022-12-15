@@ -7,6 +7,7 @@ import {
 } from "@/constants";
 import { setColor } from "@/lib/utils/figmaRGBA";
 import { UpdateStorePayload } from "@/types/Actions";
+import { NodeType } from "@/types/Node";
 
 export function reduceAllNodes() {
   const numberingbadgeGroups = getNodesByType("GROUP")
@@ -44,7 +45,7 @@ export function reduceAllNodes() {
     numberingbadgeGroups,
   } as UpdateStorePayload;
 }
-export function getNodesByType<T extends "INSTANCE" | "GROUP">(type: T) {
+export function getNodesByType<T extends NodeType>(type: T) {
   // Currently using `findAllWithCriteria`, should I use `findChildren` ?
   // OR https://github.com/figma/plugin-samples/blob/22e12c5406c72f2a88d18810d3a6efb18ece0356/text-search/code.ts#L28-L36
   return figma.currentPage.findAllWithCriteria({
@@ -52,9 +53,9 @@ export function getNodesByType<T extends "INSTANCE" | "GROUP">(type: T) {
   });
 }
 
-export function getGroupNodeById(id: string) {
-  const node = getNodesByType("GROUP").find((g) => g.id === id);
-  if (!node) throw new Error("NO GROUP NODE!");
+export function getNode(id: string, type: NodeType) {
+  const node = getNodesByType(type).find((g) => g.id === id);
+  if (!node) throw new Error(`NO ${type} NODE!`);
   return node as GroupNode;
 }
 
@@ -66,7 +67,7 @@ export function setGroup(node: SceneNode, name: string) {
 }
 
 export function removeGroupNode(id: string) {
-  const groupNode = getGroupNodeById(id);
+  const groupNode = getNode(id, "GROUP");
   const parent = groupNode.parent;
   if (!parent) return;
 

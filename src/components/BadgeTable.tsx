@@ -23,7 +23,10 @@ export type Props = {
 export const BadgeTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
 
-  const [_, { removeBadge, selectedGroupId, setSelectedGroupId }] = useStore();
+  const [
+    _,
+    { removeBadge, selectedGroupId, setSelectedGroupId, setSelectedBadgeID },
+  ] = useStore();
 
   const isDisabledRemove = createMemo(() =>
     props.data.every((x) => !x.selected())
@@ -154,8 +157,12 @@ export const BadgeTable: Component<Props> = (props) => {
                       {/* <label for="checkbox-table-search-1">checkbox</label> */}
                     </div>
                   </td>
-                  <th colSpan={2} scope="row">
-                    {item.name}
+                  <th
+                    colSpan={2}
+                    scope="row"
+                    onClick={() => setSelectedBadgeID(item.id)}
+                  >
+                    <div>{item.name}</div>
                   </th>
                 </tr>
               )}

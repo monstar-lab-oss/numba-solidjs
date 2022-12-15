@@ -31,6 +31,12 @@
   .style tbody tr td {
     @apply self-center py-2 px-2;
   }
+  .style tbody tr th {
+    @apply h-full w-full;
+  }
+  .style tbody tr th div{
+    @apply flex h-full items-center;
+  }
   .style tbody tr td a {
     @apply font-medium text-numba-red hover:underline;
   }
