@@ -167,6 +167,13 @@ export function createNumberGroup({
 export function isEnableCreateGroup(node?: SceneNode) {
   if (!node) return false;
 
+  // Check parent has NUMBA node.
+  let parent = node.parent;
+  while (parent) {
+    if (isCreatedByNUMBA(parent)) return false;
+    parent = parent.parent;
+  }
+
   // Group node
   if (node.getPluginData(NUMBERING_GROUP_ID)) return false;
 
@@ -179,7 +186,7 @@ export function isEnableCreateGroup(node?: SceneNode) {
   return true;
 }
 
-const isCreatedByNUMBA = (node: SceneNode) => {
+const isCreatedByNUMBA = (node: SceneNode | (BaseNode & ChildrenMixin)) => {
   return (
     node.getPluginData(NUMBERING_GROUP_ID) !== "" ||
     node.getPluginData(BADGE_TARGET_ID) !== "" ||
