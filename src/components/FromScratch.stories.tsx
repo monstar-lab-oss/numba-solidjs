@@ -285,7 +285,7 @@ export const LongName = Template.bind({});
 
 const LongNameBadges = createBadges(
   2,
-  "Long name of badge could be break layout"
+  "Long name of badge could be break layout × Long name of badge could be break layout"
 );
 setSelectedProp(LongNameBadges);
 
