@@ -98,6 +98,8 @@ const useStore = (): UseStoreType => {
       getBadgeByGroupId: () => "",
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => console.log("removeGroup"),
       createBadge: () => console.log("createBadge"),
@@ -121,6 +123,8 @@ const useStoreEnabled = (): UseStoreType => {
       getBadgeByGroupId: () => "",
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => console.log("removeGroup"),
       createBadge: () => console.log("createBadge"),
@@ -151,6 +155,8 @@ const useStoreGroupFilled = (): UseStoreType => {
       getBadgeByGroupId: () => "",
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
       createBadge: () => console.log("createBadge"),
@@ -189,6 +195,8 @@ const useStoreGroupAndBadgeFilled = (): UseStoreType => {
       getBadgeByGroupId: () => "",
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
       createBadge: () => console.log("createBadge"),
@@ -230,6 +238,8 @@ const useStoreManyGroupAndBadges = (): UseStoreType => {
       getBadgeByGroupId: () => "",
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
       createBadge: () => console.log("createBadge"),
@@ -273,6 +283,8 @@ const useStoreLongName = (): UseStoreType => {
       getBadgeByGroupId: () => "",
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
       createBadge: () => console.log("createBadge"),
