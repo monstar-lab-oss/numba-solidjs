@@ -4,7 +4,7 @@ import {
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   NUMBERING_GROUP_NAME,
-  RELATED_NUMBA,
+  RELATED_WITH_NUMBA,
 } from "@/constants";
 import { setColor } from "@/lib/utils/figmaRGBA";
 import { UpdateStorePayload } from "@/types/Actions";
@@ -81,7 +81,7 @@ export function removeGroupNode(id: string) {
   // TODO: should we iterator? is children of group node is only one?
   const i = parent.children.findIndex((x) => groupNode.id === x.id);
   groupNode.children.forEach((x) => {
-    x.setPluginData(RELATED_NUMBA, "");
+    x.setPluginData(RELATED_WITH_NUMBA, "");
     parent.insertChild(i, x);
   });
 }
@@ -94,7 +94,7 @@ export function removeBadgeNode(id: string) {
 }
 
 export function setIndexNode(index: number, targetNode: SceneNode) {
-  if (isCreatedByNUMBA(targetNode)) return;
+  if (isRelatedWithNUMBA(targetNode)) return;
 
   const componentNode = figma.createComponent();
   componentNode.name = `${index}`;
@@ -119,8 +119,8 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 
   const instanceNode = componentNode.createInstance();
   instanceNode.setPluginData(BADGE_TARGET_ID, targetNode.id);
-  textNode.setPluginData(RELATED_NUMBA, "1");
-  componentNode.setPluginData(RELATED_NUMBA, "1");
+  textNode.setPluginData(RELATED_WITH_NUMBA, textNode.id);
+  componentNode.setPluginData(RELATED_WITH_NUMBA, componentNode.id);
 
   // refs. https://forum.figma.com/t/known-bug-getting-x-y-coordinates-of-rectangles-within-frames-but-not-groups/7012
   const newNode = targetNode.absoluteTransform;
@@ -133,13 +133,13 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 }
 
 export function createGroup(node: SceneNode) {
-  if (!node.parent || isCreatedByNUMBA(node)) return;
+  if (!node.parent || isRelatedWithNUMBA(node)) return;
 
   const i = node.parent.children.findIndex((x) => node.id === x.id);
   const group = figma.group([node], node.parent, i);
   group.name = `${GROUP_NAME}${node.name}`;
   group.setPluginData(NUMBERING_GROUP_ID, group.id);
-  node.setPluginData(RELATED_NUMBA, "1");
+  node.setPluginData(RELATED_WITH_NUMBA, node.id);
 
   return group;
 }
@@ -151,7 +151,7 @@ export function createNumberGroup({
   targetNode: SceneNode;
   parentNode: GroupNode;
 }) {
-  if (isCreatedByNUMBA(targetNode)) return;
+  if (isRelatedWithNUMBA(targetNode)) return;
 
   const badgeNode = setIndexNode(1, targetNode);
   if (!badgeNode) return;
@@ -167,13 +167,6 @@ export function createNumberGroup({
 export function isEnableCreateGroup(node?: SceneNode) {
   if (!node) return false;
 
-  // Check parent has NUMBA node.
-  let parent = node.parent;
-  while (parent) {
-    if (isCreatedByNUMBA(parent)) return false;
-    parent = parent.parent;
-  }
-
   // Group node
   if (node.getPluginData(NUMBERING_GROUP_ID)) return false;
 
@@ -181,15 +174,22 @@ export function isEnableCreateGroup(node?: SceneNode) {
   if (node.parent && node.parent.getPluginData(NUMBERING_GROUP_ID))
     return false;
 
-  if (isCreatedByNUMBA(node)) return false;
+  if (isRelatedWithNUMBA(node)) return false;
+
+  // Check parent has NUMBA node.
+  let parent = node.parent;
+  while (parent) {
+    if (isRelatedWithNUMBA(parent)) return false;
+    parent = parent.parent;
+  }
 
   return true;
 }
 
-const isCreatedByNUMBA = (node: SceneNode | (BaseNode & ChildrenMixin)) => {
+const isRelatedWithNUMBA = (node: SceneNode | (BaseNode & ChildrenMixin)) => {
   return (
     node.getPluginData(NUMBERING_GROUP_ID) !== "" ||
     node.getPluginData(BADGE_TARGET_ID) !== "" ||
-    node.getPluginData(RELATED_NUMBA) !== ""
+    node.getPluginData(RELATED_WITH_NUMBA) !== ""
   );
 };
