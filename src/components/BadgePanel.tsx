@@ -52,7 +52,7 @@ export const BadgePanel: Component<Props> = (props) => {
             <Text
               size="sizeLarge"
               weight="weightBold"
-              class="w-full self-center truncate pl-3"
+              class="w-full self-center truncate px-4"
             >
               {getSelectedGroupName(groups(), selectedGroupId())}
             </Text>
