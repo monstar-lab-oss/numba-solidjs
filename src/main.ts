@@ -9,7 +9,7 @@ import { dispatch } from "@/lib/dispatch";
 import {
   createGroup,
   createNumberGroup,
-  getGroupNodeById,
+  getNode,
   isEnableCreategroup,
   reduceAllNodes,
   removeBadgeNode,
@@ -38,6 +38,7 @@ function onSelectionchange() {
 
   // Reflected in Store when operated at the Figma panel
   // TODO: Very expensive logic, see useStore.tsx L115
+  // badge selected state
   dispatch({
     type: "UI/UPDATE_STORE",
     payload: reduceAllNodes(),
@@ -63,11 +64,23 @@ function onMessage(action: Action) {
   const { type, payload } = action;
 
   switch (type) {
-    case "APP/SELECT_NODE":
+    case "APP/SELECT_GROUP":
       if (!payload) return (figma.currentPage.selection = []);
 
-      figma.currentPage.selection = [getGroupNodeById(payload)];
-      figma.viewport.scrollAndZoomIntoView([getGroupNodeById(payload)]);
+      figma.currentPage.selection = [
+        // FIXME: We can aggregate these argument
+        getNode(payload, "GROUP"),
+      ];
+      figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
+      return;
+    case "APP/SELECT_BADGE":
+      if (!payload) return (figma.currentPage.selection = []);
+
+      figma.currentPage.selection = [
+        // FIXME: We can aggregate these argument
+        getNode(payload, "INSTANCE"),
+      ];
+      figma.viewport.scrollAndZoomIntoView([getNode(payload, "INSTANCE")]);
       return;
     case "APP/CREATE_GROUP": {
       const [currentNode, ...rest] = figma.currentPage.selection;
@@ -76,13 +89,11 @@ function onMessage(action: Action) {
         return figma.notify("Please select a single node.");
 
       const group = createGroup(currentNode);
+      if (!group) return;
 
       // FIXME: If I use spread syntax I got `Unexpected token ...` so I do this for now.
       const res = reduceAllNodes();
-
-      if (group) {
-        res["selectedGroupID"] = group.id;
-      }
+      res["selectedGroupID"] = group.id;
 
       figma.currentPage.selection = [currentNode];
       dispatch({
@@ -101,7 +112,7 @@ function onMessage(action: Action) {
 
       createNumberGroup({
         targetNode: currentNode,
-        parentNode: getGroupNodeById(payload),
+        parentNode: getNode(payload, "GROUP"),
       });
 
       dispatch({
@@ -116,7 +127,7 @@ function onMessage(action: Action) {
       const [currentNode] = figma.currentPage.selection;
       if (!currentNode) return;
 
-      const badgeGroup = getGroupNodeById(payload.parentId)
+      const badgeGroup = getNode(payload.parentId, "GROUP")
         .findAllWithCriteria({
           types: ["GROUP"],
         })

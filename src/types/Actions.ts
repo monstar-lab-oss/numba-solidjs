@@ -27,7 +27,11 @@ export type Action =
       };
     }
   | {
-      type: "APP/SELECT_NODE";
+      type: "APP/SELECT_GROUP";
+      payload: NodeId | null;
+    }
+  | {
+      type: "APP/SELECT_BADGE";
       payload: NodeId | null;
     }
   | {

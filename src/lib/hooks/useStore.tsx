@@ -60,12 +60,13 @@ export const Provider: ParentComponent<Props> = (props) => {
     return tmp;
   };
 
-  const createBadgeWithSelectedState = ({
-    id,
-    name,
-    targetId,
-  }: Pick<Badge, "id" | "name" | "targetId">) => {
-    const [selected, setSelected] = createSignal(false);
+  const createBadgeWithSelectedState = (
+    groupID: string,
+    { id, name, targetId }: Pick<Badge, "id" | "name" | "targetId">
+  ) => {
+    const badge = state.badges[groupID]?.find((v) => v.id === id);
+    const [selected, setSelected] = createSignal(!!badge?.selected());
+
     return {
       id,
       name,
@@ -87,7 +88,11 @@ export const Provider: ParentComponent<Props> = (props) => {
     name: Badge["name"];
     targetId: string;
   }) => {
-    const b: Badge = createBadgeWithSelectedState({ id, name, targetId });
+    const b: Badge = createBadgeWithSelectedState(parentId, {
+      id,
+      name,
+      targetId,
+    });
     setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
   };
 
@@ -105,7 +110,11 @@ export const Provider: ParentComponent<Props> = (props) => {
 
   const setSelectedGroupId = (id: string | null) => {
     _setSelectedGroupId(id);
-    dispatch({ type: "APP/SELECT_NODE", payload: id });
+    dispatch({ type: "APP/SELECT_GROUP", payload: id });
+  };
+
+  const setSelectedBadgeID = (id: string | null) => {
+    dispatch({ type: "APP/SELECT_BADGE", payload: id });
   };
 
   onMount(() => {
@@ -124,7 +133,7 @@ export const Provider: ParentComponent<Props> = (props) => {
             const badges = Object.keys(badgesRaw).reduce((acc, key) => {
               return Object.assign(acc, {
                 [key]: badgesRaw[key].map((x) =>
-                  createBadgeWithSelectedState(x)
+                  createBadgeWithSelectedState(key, x)
                 ),
               });
             }, {});
@@ -185,6 +194,7 @@ export const Provider: ParentComponent<Props> = (props) => {
       setEnabled,
       selectedGroupId,
       setSelectedGroupId,
+      setSelectedBadgeID,
       groups,
       removeGroup,
       getBadgeByGroupId,
@@ -202,6 +212,7 @@ export type UseStoreType = [
     enabled: Accessor<boolean>;
     selectedGroupId: Accessor<string | null>;
     setSelectedGroupId: Setter<string | null>;
+    setSelectedBadgeID: Setter<string | null>;
     setEnabled: Setter<boolean>;
     groups: Accessor<Group[]>;
     createGroup: ({ id, name }: { id: string; name: string }) => void;
