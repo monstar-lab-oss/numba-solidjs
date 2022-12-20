@@ -111,7 +111,7 @@ export const BadgeTable: Component<Props> = (props) => {
                     id="checkbox-all-search"
                     checked={isSelectAll()}
                     onChange={() => onToggleAllClick()}
-                    indeterminate={isIndeterminate()}
+                    indeterminate={isIndeterminate() || isSelectAll()}
                   />
                   <label for="checkbox-all-search" class="ml-2">
                     <Text size="sizeSmall" weight="weightRegular">
