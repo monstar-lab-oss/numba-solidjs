@@ -1,4 +1,12 @@
-import { Component, createMemo, createSignal, For, JSX, Show, splitProps } from "solid-js";
+import {
+  Component,
+  createMemo,
+  createSignal,
+  For,
+  JSX,
+  Show,
+  splitProps,
+} from "solid-js";
 import { Portal } from "solid-js/web";
 import { clsx } from "clsx";
 import css from "@/components/BadgeTable.module.css";
@@ -8,7 +16,6 @@ import { IconButton } from "@/components/IconButton";
 import { Text } from "@/components/Text";
 import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Badge } from "@/types/Badge";
-
 
 export type Props = {
   data: Badge[];
@@ -161,7 +168,11 @@ export const BadgeTable: Component<Props> = (props) => {
                       {/* <label for="checkbox-table-search-1">checkbox</label> */}
                     </div>
                   </td>
-                  <th colSpan={2} scope="row" onClick={() => setSelectedBadgeID(item.id)}>
+                  <th
+                    colSpan={2}
+                    scope="row"
+                    onClick={() => setSelectedBadgeID(item.id)}
+                  >
                     <div class={clsx({ [css.textWrapper]: true })}>
                       <Text
                         class={clsx({ [css.text]: true })}
