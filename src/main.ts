@@ -10,7 +10,7 @@ import {
   createGroup,
   createNumberGroup,
   getNode,
-  isEnableCreategroup,
+  isEnableCreateGroup,
   reduceAllNodes,
   removeBadgeNode,
   removeGroupNode,
@@ -46,7 +46,7 @@ function onSelectionchange() {
 
   dispatch({
     type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
-    payload: isEnableCreategroup(currentNode),
+    payload: isEnableCreateGroup(currentNode),
   });
 
   if (!currentNode) return;
@@ -147,6 +147,7 @@ function onMessage(action: Action) {
         badgeGroup.children.map((x) => Number(x.name))
       );
       const badgeNode = setIndexNode(idx, currentNode);
+      if (!badgeNode) return;
       badgeGroup.insertChild(0, badgeNode);
 
       dispatch({
@@ -193,7 +194,7 @@ async function onRun() {
 
   dispatch({
     type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
-    payload: isEnableCreategroup(currentNode),
+    payload: isEnableCreateGroup(currentNode),
   });
 }
 
