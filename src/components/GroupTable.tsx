@@ -90,7 +90,7 @@ export const GroupTable: Component<Props> = (props) => {
             </Text>
           )}
         >
-          <tbody class="border-t">
+          <tbody>
             <For
               each={filteredData()}
               fallback={() => (
@@ -108,6 +108,7 @@ export const GroupTable: Component<Props> = (props) => {
                   onClick={(e) => onSelectClick(e, item.id)}
                   class={clsx({
                     [css.selected_row]: selectedGroupId() === item.id,
+                    [css.item]: true,
                   })}
                 >
                   <th scope="row">
