@@ -30,7 +30,7 @@
     @apply bg-gray-50;
   }
   .style tbody tr th div {
-    /* FIXME: actual size is 48px but border use 1px so I reduce 1px */
+    /* FIXME: actual size is 48px but border use 1px  so height reduced 1px */
     @apply h-[47px] font-medium px-4 py-2 table-cell align-middle;
   }
   .style tbody th {
