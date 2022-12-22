@@ -36,6 +36,18 @@ export const IconButton: Component<Props> = (props) => {
     ["onClick", "disabled"]
   );
 
+  const getIconDisabledColor = (
+    disabled: boolean | undefined,
+    disabledColor: Color | undefined,
+    color: Color
+  ): Color => {
+    if (disabled && disabledColor) return disabledColor;
+
+    if (disabled) return "disabled";
+
+    return color;
+  };
+
   return (
     <Button
       {...{
@@ -48,11 +60,11 @@ export const IconButton: Component<Props> = (props) => {
           <Icon
             size={iconAttributes.iconSize}
             name={iconAttributes.iconName}
-            color={
-              iconAttributes.iconDisabledColor
-                ? iconAttributes.iconDisabledColor
-                : "disabled"
-            }
+            color={getIconDisabledColor(
+              buttonAttributes.disabled,
+              iconAttributes.iconDisabledColor,
+              iconAttributes.iconColor
+            )}
           />
         </div>
         <Show when={!!local.children}>
