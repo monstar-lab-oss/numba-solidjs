@@ -20,13 +20,13 @@
     @apply flex h-[295px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
   }
   .item {
-    @apply hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600 mr-0.5;
+    @apply hover:bg-numba-white-gray;
   }
   .style tbody tr {
     @apply w-full cursor-pointer bg-transparent;
   }
   .style tbody tr.selected_row {
-    @apply bg-gray-50;
+    @apply bg-numba-white-gray;
   }
   .style tbody tr th div {
     @apply h-[32px] font-medium px-4 py-2 table-cell align-middle;
@@ -35,7 +35,7 @@
     @apply p-0;
   }
   .style tbody td {
-    @apply flex items-center py-4 px-4;
+    @apply flex items-center p-4;
   }
   .emptyMessage {
     @apply px-4 py-2;
