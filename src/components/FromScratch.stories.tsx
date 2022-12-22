@@ -75,7 +75,7 @@ const Template: Story<Props> = (args) => {
           <GroupTable data={groups()} useStore={useStore} />
         </GroupPanel>
 
-        <BadgePanel useStore={args.useStore}  badges={args.badges() || []}>
+        <BadgePanel useStore={args.useStore} badges={args.badges() || []}>
           <Show when={true}>
             <BadgeTable data={args.badges() || []} useStore={args.useStore} />
           </Show>
@@ -93,9 +93,8 @@ const useStore = (): UseStoreType => {
     {
       groups: () => [],
       enabled: () => false,
-      selectedGroupId: () => "",
-      // @ts-expect-error FIXME: Should pass tslint.
-      getBadgeByGroupId: () => "",
+      selectedGroupId: () => "472:10835",
+      getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
       // @ts-expect-error FIXME: Should pass tslint.
@@ -118,9 +117,8 @@ const useStoreEnabled = (): UseStoreType => {
     {
       groups: () => [],
       enabled: () => true,
-      selectedGroupId: () => "",
-      // @ts-expect-error FIXME: Should pass tslint.
-      getBadgeByGroupId: () => "",
+      selectedGroupId: () => "472:10835",
+      getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
       // @ts-expect-error FIXME: Should pass tslint.
@@ -150,9 +148,9 @@ const useStoreCreateDisabled = (): UseStoreType => {
     {
       groups,
       enabled: () => false,
-      selectedGroupId: () => "",
+      selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
-      getBadgeByGroupId: () => "",
+      getBadgeByGroupId: () => [""],
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
       // @ts-expect-error FIXME: Should pass tslint.
@@ -189,8 +187,7 @@ const useStoreGroupFilled = (): UseStoreType => {
       groups,
       enabled: () => true,
       selectedGroupId: () => "472:10835",
-      // @ts-expect-error FIXME: Should pass tslint.
-      getBadgeByGroupId: () => "",
+      getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
       // @ts-expect-error FIXME: Should pass tslint.
@@ -230,7 +227,7 @@ const useStoreGroupAndBadgeFilled = (): UseStoreType => {
       enabled: () => true,
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
-      getBadgeByGroupId: () => "",
+      getBadgeByGroupId: () => [""],
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
       // @ts-expect-error FIXME: Should pass tslint.
@@ -273,7 +270,7 @@ const useStoreManyGroupAndBadges = (): UseStoreType => {
       enabled: () => true,
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
-      getBadgeByGroupId: () => "",
+      getBadgeByGroupId: () => [""],
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
       // @ts-expect-error FIXME: Should pass tslint.
@@ -318,7 +315,7 @@ const useStoreLongName = (): UseStoreType => {
       enabled: () => true,
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
-      getBadgeByGroupId: () => "",
+      getBadgeByGroupId: () => [""],
       // @ts-expect-error FIXME: Should pass tslint.
       setSelectedGroupId: () => console.log("setSelectedGroupId"),
       // @ts-expect-error FIXME: Should pass tslint.

@@ -24,10 +24,8 @@ const getSelectedGroupName = (
 };
 
 export const BadgePanel: Component<Props> = (props) => {
-  const [, attributes] = splitProps(props, ["children"]);
+  const [, local, attributes] = splitProps(props, ["children"], ["badges"]);
   const [_, { groups, selectedGroupId }] = props.useStore();
-
-  const height = props.badges.length > 0 ? "h-[64px]" : "h-[96px]";
 
   return (
     <Panel>
@@ -51,7 +49,7 @@ export const BadgePanel: Component<Props> = (props) => {
           <div
             class={clsx({
               "flex overflow-hidden": true,
-              [height]: true,
+              [local.badges.length > 0 ? "h-[64px]" : "h-[96px]"]: true,
             })}
             {...attributes}
           >
