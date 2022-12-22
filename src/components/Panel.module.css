@@ -2,7 +2,7 @@
 
 @layer components {
   .style {
-    @apply  flex-1 first:border-r first:shadow-[inset_-2px_0_6px_rgba(0,0,0,0.1)];
+    @apply  flex-1 first:border-r first:shadow-[inset_-10px_0_6px_-10px_rgba(0,0,0,0.1)];
   }
 
 }

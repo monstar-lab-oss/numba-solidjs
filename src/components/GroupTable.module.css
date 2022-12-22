@@ -20,10 +20,9 @@
     @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
   }
   .item {
-    @apply hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600 mr-1 border-b;
+    @apply hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-600 mr-0.5 border-b;
   }
   .style tbody tr {
-    /* NOTE: mr-1.5 is for inner shadow, if not add it shadow hides behind the tr */
     @apply w-full cursor-pointer bg-transparent;
   }
   .style tbody tr.selected_row {
