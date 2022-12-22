@@ -75,7 +75,7 @@ const Template: Story<Props> = (args) => {
           <GroupTable data={groups()} useStore={useStore} />
         </GroupPanel>
 
-        <BadgePanel useStore={args.useStore} badges={args.badges() || []}>
+        <BadgePanel useStore={args.useStore}>
           <Show when={true}>
             <BadgeTable data={args.badges() || []} useStore={args.useStore} />
           </Show>
@@ -268,7 +268,7 @@ const useStoreManyGroupAndBadges = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
-      selectedGroupId: () => "472:10835",
+      selectedGroupId: () => "472:108350",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],
       // @ts-expect-error FIXME: Should pass tslint.

@@ -11,7 +11,7 @@
     @apply flex w-full justify-between;
   }
   .style thead {
-    @apply flex w-full flex-col items-center justify-between;
+    @apply flex h-[48px] w-full flex-col items-center justify-between;
   }
   .style tbody {
     @apply flex h-[295px] w-full table-auto flex-col items-center overflow-y-scroll border-t;

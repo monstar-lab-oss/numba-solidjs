@@ -26,7 +26,7 @@ export const FromScratch: Component = () => {
         <GroupPanel createButtonDisabled={!enabled()} onCreateClick={onClick}>
           <GroupTable data={groups()} useStore={useStore} />
         </GroupPanel>
-        <BadgePanel useStore={useStore} badges={badges() || []}>
+        <BadgePanel useStore={useStore}>
           <Show when={selectedGroupId()}>
             <BadgeTable data={badges() || []} useStore={useStore} />
           </Show>

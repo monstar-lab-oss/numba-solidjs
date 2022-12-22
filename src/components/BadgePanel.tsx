@@ -5,13 +5,11 @@ import { Icon } from "@/components/Icon";
 import { Panel } from "@/components/Panel";
 import { Text } from "@/components/Text";
 import type { UseStoreType } from "@/lib/hooks/useStore";
-import type { Badge } from "@/types/Badge";
 import type { Group } from "@/types/Group";
 
 export type Props = {
   children: JSX.Element;
   useStore: () => UseStoreType;
-  badges: Badge[];
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 const getSelectedGroupName = (
@@ -24,7 +22,7 @@ const getSelectedGroupName = (
 };
 
 export const BadgePanel: Component<Props> = (props) => {
-  const [, local, attributes] = splitProps(props, ["children"], ["badges"]);
+  const [, attributes] = splitProps(props, ["children"]);
   const [_, { groups, selectedGroupId }] = props.useStore();
 
   return (
@@ -48,8 +46,7 @@ export const BadgePanel: Component<Props> = (props) => {
           {/* FIXME: Fixed height only now */}
           <div
             class={clsx({
-              "flex overflow-hidden": true,
-              [local.badges.length > 0 ? "h-[64px]" : "h-[96px]"]: true,
+              "flex overflow-hidden h-[48px]": true,
             })}
             {...attributes}
           >
