@@ -24,7 +24,7 @@ export type Props = {
   size?: number;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
-export const DEFAULT_ICON_SIZE = 24;
+export const DEFAULT_ICON_SIZE = 20;
 
 export const Icon: Component<Props> = (props) => {
   const LazyComponent = lazy(
