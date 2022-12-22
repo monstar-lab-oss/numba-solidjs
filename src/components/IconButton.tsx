@@ -12,6 +12,7 @@ export type Props = {
   link?: boolean;
   iconName: IconName;
   iconColor: Color;
+  iconDisabledColor?: Color;
   iconSize?: number;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -47,7 +48,11 @@ export const IconButton: Component<Props> = (props) => {
           <Icon
             size={iconAttributes.iconSize}
             name={iconAttributes.iconName}
-            color={iconAttributes.iconColor}
+            color={
+              iconAttributes.iconDisabledColor
+                ? iconAttributes.iconDisabledColor
+                : "disabled"
+            }
           />
         </div>
         <Show when={!!local.children}>

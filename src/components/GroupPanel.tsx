@@ -35,6 +35,7 @@ export const GroupPanel: Component<Props> = (props) => {
             disabled={props.createButtonDisabled}
             iconName="create"
             iconColor="white"
+            iconDisabledColor="white"
             buttonColor="primary"
           >
             Create
