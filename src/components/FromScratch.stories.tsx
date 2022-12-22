@@ -75,7 +75,7 @@ const Template: Story<Props> = (args) => {
           <GroupTable data={groups()} useStore={useStore} />
         </GroupPanel>
 
-        <BadgePanel useStore={args.useStore}>
+        <BadgePanel useStore={args.useStore}  badges={args.badges() || []}>
           <Show when={true}>
             <BadgeTable data={args.badges() || []} useStore={args.useStore} />
           </Show>
