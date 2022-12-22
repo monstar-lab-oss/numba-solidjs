@@ -45,7 +45,7 @@ export const BadgePanel: Component<Props> = (props) => {
           {/* FIXME: Fixed height only now */}
           <div
             class={clsx({
-              "flex h-[49.5px] overflow-hidden": true,
+              "flex h-[64px] overflow-hidden": true,
             })}
             {...attributes}
           >

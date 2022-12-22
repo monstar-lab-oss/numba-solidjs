@@ -70,7 +70,7 @@ const Template: Story<Props> = (args) => {
       }}
     >
       {/* FIXME: Fixed height only now */}
-      <div class="flex h-[424px] items-stretch">
+      <div class={`flex h-[${UI_HEIGHT}px] items-stretch`}>
         <GroupPanel createButtonDisabled={!enabled()} onCreateClick={onClick}>
           <GroupTable data={groups()} useStore={useStore} />
         </GroupPanel>

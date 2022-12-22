@@ -11,26 +11,25 @@
     @apply flex w-full justify-between;
   }
   .style thead {
-    @apply flex  h-[48px] w-full flex-col items-center justify-between overflow-y-scroll;
+    @apply flex w-full flex-col items-center justify-between;
   }
   .style tbody {
-    @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
+    @apply flex h-[295px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
   }
   .style tbody tr th{
     @apply p-0;
   }
   .style tbody tr.item {
-    @apply w-full cursor-pointer flex-row bg-white hover:bg-gray-50 border-b pl-4;
+    @apply w-full cursor-pointer flex-row bg-white hover:bg-gray-50 pl-4;
   }
   .style tbody tr.selected_row {
     @apply bg-gray-50;
   }
   .text{
-    @apply font-medium truncate w-64;
+    @apply font-medium truncate w-[182px];
   }
   .textWrapper{
-    /* FIXME: actual size is 31px but border use 1px so height reduced 1px */
-    @apply h-[31px] flex items-center pr-4;
+    @apply h-[32px] flex items-center pr-4;
   }
   .style tbody tr th div p{
     @apply truncate;
