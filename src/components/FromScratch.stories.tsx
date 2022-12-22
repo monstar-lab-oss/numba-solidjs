@@ -110,7 +110,7 @@ const useStore = (): UseStoreType => {
 export const Default = Template.bind({});
 Default.args = { useStore: useStore, badges: () => [] };
 
-// CreateDisabled
+// CreateEnabled
 const useStoreEnabled = (): UseStoreType => {
   return [
     // @ts-expect-error FIXME: Should pass tslint.
@@ -134,6 +134,44 @@ const useStoreEnabled = (): UseStoreType => {
 };
 export const CreateEnabled = Template.bind({});
 CreateEnabled.args = { useStore: useStoreEnabled, badges: () => [] };
+
+// CreateDisabled
+const useStoreCreateDisabled = (): UseStoreType => {
+  const [groups, setGroups] = createSignal([
+    {
+      id: "472:10835",
+      name: "TEST FRAME",
+      children: ["423:12558", "472:11220"],
+    },
+  ]);
+  return [
+    // @ts-expect-error FIXME: Should pass tslint.
+    {},
+    {
+      groups,
+      enabled: () => false,
+      selectedGroupId: () => "",
+      // @ts-expect-error FIXME: Should pass tslint.
+      getBadgeByGroupId: () => "",
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedGroupId: () => console.log("setSelectedGroupId"),
+      // @ts-expect-error FIXME: Should pass tslint.
+      setSelectedBadgeID: () => console.log("setSelectedGroupId"),
+      createGroup: () => console.log("createGroup"),
+      removeGroup: () => setGroups([]),
+      createBadge: () => console.log("createBadge"),
+      removeBadge: () => console.log("removeBadge"),
+    },
+  ];
+};
+const CreateDisabledBadges = createBadges(5);
+setSelectedProp(CreateDisabledBadges);
+
+export const CreateDisabled = Template.bind({});
+CreateDisabled.args = {
+  useStore: useStoreCreateDisabled,
+  badges: () => CreateDisabledBadges,
+};
 
 // GroupFilled
 const useStoreGroupFilled = (): UseStoreType => {
