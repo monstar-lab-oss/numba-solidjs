@@ -30,7 +30,7 @@
   }
   .textWrapper{
     /* FIXME: actual size is 31px but border use 1px so height reduced 1px */
-    @apply h-[31px] flex items-center pr-2;
+    @apply h-[31px] flex items-center pr-4;
   }
   .style tbody tr th div p{
     @apply truncate;
