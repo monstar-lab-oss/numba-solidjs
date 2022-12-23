@@ -30,8 +30,8 @@ export const BadgePanel: Component<Props> = (props) => {
       <Show
         when={groups().length > 0}
         fallback={() => (
-          <div class="m-4 flex">
-            <div class="flex self-center">
+          <div class="m-4 flex justify-between">
+            <div class="pr-1 mb-3">
               <Icon name="arrowLeftNUMBA" color="darkGray" />
             </div>
             <div class="flex self-center">

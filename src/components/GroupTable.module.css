@@ -11,13 +11,13 @@
     @apply block w-full;
   }
   .style thead td {
-    @apply block w-full px-3;
+    @apply block w-full px-4;
   }
   .style thead {
     @apply flex w-full flex-col items-center;
   }
   .style tbody {
-    @apply flex h-[295px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
+    @apply flex h-[280px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
   }
   .item {
     @apply hover:bg-numba-white-gray;

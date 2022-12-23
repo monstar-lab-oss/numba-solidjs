@@ -24,7 +24,7 @@ export type GroupSearchProps = {
 
 const GroupSearch: Component<GroupSearchProps> = (props) => {
   return (
-    <form onSubmit={(e) => e.preventDefault()} class="mb-3">
+    <form onSubmit={(e) => e.preventDefault()} class="mb-2">
       <TextField
         id="query"
         value={props.query()}

@@ -23,11 +23,7 @@ export const GroupPanel: Component<Props> = (props) => {
     <Panel>
       <div class={clsx({ [css.style]: true })}>
         <div class={clsx({ [css.header]: true })} {...attributes}>
-          <Text
-            size="sizeLarge"
-            weight="weightBold"
-            class={clsx({ [css.title]: true })}
-          >
+          <Text size="sizeLarge" weight="weightBold">
             Groups
           </Text>
           <IconButton
