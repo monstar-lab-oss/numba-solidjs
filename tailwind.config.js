@@ -28,5 +28,6 @@ module.exports = {
     forms({
       strategy: "class",
     }),
+    require('flowbite/plugin')
   ],
 };
