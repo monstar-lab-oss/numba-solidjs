@@ -1,7 +1,7 @@
 export const APP_NAME = "NUMBA";
 
-export const UI_WIDTH = 592;
-export const UI_HEIGHT = 424;
+export const UI_WIDTH = 480;
+export const UI_HEIGHT = 392;
 export const MAX_BADGE_ALLOWED = 999;
 export const GROUP_NAME = `(${APP_NAME})`;
 export const NUMBERING_GROUP_NAME = `${GROUP_NAME}numbering`;

@@ -2,15 +2,12 @@
 
 @layer components {
   .body {
-    @apply relative h-[110px] w-[250px] space-y-4 rounded-lg bg-white shadow-2xl;
+    @apply relative h-[110px] w-[250px] space-y-4 rounded-[2px] bg-white;
   }
   .header {
     @apply flex items-center justify-center px-2 pt-4 pb-1;
   }
-  .text {
-    @apply text-sm  text-numba-dark-gray;
-  }
   .footer {
-    @apply flex items-center justify-center space-x-2 p-1;
+    @apply flex items-center justify-end space-x-2 p-1 pr-5;
   }
 }

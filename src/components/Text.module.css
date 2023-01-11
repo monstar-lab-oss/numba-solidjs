@@ -19,4 +19,10 @@
   .weightBold {
     @apply font-bold;
   }
+  .primary {
+    @apply text-numba-black;
+  }
+  .darkGray {
+    @apply text-numba-dark-gray;
+  }
 }

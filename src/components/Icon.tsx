@@ -11,7 +11,9 @@ export const ICON_NAMES = [
   "help",
   "search",
   "textDelete",
-  "arrow",
+  "arrowLeft",
+  "arrowLeftNUMBA",
+  "arrowRight",
 ] as const;
 
 export type IconName = typeof ICON_NAMES[number];
@@ -22,7 +24,7 @@ export type Props = {
   size?: number;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
-export const DEFAULT_ICON_SIZE = 24;
+export const DEFAULT_ICON_SIZE = 20;
 
 export const Icon: Component<Props> = (props) => {
   const LazyComponent = lazy(
@@ -37,18 +39,9 @@ export const Icon: Component<Props> = (props) => {
       }}
       class={clsx({
         [css.style]: true,
-        [css.disabled]: props.color === "disabled",
-        [css.primary]: props.color === "primary",
-        [css.danger]: props.color === "danger",
-        [css.secondary]: props.color === "secondary",
-        // FIXME this is for IconButton Component so we need handle the color inside of IconButton
-        [css.white]: props.color === "white",
-        [css.primaryOutline]: props.color === "primaryOutline",
-        [css.dangerOutline]: props.color === "dangerOutline",
-        [css.secondaryOutline]: props.color === "secondaryOutline",
+        [css[props.color]]: true,
       })}
       viewBox="0 0 20 20"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <LazyComponent />

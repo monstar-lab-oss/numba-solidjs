@@ -10,8 +10,9 @@ import {
 import { clsx } from "clsx";
 import { Icon } from "@/components/Icon";
 import { IconButton } from "@/components/IconButton";
+import { Text } from "@/components/Text";
 import { TextField } from "@/components/TextField";
-import { useStore } from "@/lib/hooks/useStore";
+import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Group } from "@/types/Group";
 import css from "./GroupTable.module.css";
 
@@ -23,23 +24,23 @@ export type GroupSearchProps = {
 
 const GroupSearch: Component<GroupSearchProps> = (props) => {
   return (
-    <form onSubmit={(e) => e.preventDefault()} class="mb-3">
+    <form onSubmit={(e) => e.preventDefault()} class="mb-2">
       <TextField
         id="query"
         value={props.query()}
         type="text"
         placeholder="Search"
-        onInput={(e) => {
-          props.setQuery(e.currentTarget.value);
-        }}
+        onInput={(e) => props.setQuery(e.currentTarget.value)}
         prefixElement={<Icon name="search" color="disabled" />}
         suffixElement={
-          <IconButton
-            iconName="textDelete"
-            iconColor="secondary"
-            link
-            onClick={() => props.setQuery("")}
-          />
+          !!props.query().length && (
+            <IconButton
+              iconName="textDelete"
+              iconColor="secondary"
+              link
+              onClick={() => props.setQuery("")}
+            />
+          )
         }
       />
     </form>
@@ -48,12 +49,13 @@ const GroupSearch: Component<GroupSearchProps> = (props) => {
 
 export type Props = {
   data: Group[];
+  useStore: () => UseStoreType;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const GroupTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
   const [query, setQuery] = createSignal("");
-  const [_, { selectedGroupId, setSelectedGroupId }] = useStore();
+  const [_, { selectedGroupId, setSelectedGroupId }] = props.useStore();
 
   const onSelectClick = (e: MouseEvent, id: string) => {
     setSelectedGroupId(selectedGroupId() !== id ? id : null);
@@ -79,18 +81,25 @@ export const GroupTable: Component<Props> = (props) => {
         <Show
           when={props.data.length}
           fallback={() => (
-            <span class={clsx({ [css.emptyMessage]: true })}>
-              {/* First select a frame/object you want to add numbering to 😄 */}
+            <Text
+              size="sizeSmall"
+              color="darkGray"
+              class={clsx({ [css.emptyMessage]: true })}
+            >
               No groups in the list.
-            </span>
+            </Text>
           )}
         >
-          <tbody class="border-t">
+          <tbody>
             <For
               each={filteredData()}
               fallback={() => (
                 <tr>
-                  <td>Oops! No groups found.</td>
+                  <td>
+                    <Text size="sizeSmall" color="darkGray">
+                      Oops! No groups found.
+                    </Text>
+                  </td>
                 </tr>
               )}
             >
@@ -99,9 +108,12 @@ export const GroupTable: Component<Props> = (props) => {
                   onClick={(e) => onSelectClick(e, item.id)}
                   class={clsx({
                     [css.selected_row]: selectedGroupId() === item.id,
+                    [css.item]: true,
                   })}
                 >
-                  <th scope="row">{item.name}</th>
+                  <th scope="row">
+                    <Text size="sizeSmall">{item.name}</Text>
+                  </th>
                 </tr>
               )}
             </For>

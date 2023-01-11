@@ -5,12 +5,12 @@
     @apply inline-flex min-h-max w-full items-center rounded border border-numba-gray bg-white px-2.5 py-1 font-sans text-xs leading-5 text-numba-dark-gray focus-within:border-numba-blue;
   }
   .style > input {
-    @apply h-6 w-full appearance-none border-0 bg-transparent placeholder:text-numba-dark-gray focus:outline-none;
+    @apply text-numba-black h-6 w-full appearance-none border-0 bg-transparent placeholder:text-numba-dark-gray focus:outline-none;
   }
   .prefix {
-    @apply pr-1.5;
+    @apply pr-1.5 flex justify-center items-center;
   }
   .suffix {
-    @apply pl-1.5;
+    @apply pl-1.5 flex justify-center items-center;
   }
 }

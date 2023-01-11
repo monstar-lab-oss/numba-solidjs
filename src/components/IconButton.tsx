@@ -12,6 +12,8 @@ export type Props = {
   link?: boolean;
   iconName: IconName;
   iconColor: Color;
+  iconDisabledColor?: Color;
+  iconSize?: number;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const getButtonConfig = (link?: boolean, color?: Color): ButtonColor => {
@@ -27,14 +29,24 @@ const getButtonConfig = (link?: boolean, color?: Color): ButtonColor => {
   return res;
 };
 
-export const DEFAULT_ICON_SIZE = 24;
-
 export const IconButton: Component<Props> = (props) => {
   const [local, buttonAttributes, iconAttributes] = splitProps(
     props,
     ["children", "link", "buttonColor"],
     ["onClick", "disabled"]
   );
+
+  const getIconDisabledColor = (
+    disabled: boolean | undefined,
+    disabledColor: Color | undefined,
+    color: Color
+  ): Color => {
+    if (disabled && disabledColor) return disabledColor;
+
+    if (disabled) return "disabled";
+
+    return color;
+  };
 
   return (
     <Button
@@ -46,9 +58,13 @@ export const IconButton: Component<Props> = (props) => {
       <div class={clsx({ [css.style]: true })}>
         <div>
           <Icon
-            size={20}
+            size={iconAttributes.iconSize}
             name={iconAttributes.iconName}
-            color={iconAttributes.iconColor}
+            color={getIconDisabledColor(
+              buttonAttributes.disabled,
+              iconAttributes.iconDisabledColor,
+              iconAttributes.iconColor
+            )}
           />
         </div>
         <Show when={!!local.children}>
