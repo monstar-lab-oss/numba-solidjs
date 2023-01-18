@@ -9,15 +9,17 @@ import {
 } from "solid-js";
 import { Portal } from "solid-js/web";
 import { clsx } from "clsx";
+import css from "@/components/BadgeTable.module.css";
 import { Checkbox } from "@/components/Checkbox";
 import { Confirm, ConfirmOptions } from "@/components/Confirm";
-import { useStore } from "@/lib/hooks/useStore";
+import { IconButton } from "@/components/IconButton";
+import { Text } from "@/components/Text";
+import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Badge } from "@/types/Badge";
-import css from "./BadgeTable.module.css";
-import { IconButton } from "./IconButton";
 
 export type Props = {
   data: Badge[];
+  useStore: () => UseStoreType;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const BadgeTable: Component<Props> = (props) => {
@@ -26,7 +28,7 @@ export const BadgeTable: Component<Props> = (props) => {
   const [
     _,
     { removeBadge, selectedGroupId, setSelectedGroupId, setSelectedBadgeID },
-  ] = useStore();
+  ] = props.useStore();
 
   const isDisabledRemove = createMemo(() =>
     props.data.every((x) => !x.selected())
@@ -62,7 +64,14 @@ export const BadgeTable: Component<Props> = (props) => {
   };
 
   const onToggleAllClick = () => {
-    const toggle = isSelectAll();
+    if (isIndeterminate()) {
+      // FIXME: After false to indeterminate checkbox's check never changed. So this is workaround.
+      props.data.forEach((x) => x.setSelected(true));
+      props.data.forEach((x) => x.setSelected(false));
+      return;
+    }
+
+    const toggle = isIndeterminate() || isSelectAll();
     props.data.forEach((x) => x.setSelected(!toggle));
   };
 
@@ -80,6 +89,9 @@ export const BadgeTable: Component<Props> = (props) => {
     props.data.filter((v) => v.selected())
   );
 
+  const isIndeterminate = () =>
+    selectedItems().length > 0 && props.data.length !== selectedItems().length;
+
   return (
     <div class={clsx({ [css.style]: true })} {...attributes}>
       <Show when={show()}>
@@ -92,25 +104,21 @@ export const BadgeTable: Component<Props> = (props) => {
         <thead>
           <tr>
             <Show when={props.data.length}>
-              <th colSpan={2} scope="col" class="p-2">
+              <th colSpan={2} scope="col" class="py-2 pr-2 pl-4">
                 {/* TODO need split as checkbox component */}
                 <div class="flex items-center">
                   <Checkbox
                     id="checkbox-all-search"
                     checked={isSelectAll()}
                     onChange={() => onToggleAllClick()}
-                    indeterminate={
-                      selectedItems().length > 0 &&
-                      props.data.length !== selectedItems().length
-                    }
+                    indeterminate={isIndeterminate() || isSelectAll()}
                   />
-                  <label
-                    for="checkbox-all-search"
-                    class="ml-3 font-normal text-numba-black"
-                  >
-                    {selectedItems().length > 0
-                      ? `${selectedItems().length} Selected`
-                      : "Select All"}
+                  <label for="checkbox-all-search" class="ml-2">
+                    <Text size="sizeSmall" weight="weightRegular">
+                      {selectedItems().length > 0
+                        ? `${selectedItems().length} Selected`
+                        : "Select All"}
+                    </Text>
                   </label>
                 </div>
               </th>
@@ -135,10 +143,12 @@ export const BadgeTable: Component<Props> = (props) => {
             fallback={() => (
               <tr class={clsx({ [css.fallback]: true })}>
                 <td>
-                  <div>No numbers here yet.</div>
-                  <div>
+                  <Text color="darkGray" size="sizeSmall">
+                    No numbers here yet.
+                  </Text>
+                  <Text color="darkGray" size="sizeSmall">
                     Click an object on the canvas and you get a number !
-                  </div>
+                  </Text>
                 </td>
               </tr>
             )}
@@ -162,7 +172,14 @@ export const BadgeTable: Component<Props> = (props) => {
                     scope="row"
                     onClick={() => setSelectedBadgeID(item.id)}
                   >
-                    <div>{item.name}</div>
+                    <div class={clsx({ [css.textWrapper]: true })}>
+                      <Text
+                        class={clsx({ [css.text]: true })}
+                        size="sizeMedium"
+                      >
+                        {item.name}
+                      </Text>
+                    </div>
                   </th>
                 </tr>
               )}

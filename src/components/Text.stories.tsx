@@ -1,4 +1,10 @@
-import { FONT_SIZES, FONT_WEIGHT, Props, Text } from "@/components/Text";
+import {
+  FONT_COLOR,
+  FONT_SIZES,
+  FONT_WEIGHT,
+  Props,
+  Text,
+} from "@/components/Text";
 import { Meta, Story } from "@storybook/html";
 
 export default {
@@ -10,6 +16,10 @@ export default {
     },
     weight: {
       options: FONT_WEIGHT,
+      control: { type: "select" },
+    },
+    color: {
+      options: FONT_COLOR,
       control: { type: "select" },
     },
   },
@@ -47,4 +57,12 @@ WeightMedium.args = {
 export const WeightBold = Template.bind({});
 WeightBold.args = {
   weight: "weightBold",
+};
+
+export const TextDefault = Template.bind({});
+TextDefault.args = {};
+
+export const TextDarkGray = Template.bind({});
+TextDarkGray.args = {
+  color: "darkGray",
 };

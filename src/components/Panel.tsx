@@ -1,6 +1,7 @@
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
+import css from "./Panel.module.css";
 
 export type Props = {
   children: JSX.Element;
@@ -9,7 +10,7 @@ export type Props = {
 export const Panel: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, []);
   return (
-    <div class={clsx({ "flex-1 first:border-r": true })} {...attributes}>
+    <div class={clsx({ [css.style]: true })} {...attributes}>
       {props.children}
     </div>
   );

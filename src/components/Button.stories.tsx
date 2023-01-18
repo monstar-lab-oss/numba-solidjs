@@ -41,6 +41,11 @@ White.args = {
   color: "white",
 };
 
+export const DarkGray = Template.bind({});
+DarkGray.args = {
+  color: "darkGray",
+};
+
 export const PrimaryOutline = Template.bind({});
 PrimaryOutline.args = {
   color: "primaryOutline",

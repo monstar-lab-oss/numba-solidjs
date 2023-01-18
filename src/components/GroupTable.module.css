@@ -5,37 +5,39 @@
     @apply w-full;
   }
   .style table {
-    @apply w-full text-left text-xs text-numba-dark-gray;
+    @apply w-full text-left;
   }
   .style thead tr {
     @apply block w-full;
   }
   .style thead td {
-    @apply block w-full px-3;
+    @apply block w-full px-4;
   }
   .style thead {
     @apply flex w-full flex-col items-center;
   }
   .style tbody {
-    @apply flex h-[315px] w-full table-auto flex-col items-center overflow-y-scroll;
+    @apply flex h-[280px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
   }
-
+  .item {
+    @apply hover:bg-numba-white-gray;
+  }
   .style tbody tr {
-    @apply min-h-[49px] w-full cursor-pointer border-b bg-white hover:bg-gray-50;
+    @apply w-full cursor-pointer bg-transparent;
   }
   .style tbody tr.selected_row {
-    @apply bg-gray-50;
+    @apply bg-numba-white-gray;
   }
-  .style tbody tr th {
-    @apply px-4 font-medium text-numba-black;
+  .style tbody tr th div {
+    @apply h-[32px] font-medium px-4 py-2 table-cell align-middle;
+  }
+  .style tbody th {
+    @apply p-0;
   }
   .style tbody td {
-    @apply flex items-center py-4 px-4;
-  }
-  .style tbody td a {
-    @apply font-medium text-numba-red hover:underline;
+    @apply flex items-center p-4;
   }
   .emptyMessage {
-    @apply px-4 py-2 text-xs text-numba-dark-gray;
+    @apply px-4 py-2;
   }
 }
