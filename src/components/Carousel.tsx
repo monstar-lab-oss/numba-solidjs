@@ -19,17 +19,14 @@ export const Carousel: Component<Props> = (props) => {
 
   const onNext = () => {
     if (selected() + 1 > props.contents.length - 1) {
-      setSelected(0);
+      props.onClose();
       return;
     }
     setSelected(selected() + 1);
   };
 
   const onPrev = () => {
-    if (selected() - 1 < 0) {
-      setSelected(props.contents.length - 1);
-      return;
-    }
+    if (selected() - 1 < 0) return;
     setSelected(selected() - 1);
   };
 
