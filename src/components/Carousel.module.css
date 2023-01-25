@@ -2,22 +2,19 @@
 
 @layer components {
   .style {
-    @apply flex justify-center w-full h-screen;
+    @apply flex justify-center w-full h-full;
   }
-  .skipButton {
-    @apply min-w-[150px] self-end px-6;
-  }
-  .startButton {
+  .sideButton {
     @apply min-w-[150px] self-end px-6;
   }
   .contents {
-    @apply relative flex flex-col min-h-[300px] min-w-[280px] justify-around grow;
+    @apply relative flex flex-col min-h-full min-w-[280px] justify-around grow;
   }
   .inner {
     @apply relative overflow-hidden m-auto flex justify-center items-center;
   }
   .buttonContainer {
-    @apply flex justify-center items-center self-center pb-6 w-full;
+    @apply flex justify-center items-center self-center mb-6 w-full;
   }
   .buttonContainerInner {
     @apply flex items-center justify-center self-center justify-between grow;

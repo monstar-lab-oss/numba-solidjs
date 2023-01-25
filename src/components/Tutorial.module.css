@@ -1,0 +1,16 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply flex h-screen flex-col;
+  }
+  .version {
+    @apply text-right pr-3 pt-2;
+  }
+  .carousel {
+    @apply grow;
+  }
+  .text {
+    @apply text-center;
+  }
+}
