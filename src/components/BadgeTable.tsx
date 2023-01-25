@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/Checkbox";
 import { Confirm, ConfirmOptions } from "@/components/Confirm";
 import { IconButton } from "@/components/IconButton";
 import { Text } from "@/components/Text";
+import { Tutorial } from "@/components/Tutorial";
 import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Badge } from "@/types/Badge";
 
@@ -35,6 +36,7 @@ export const BadgeTable: Component<Props> = (props) => {
   );
 
   const [show, setShow] = createSignal(false);
+  const [showTutorial, setShowTutorial] = createSignal(false);
   const [confirmOptions, setConfirmOptions] = createSignal<ConfirmOptions>(
     {} as ConfirmOptions
   );
@@ -97,6 +99,12 @@ export const BadgeTable: Component<Props> = (props) => {
       <Show when={show()}>
         <Portal>
           <Confirm {...confirmOptions()} />
+        </Portal>
+      </Show>
+
+      <Show when={showTutorial()}>
+        <Portal>
+          <Tutorial onClose={() => setShowTutorial(false)} />
         </Portal>
       </Show>
 
@@ -187,6 +195,14 @@ export const BadgeTable: Component<Props> = (props) => {
           </Show>
         </tbody>
       </table>
+
+      <div class="absolute bottom-0 left-0">
+        <IconButton
+          iconName="help"
+          iconColor="secondary"
+          onClick={() => setShowTutorial(true)}
+        />
+      </div>
     </div>
   );
 };

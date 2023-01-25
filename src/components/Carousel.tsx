@@ -55,7 +55,6 @@ export const Carousel: Component<Props> = (props) => {
   const Indicator = (index: number) => {
     return (
       <button
-        type="button"
         class={clsx({
           [css.indicator]: true,
           [index === selected() ? css.indicatorActive : css.indicatorInactive]:
@@ -68,11 +67,6 @@ export const Carousel: Component<Props> = (props) => {
 
   return (
     <div class={clsx({ [css.style]: true })}>
-      <div class={clsx({ [css.sideButton]: true })}>
-        <Button onClick={props.onClose} color="secondaryOutline">
-          Skip
-        </Button>
-      </div>
       <div class={clsx({ [css.contents]: true })}>
         <div class={clsx({ [css.inner]: true })}>
           <For each={props.contents}>
@@ -81,32 +75,39 @@ export const Carousel: Component<Props> = (props) => {
         </div>
         <div class={clsx({ [css.buttonContainer]: true })}>
           <div class={clsx({ [css.buttonContainerInner]: true })}>
-            <IconButton
-              iconName="arrowLeft"
-              iconColor="darkGray"
-              link
-              onClick={onPrev}
-            />
-            <div class={clsx({ [css.indicatorContainer]: true })}>
-              <For each={props.contents}>{(_, i) => Indicator(i())}</For>
+            <div class={clsx({ [css.skipButton]: true })}>
+              <Button onClick={props.onClose} color="secondaryOutline">
+                Skip
+              </Button>
             </div>
-            <IconButton
-              iconName="arrowRight"
-              iconColor="darkGray"
-              link
-              onClick={onNext}
-            />
+            <div class={clsx({ [css.indicatorBlock]: true })}>
+              <IconButton
+                iconName="arrowLeft"
+                iconColor="darkGray"
+                link
+                onClick={onPrev}
+              />
+              <div class={clsx({ [css.indicatorContainer]: true })}>
+                <For each={props.contents}>{(_, i) => Indicator(i())}</For>
+              </div>
+              <IconButton
+                iconName="arrowRight"
+                iconColor="darkGray"
+                link
+                onClick={onNext}
+              />
+            </div>
+            <div class={clsx({ [css.startButton]: true })}>
+              {selected() + 1 > props.contents.length - 1 ? (
+                <Button onClick={props.onClose} color="primary">
+                  Get Started
+                </Button>
+              ) : (
+                <div></div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div class={clsx({ [css.sideButton]: true })}>
-        {selected() + 1 > props.contents.length - 1 ? (
-          <Button onClick={props.onClose} color="primary">
-            Get Started
-          </Button>
-        ) : (
-          <div></div>
-        )}
       </div>
     </div>
   );
