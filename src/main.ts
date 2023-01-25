@@ -1,5 +1,6 @@
 import {
   MAX_BADGE_ALLOWED,
+  NUMBA_FIRST_OPEN,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   UI_HEIGHT,
@@ -184,10 +185,17 @@ async function onRun() {
     height: UI_HEIGHT,
   });
 
+  const payload = reduceAllNodes();
+  payload.firstOpen = await figma.clientStorage.getAsync(NUMBA_FIRST_OPEN);
+
+  // FIXME: need change bool to false and remove the comment out
+  // if (payload.firstOpen)
+  await figma.clientStorage.setAsync(NUMBA_FIRST_OPEN, true);
+
   // Initialize store data at startup app
   dispatch({
     type: "UI/UPDATE_STORE",
-    payload: reduceAllNodes(),
+    payload,
   });
 
   const [currentNode] = figma.currentPage.selection;

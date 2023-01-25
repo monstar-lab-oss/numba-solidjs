@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import { IconButton } from "@/components/IconButton";
 import { Panel } from "@/components/Panel";
 import { Tutorial } from "@/components/Tutorial";
+import type { UseStoreType } from "@/lib/hooks/useStore";
 import css from "./GroupPanel.module.css";
 import { Text } from "./Text";
 
@@ -12,6 +13,7 @@ export type Props = {
   createButtonDisabled: boolean;
   onCreateClick: () => void;
   children: JSX.Element;
+  useStore: () => UseStoreType;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const GroupPanel: Component<Props> = (props) => {
@@ -20,13 +22,19 @@ export const GroupPanel: Component<Props> = (props) => {
     "createButtonDisabled",
     "children",
   ]);
+  const [_, { setFirstOpen, firstOpen }] = props.useStore();
   const [showTutorial, setShowTutorial] = createSignal(false);
+
+  const tutorialOnCLose = () => {
+    setFirstOpen(false);
+    setShowTutorial(false);
+  };
 
   return (
     <Panel>
-      <Show when={showTutorial()}>
+      <Show when={showTutorial() || firstOpen()}>
         <Portal>
-          <Tutorial onClose={() => setShowTutorial(false)} />
+          <Tutorial onClose={tutorialOnCLose} />
         </Portal>
       </Show>
 

@@ -11,3 +11,6 @@ export const RELATED_WITH_NUMBA = "RELATED_WITH_NUMBA";
 export const NUMBERING_GROUP_ID = "NUMBERING_GROUP_ID";
 export const NUMBERING_BADGE_GROUP_ID = "NUMBERING_BADGE_GROUP_ID";
 export const BADGE_TARGET_ID = "BADGE_TARGET_ID";
+
+// Figma client storage keys
+export const NUMBA_FIRST_OPEN = "numba-first-open";
