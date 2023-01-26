@@ -77,7 +77,7 @@ export const Carousel: Component<Props> = (props) => {
         </div>
         <div class={clsx({ [css.buttonContainer]: true })}>
           <div class={clsx({ [css.buttonContainerInner]: true })}>
-            <div class={clsx({ [css.sideButton]: true })}>
+            <div class={clsx({ [css.skipButton]: true })}>
               <Button onClick={props.onClose} color="secondaryOutline">
                 Skip
               </Button>
@@ -101,7 +101,7 @@ export const Carousel: Component<Props> = (props) => {
                 disabled={!hasNext()}
               />
             </div>
-            <div class={clsx({ [css.sideButton]: true })}>
+            <div class={clsx({ [css.getStartedButton]: true })}>
               {selected() + 1 > props.contents.length - 1 ? (
                 <Button onClick={props.onClose} color="primary">
                   Get Started

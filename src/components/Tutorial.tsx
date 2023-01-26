@@ -10,6 +10,7 @@ import { Modal } from "@/components/Modal";
 import { Text } from "@/components/Text";
 import css from "@/components/Tutorial.module.css";
 import * as packageJSON from "../../package.json";
+import { Icon } from "./Icon";
 
 export type Props = {
   onClose: () => void;
@@ -43,7 +44,7 @@ export const Tutorial: Component<Props> = (props) => {
           <Text
             size="sizeSmall"
             color="darkGray"
-            class={clsx({ [css.text]: true })}
+            class={clsx({ [css.text]: true, [css.textSmall]: true })}
           >
             ※ The number is available up to 999.
           </Text>
@@ -62,9 +63,16 @@ export const Tutorial: Component<Props> = (props) => {
       src: page4,
       body: (
         <>
-          <Text size="sizeMedium" class={clsx({ [css.text]: true })}>
-            Click on the 🗑 to delete the numbers from the
-          </Text>
+          <div class={clsx({ [css.textWithIcon]: true })}>
+            <Text size="sizeMedium" class={clsx({ [css.text]: true })}>
+              {`Click on the `}
+            </Text>
+            <Icon name="delete" color="secondary" size={16} />
+            <Text size="sizeMedium" class={clsx({ [css.text]: true })}>
+              {` to delete the numbers from the`}
+            </Text>
+          </div>
+
           <Text size="sizeMedium" class={clsx({ [css.text]: true })}>
             selected group.
           </Text>

@@ -5,12 +5,18 @@
     @apply flex h-screen flex-col;
   }
   .version {
-    @apply text-right pr-3 pt-2;
+    @apply absolute right-3 top-2;
   }
   .carousel {
     @apply grow;
   }
   .text {
     @apply text-center;
+  }
+  .textWithIcon {
+    @apply flex;
+  }
+  .textSmall {
+    @apply pt-2;
   }
 }

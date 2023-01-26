@@ -4,26 +4,29 @@
   .style {
     @apply flex justify-center w-full h-full;
   }
-  .sideButton {
-    @apply min-w-[150px] self-end px-6;
+  .skipButton {
+    @apply min-w-[150px] px-6 text-left;
+  }
+  .getStartedButton {
+    @apply min-w-[150px] px-6 text-right;
   }
   .contents {
-    @apply relative flex flex-col min-h-full min-w-[280px] justify-around grow;
+    @apply relative flex flex-col min-h-full min-w-[280px] justify-between grow;
   }
   .inner {
-    @apply relative overflow-hidden m-auto flex justify-center items-center;
+    @apply relative overflow-hidden flex justify-center items-center;
   }
   .buttonContainer {
     @apply flex justify-center items-center self-center mb-6 w-full;
   }
   .buttonContainerInner {
-    @apply flex items-center justify-center self-center justify-between grow;
+    @apply flex items-center self-center justify-between grow;
   }
   .indicator {
-    @apply w-3 h-3 rounded-full transition duration-200 ease-in-out transform; 
+    @apply w-2.5 h-2.5 rounded-full transition duration-200 ease-in-out transform; 
   }
   .indicatorContainer {
-    @apply items-center m-auto space-x-3 px-4 mx-0;
+    @apply items-center space-x-2 mx-2
   }
   .indicatorBlock {
     @apply flex items-center justify-center self-center;
@@ -32,7 +35,7 @@
     @apply flex flex-col transition duration-700 ease-in transform;
   }
   .cardInner {
-    @apply m-auto w-[260px] h-[205px];
+    @apply m-auto w-[260px] h-[205px] my-5;
   }
   .cardHidden {
     @apply opacity-0 absolute left-[-1000px];
