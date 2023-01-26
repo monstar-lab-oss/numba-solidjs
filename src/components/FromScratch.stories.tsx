@@ -97,6 +97,9 @@ const useStore = (): UseStoreType => {
     {
       groups: () => [],
       enabled: () => false,
+      firstOpen: () => false,
+      // @ts-expect-error FIXME: Should pass tslint.
+      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
@@ -121,6 +124,9 @@ const useStoreEnabled = (): UseStoreType => {
     {
       groups: () => [],
       enabled: () => true,
+      firstOpen: () => false,
+      // @ts-expect-error FIXME: Should pass tslint.
+      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
@@ -152,6 +158,9 @@ const useStoreCreateDisabled = (): UseStoreType => {
     {
       groups,
       enabled: () => false,
+      firstOpen: () => false,
+      // @ts-expect-error FIXME: Should pass tslint.
+      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],
@@ -190,6 +199,9 @@ const useStoreGroupFilled = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
+      firstOpen: () => false,
+      // @ts-expect-error FIXME: Should pass tslint.
+      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
@@ -229,6 +241,9 @@ const useStoreGroupAndBadgeFilled = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
+      firstOpen: () => false,
+      // @ts-expect-error FIXME: Should pass tslint.
+      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],
@@ -272,6 +287,9 @@ const useStoreManyGroupAndBadges = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
+      firstOpen: () => false,
+      // @ts-expect-error FIXME: Should pass tslint.
+      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:108350",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],
@@ -317,6 +335,9 @@ const useStoreLongName = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
+      firstOpen: () => false,
+      // @ts-expect-error FIXME: Should pass tslint.
+      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],
