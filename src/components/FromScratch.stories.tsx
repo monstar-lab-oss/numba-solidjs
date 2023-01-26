@@ -9,11 +9,18 @@ import { Meta, Story } from "@storybook/html";
 import { BadgePanel } from "./BadgePanel";
 import { GroupPanel } from "./GroupPanel";
 
+const styles = {
+  transform: "scale(1)",
+  height: UI_HEIGHT + "px",
+  width: UI_WIDTH + "px",
+};
+
 export default {
   title: "Components/FromScratch",
   args: {
     children: "FromScratch",
   },
+  decorators: [(storyFn) => <div style={styles}>{storyFn()}</div>],
 } as Meta;
 
 // FIXME: This code need refactor
