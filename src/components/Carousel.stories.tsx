@@ -3,8 +3,9 @@ import page2 from "@/asset/tutorial/page-2.png";
 import page3 from "@/asset/tutorial/page-3.png";
 import page4 from "@/asset/tutorial/page-4.png";
 import { Carousel, Props } from "@/components/Carousel";
+// import { UI_WIDTH, UI_HEIGHT } from "@/constants";
+import { Text } from "@/components/Text";
 import { Meta, Story } from "@storybook/html";
-import { Text } from "./Text";
 
 export default {
   title: "Components/Carousel",
@@ -61,7 +62,8 @@ const contents = [
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => {
   return (
-    <div class="bg-white p-10">
+    // NOTE: import { UI_WIDTH, UI_HEIGHT } from "@/constants";
+    <div class={`bg-white w-[480px] h-[392px]`}>
       <Carousel {...args} />
     </div>
   );
