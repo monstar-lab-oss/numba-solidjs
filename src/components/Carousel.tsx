@@ -18,16 +18,21 @@ export const Carousel: Component<Props> = (props) => {
   const [selected, setSelected] = createSignal(0);
 
   const onNext = () => {
-    if (selected() + 1 > props.contents.length - 1) {
-      props.onClose();
-      return;
-    }
+    if (!hasNext()) return;
     setSelected(selected() + 1);
   };
 
   const onPrev = () => {
-    if (selected() - 1 < 0) return;
+    if (!hasPrev()) return;
     setSelected(selected() - 1);
+  };
+
+  const hasNext = (): boolean => {
+    return selected() + 1 <= props.contents.length - 1;
+  };
+
+  const hasPrev = (): boolean => {
+    return selected() - 1 >= 0;
   };
 
   // TODO: need refactor
@@ -80,18 +85,20 @@ export const Carousel: Component<Props> = (props) => {
             <div class={clsx({ [css.indicatorBlock]: true })}>
               <IconButton
                 iconName="arrowLeft"
-                iconColor="darkGray"
+                iconColor="secondary"
                 link
                 onClick={onPrev}
+                disabled={!hasPrev()}
               />
               <div class={clsx({ [css.indicatorContainer]: true })}>
                 <For each={props.contents}>{(_, i) => Indicator(i())}</For>
               </div>
               <IconButton
                 iconName="arrowRight"
-                iconColor="darkGray"
+                iconColor="secondary"
                 link
                 onClick={onNext}
+                disabled={!hasNext()}
               />
             </div>
             <div class={clsx({ [css.sideButton]: true })}>
