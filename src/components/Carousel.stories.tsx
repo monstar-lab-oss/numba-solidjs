@@ -3,7 +3,6 @@ import page2 from "@/asset/tutorial/page-2.png";
 import page3 from "@/asset/tutorial/page-3.png";
 import page4 from "@/asset/tutorial/page-4.png";
 import { Carousel, Props } from "@/components/Carousel";
-// import { UI_WIDTH, UI_HEIGHT } from "@/constants";
 import { Text } from "@/components/Text";
 import { Meta, Story } from "@storybook/html";
 
