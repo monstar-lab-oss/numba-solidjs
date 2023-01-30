@@ -46,7 +46,7 @@ export const Carousel: Component<Props> = (props) => {
       >
         <div class={clsx({ [css.cardInner]: true })}>
           {/* TODO: need add alt */}
-          <img src={src} />
+          <img src={src} alt="" />
         </div>
         {body}
       </div>
