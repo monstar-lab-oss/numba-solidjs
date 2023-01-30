@@ -27,9 +27,9 @@ export const Carousel: Component<Props> = (props) => {
     setSelected(selected() - 1);
   };
 
-  const hasNext = (): boolean => {
+  const hasNext = createMemo(() => {
     return selected() + 1 <= props.contents.length - 1;
-  };
+  });
 
   const hasPrev = (): boolean => {
     return selected() - 1 >= 0;
