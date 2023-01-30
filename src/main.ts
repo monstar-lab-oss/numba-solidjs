@@ -188,9 +188,8 @@ async function onRun() {
   const payload = reduceAllNodes();
   payload.firstOpen = await figma.clientStorage.getAsync(NUMBA_FIRST_OPEN);
 
-  // FIXME: need change bool to false and remove the comment out
-  // if (payload.firstOpen)
-  await figma.clientStorage.setAsync(NUMBA_FIRST_OPEN, true);
+  if (payload.firstOpen)
+    await figma.clientStorage.setAsync(NUMBA_FIRST_OPEN, false);
 
   // Initialize store data at startup app
   dispatch({
