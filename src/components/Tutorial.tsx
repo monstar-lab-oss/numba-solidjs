@@ -9,7 +9,6 @@ import { Carousel } from "@/components/Carousel";
 import { Modal } from "@/components/Modal";
 import { Text } from "@/components/Text";
 import css from "@/components/Tutorial.module.css";
-import * as packageJSON from "../../package.json";
 import { Icon } from "./Icon";
 
 export type Props = {
@@ -89,7 +88,7 @@ export const Tutorial: Component<Props> = (props) => {
           color="darkGray"
           class={clsx({ [css.version]: true })}
         >
-          {`v${packageJSON.version}`}
+          {`v${__APP_VERSION__}`}
         </Text>
         <div class={clsx({ [css.carousel]: true })}>
           <Carousel contents={contents} onClose={props.onClose} />

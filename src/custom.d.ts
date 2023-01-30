@@ -4,3 +4,5 @@ declare module "*.module.css" {
 }
 
 declare module "*.png";
+
+declare const __APP_VERSION__: string;

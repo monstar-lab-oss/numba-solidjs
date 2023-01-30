@@ -17,4 +17,7 @@ export default defineConfig({
     minify: false,
     outDir: path.resolve(__dirname, "dist"),
   },
+  define: {
+    '__APP_VERSION__': JSON.stringify(process.env.npm_package_version),
+  }
 });
