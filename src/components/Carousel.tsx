@@ -63,7 +63,7 @@ export const Carousel: Component<Props> = (props) => {
             true,
         })}
         onClick={() => setSelected(index)}
-      ></button>
+      />
     );
   };
 
