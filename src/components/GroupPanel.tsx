@@ -58,7 +58,7 @@ export const GroupPanel: Component<Props> = (props) => {
         <div>{props.children}</div>
       </div>
       {/* TODO: need refactor */}
-      <div class="absolute bottom-0 left-0 bg-black rounded-full p-1.5 m-4">
+      <div class="absolute bottom-0 left-0 bg-black rounded-full p-1.5 m-4 w-8 h-8">
         <IconButton
           iconName="help"
           iconColor="white"
