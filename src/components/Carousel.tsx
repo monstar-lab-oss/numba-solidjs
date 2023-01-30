@@ -107,7 +107,7 @@ export const Carousel: Component<Props> = (props) => {
                   Get Started
                 </Button>
               ) : (
-                <div></div>
+                <div />
               )}
             </div>
           </div>
