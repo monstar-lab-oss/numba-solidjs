@@ -1,8 +1,8 @@
-import { Component, createSignal, For, JSX } from "solid-js";
+import { Component, createMemo, createSignal, For, JSX } from "solid-js";
 import { clsx } from "clsx";
+import { Button } from "@/components/Button";
+import css from "@/components/Carousel.module.css";
 import { IconButton } from "@/components/IconButton";
-import { Button } from "./Button";
-import css from "./Carousel.module.css";
 
 export type Content = {
   src: string;
@@ -31,11 +31,11 @@ export const Carousel: Component<Props> = (props) => {
     return selected() + 1 <= props.contents.length - 1;
   });
 
-  const hasPrev = (): boolean => {
+  const hasPrev = createMemo(() => {
     return selected() - 1 >= 0;
-  };
+  });
 
-  // TODO: need refactor
+  // TODO: need refactor / maybe separate component from Carousel is more readable.
   const Card = (src: string, body: JSX.Element, index: number) => {
     return (
       <div
@@ -45,7 +45,6 @@ export const Carousel: Component<Props> = (props) => {
         })}
       >
         <div class={clsx({ [css.cardInner]: true })}>
-          {/* TODO: need add alt */}
           <img src={src} alt="" />
         </div>
         {body}
@@ -53,7 +52,7 @@ export const Carousel: Component<Props> = (props) => {
     );
   };
 
-  // TODO: need refactor
+  // TODO: need refactor / maybe separate component from Carousel is more readable.
   const Indicator = (index: number) => {
     return (
       <button
