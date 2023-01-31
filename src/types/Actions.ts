@@ -1,7 +1,7 @@
 import type { Badge } from "@/types/Badge";
 import type { Group } from "@/types/Group";
 
-type NodeId = string;
+export type NodeId = string;
 
 export type UpdateStorePayload = {
   selectedGroupID?: string;
@@ -57,4 +57,8 @@ export type Action =
   | {
       type: "APP/REMOVE_BADGES";
       payload: Group["id"][];
+    }
+  | {
+      type: "UI/SELECT_GROUP";
+      payload: NodeId | null;
     };

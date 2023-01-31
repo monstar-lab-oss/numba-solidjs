@@ -182,6 +182,16 @@ export const Provider: ParentComponent<Props> = (props) => {
           case "UI/TOGGLE_CREATE_GROUP_BUTTON":
             setEnabled(payload);
             return;
+          case "UI/SELECT_GROUP":
+            if (!payload) return;
+
+            // make sure the groupID is exists.
+            if (state.groups.find((v) => v.id === payload)) {
+              _setSelectedGroupId(payload);
+              return;
+            }
+
+            return;
           default:
             return;
         }

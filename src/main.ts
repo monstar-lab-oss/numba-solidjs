@@ -3,6 +3,7 @@ import {
   NUMBA_FIRST_OPEN,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
+  RELATED_WITH_NUMBA,
   UI_HEIGHT,
   UI_WIDTH,
 } from "@/constants";
@@ -10,6 +11,7 @@ import { dispatch } from "@/lib/dispatch";
 import {
   createGroup,
   createNumberGroup,
+  getGroupNode,
   getNode,
   isEnableCreateGroup,
   reduceAllNodes,
@@ -58,6 +60,22 @@ function onSelectionchange() {
       groupId: shouldMakeBadge(currentNode) as string | undefined,
       targetId: currentNode.id,
     },
+  });
+
+  if (
+    !currentNode.getPluginData(RELATED_WITH_NUMBA) &&
+    !currentNode.getPluginData(NUMBERING_GROUP_ID)
+  )
+    return;
+
+  const groupNode = getGroupNode(currentNode);
+  if (!groupNode) return;
+
+  figma.viewport.scrollAndZoomIntoView([groupNode]);
+
+  dispatch({
+    type: "UI/SELECT_GROUP",
+    payload: groupNode.id,
   });
 }
 
