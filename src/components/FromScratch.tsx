@@ -59,7 +59,8 @@ export const FromScratch: Component = () => {
             <BadgeTable data={badges() || []} useStore={useStore} />
           </Show>
         </BadgePanel>
-        <div class="absolute bottom-0 left-0 bg-black rounded-full p-1.5 m-4">
+        {/* TODO: ラップしている部分の「w-8 h-8」はIconButtonに責務を持たせる必要がある */}
+        <div class="absolute bottom-0 left-0 bg-black rounded-full p-1.5 m-4 w-8 h-8">
           <IconButton
             iconName="help"
             iconColor="white"

@@ -39,7 +39,6 @@ export const GroupPanel: Component<Props> = (props) => {
             Create
           </IconButton>
         </div>
-
         <div>{props.children}</div>
       </div>
     </Panel>

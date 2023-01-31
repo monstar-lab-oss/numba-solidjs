@@ -1,7 +1,10 @@
 import { createSignal, Show } from "solid-js";
+import { Portal } from "solid-js/web";
 import { BadgeTable } from "@/components/BadgeTable";
 import { GroupTable } from "@/components/GroupTable";
 // import { useStore } from "@/lib/hooks/useStore";
+import { IconButton } from "@/components/IconButton";
+import { Tutorial } from "@/components/Tutorial";
 import { UI_HEIGHT, UI_WIDTH } from "@/constants";
 import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Action } from "@/types/Actions";
@@ -65,10 +68,18 @@ const setSelectedProp = (v: any[]) => {
 
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => {
-  const [_, { enabled, groups }] = args.useStore();
+  const [_, { enabled, groups, setFirstOpen, firstOpen }] = args.useStore();
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
 
+  const [showTutorial, setShowTutorial] = createSignal(false);
+
+  const tutorialOnCLose = () => {
+    setFirstOpen(false);
+    setShowTutorial(false);
+  };
+
   return (
+    // FIXME: 根本的にこのファイルの構成を考える必要あり/内部でhooksなど作っていて、再現するのが難しいことなどが理由
     <div
       style={{
         width: `${UI_WIDTH}px`,
@@ -78,6 +89,11 @@ const Template: Story<Props> = (args) => {
     >
       {/* FIXME: Fixed height only now */}
       <div class={`flex h-[${UI_HEIGHT}px] items-stretch`}>
+        <Show when={showTutorial() || firstOpen()}>
+          <Portal>
+            <Tutorial onClose={tutorialOnCLose} />
+          </Portal>
+        </Show>
         <GroupPanel
           createButtonDisabled={!enabled()}
           onCreateClick={onClick}
@@ -91,6 +107,16 @@ const Template: Story<Props> = (args) => {
             <BadgeTable data={args.badges() || []} useStore={args.useStore} />
           </Show>
         </BadgePanel>
+      </div>
+      {/* TODO: ラップしている部分の「w-8 h-8」はIconButtonに責務を持たせる必要がある */}
+      <div class="absolute bottom-0 left-0 bg-black rounded-full p-1.5 m-4 w-8 h-8">
+        <IconButton
+          iconName="help"
+          iconColor="white"
+          buttonColor="secondary"
+          link
+          onClick={() => setShowTutorial(true)}
+        />
       </div>
     </div>
   );
