@@ -2,7 +2,7 @@
 
 @layer components {
   .style {
-    @apply flex h-screen flex-col;
+    @apply flex h-full flex-col;
   }
   .version {
     @apply absolute right-3 top-2;

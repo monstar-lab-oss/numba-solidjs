@@ -6,7 +6,6 @@ const styles = {
   transform: "scale(1)",
   height: UI_HEIGHT + "px",
   width: UI_WIDTH + "px",
-  "background-color": "white",
 };
 
 export default {
