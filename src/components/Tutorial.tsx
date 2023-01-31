@@ -12,6 +12,7 @@ import css from "@/components/Tutorial.module.css";
 import { Icon } from "./Icon";
 
 export type Props = {
+  version: string;
   onClose: () => void;
 };
 
@@ -88,7 +89,7 @@ export const Tutorial: Component<Props> = (props) => {
           color="darkGray"
           class={clsx({ [css.version]: true })}
         >
-          {`v${__APP_VERSION__}`}
+          {`v${props.version}`}
         </Text>
         <div class={clsx({ [css.carousel]: true })}>
           <Carousel contents={contents} onClose={props.onClose} />
