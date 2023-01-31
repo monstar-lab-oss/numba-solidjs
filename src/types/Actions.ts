@@ -60,5 +60,5 @@ export type Action =
     }
   | {
       type: "UI/SELECT_GROUP";
-      payload: NodeId | null;
+      payload: NodeId;
     };
