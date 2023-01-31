@@ -1,9 +1,4 @@
-import page1 from "@/asset/tutorial/page-1.png";
-import page2 from "@/asset/tutorial/page-2.png";
-import page3 from "@/asset/tutorial/page-3.png";
-import page4 from "@/asset/tutorial/page-4.png";
 import { Carousel, Props } from "@/components/Carousel";
-import { Text } from "@/components/Text";
 import { UI_HEIGHT, UI_WIDTH } from "@/constants";
 import { Meta, Story } from "@storybook/html";
 
@@ -24,46 +19,16 @@ export default {
 
 const contents = [
   {
-    src: page1,
-    body: (
-      <>
-        <Text class="text-center">
-          Select the group you want to assign numbers
-        </Text>
-        <Text class="text-center"> and click "Create" button.</Text>
-      </>
-    ),
+    src: "https://picsum.photos/300/200",
+    body: <div>TEXT HERE</div>,
   },
   {
-    src: page2,
-    body: (
-      <>
-        <Text class="text-center">To start assigning numbers,</Text>
-        <Text class="text-center">click the object on the canvas.</Text>
-        <Text size="sizeSmall" color="darkGray" class="text-center">
-          ※ The number is available up to 999.
-        </Text>
-      </>
-    ),
+    src: "https://picsum.photos/200/300",
+    body: <div>TEXT HERE</div>,
   },
   {
-    src: page3,
-    body: (
-      <Text class="text-center">
-        To check the assigned numbers, select a group
-      </Text>
-    ),
-  },
-  {
-    src: page4,
-    body: (
-      <>
-        <Text class="text-center">
-          Click on the 🗑 to delete the numbers from the
-        </Text>
-        <Text class="text-center">selected group.</Text>
-      </>
-    ),
+    src: "https://picsum.photos/300/300",
+    body: <div>TEXT HERE</div>,
   },
 ];
 
