@@ -35,7 +35,6 @@ export const Carousel: Component<Props> = (props) => {
     return selected() - 1 >= 0;
   });
 
-  // TODO: need refactor / maybe separate component from Carousel is more readable.
   const Card = (src: string, body: JSX.Element, index: number) => {
     return (
       <div
@@ -52,7 +51,6 @@ export const Carousel: Component<Props> = (props) => {
     );
   };
 
-  // TODO: need refactor / maybe separate component from Carousel is more readable.
   const Indicator = (index: number) => {
     return (
       <button
