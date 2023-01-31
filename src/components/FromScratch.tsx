@@ -44,7 +44,7 @@ export const FromScratch: Component = () => {
       <div class={`flex h-[${UI_HEIGHT}px] items-stretch`}>
         <Show when={showTutorial() || firstOpen()}>
           <Portal>
-            <Tutorial onClose={tutorialOnCLose} version={__APP_VERSION__}/>
+            <Tutorial onClose={tutorialOnCLose} version={__APP_VERSION__} />
           </Portal>
         </Show>
         <GroupPanel
