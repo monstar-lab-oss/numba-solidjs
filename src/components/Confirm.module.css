@@ -1,6 +1,9 @@
 @tailwind components;
 
 @layer components {
+  .style {
+    @apply flex items-center justify-center h-full;
+  }
   .body {
     @apply relative h-[110px] w-[250px] space-y-4 rounded-[2px] bg-white;
   }
