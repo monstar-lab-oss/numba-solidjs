@@ -28,6 +28,7 @@ type Props = {
 
 export const Provider: ParentComponent<Props> = (props) => {
   const [enabled, setEnabled] = createSignal(props.value.enabled);
+  const [firstOpen, setFirstOpen] = createSignal(false);
   const [selectedGroupId, _setSelectedGroupId] = createSignal<string | null>(
     null
   );
@@ -143,6 +144,7 @@ export const Provider: ParentComponent<Props> = (props) => {
               groups: payload.numberingGroups,
               badges,
             }));
+            setFirstOpen(payload.firstOpen);
 
             // NOTE: I want to set only UI side if set to Figma side the numbering is going to be wrong place.
             if (payload.selectedGroupID)
@@ -191,6 +193,8 @@ export const Provider: ParentComponent<Props> = (props) => {
     state,
     {
       enabled,
+      firstOpen,
+      setFirstOpen,
       setEnabled,
       selectedGroupId,
       setSelectedGroupId,
@@ -210,6 +214,8 @@ export type UseStoreType = [
   Store,
   {
     enabled: Accessor<boolean>;
+    firstOpen: Accessor<boolean>;
+    setFirstOpen: Setter<boolean>;
     selectedGroupId: Accessor<string | null>;
     setSelectedGroupId: Setter<string | null>;
     setSelectedBadgeID: Setter<string | null>;

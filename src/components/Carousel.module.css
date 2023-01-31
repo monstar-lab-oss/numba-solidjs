@@ -1,0 +1,49 @@
+@tailwind components;
+
+@layer components {
+  .style {
+    @apply flex justify-center w-full h-full;
+  }
+  .skipButton {
+    @apply min-w-[150px] px-6 text-left;
+  }
+  .getStartedButton {
+    @apply min-w-[150px] px-6 text-right;
+  }
+  .contents {
+    @apply relative flex flex-col min-h-full min-w-[280px] justify-between grow;
+  }
+  .inner {
+    @apply relative overflow-hidden flex justify-center items-center;
+  }
+  .buttonContainer {
+    @apply flex justify-center items-center self-center mb-6 w-full;
+  }
+  .buttonContainerInner {
+    @apply flex items-center self-center justify-between grow;
+  }
+  .indicator {
+    @apply w-2.5 h-2.5 rounded-full transition duration-200 ease-in-out transform; 
+  }
+  .indicatorContainer {
+    @apply items-center space-x-2 mx-2
+  }
+  .indicatorBlock {
+    @apply flex items-center justify-center self-center;
+  }
+  .card {
+    @apply flex flex-col transition duration-700 ease-in transform;
+  }
+  .cardInner {
+    @apply m-auto w-[260px] h-[205px] my-5;
+  }
+  .cardHidden {
+    @apply opacity-0 absolute left-[-1000px];
+  }
+  .indicatorActive {
+    @apply bg-numba-blue;
+  }
+  .indicatorInactive {
+    @apply bg-numba-gray;
+  }
+}

@@ -1,15 +1,17 @@
 import type { Component, JSX } from "solid-js";
 import { splitProps } from "solid-js";
 import { clsx } from "clsx";
+import css from "@/components/GroupPanel.module.css";
 import { IconButton } from "@/components/IconButton";
 import { Panel } from "@/components/Panel";
-import css from "./GroupPanel.module.css";
-import { Text } from "./Text";
+import { Text } from "@/components/Text";
+import type { UseStoreType } from "@/lib/hooks/useStore";
 
 export type Props = {
   createButtonDisabled: boolean;
   onCreateClick: () => void;
   children: JSX.Element;
+  useStore: () => UseStoreType;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
 export const GroupPanel: Component<Props> = (props) => {
@@ -37,7 +39,6 @@ export const GroupPanel: Component<Props> = (props) => {
             Create
           </IconButton>
         </div>
-
         <div>{props.children}</div>
       </div>
     </Panel>
