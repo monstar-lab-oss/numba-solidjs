@@ -7,12 +7,8 @@ Figma plugin for easy numbering with 1-click.
 Install it with npm:
 
 ```sh
-npm ci --legacy-peer-deps
+npm ci
 ```
-
-### Reason of `--legacy-peer-deps`
-Because we faced storybook + vite-build's issue. -> https://github.com/monstar-lab-group/numba/issues/102
-So this is temporary.
 
 ## Getting started with plugin development
 
