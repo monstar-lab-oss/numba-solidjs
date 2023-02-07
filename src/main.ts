@@ -3,7 +3,6 @@ import {
   NUMBA_FIRST_OPEN,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
-  RELATED_WITH_NUMBA,
   UI_HEIGHT,
   UI_WIDTH,
 } from "@/constants";
@@ -36,7 +35,7 @@ function shouldMakeBadge(
   return shouldMakeBadge(node.parent);
 }
 
-function onSelectionchange() {
+async function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
 
   // Reflected in Store when operated at the Figma panel
@@ -54,27 +53,28 @@ function onSelectionchange() {
 
   if (!currentNode) return;
 
-  dispatch({
-    type: "UI/SHOULD_MAKE_BADGE",
-    payload: {
-      groupId: shouldMakeBadge(currentNode) as string | undefined,
-      targetId: currentNode.id,
-    },
-  });
-
-  if (
-    !currentNode.getPluginData(RELATED_WITH_NUMBA) &&
-    !currentNode.getPluginData(NUMBERING_GROUP_ID)
-  )
-    return;
-
   const groupNode = getGroupNode(currentNode);
+  const groupID = shouldMakeBadge(currentNode) as string | undefined;
+  const sg = await figma.clientStorage.getAsync("selected-group");
+
+  if (groupID) {
+    figma.clientStorage.setAsync("selected-group", groupID);
+
+    if (sg === groupID) {
+      dispatch({
+        type: "UI/SHOULD_MAKE_BADGE",
+        payload: {
+          groupId: shouldMakeBadge(currentNode) as string | undefined,
+          targetId: currentNode.id,
+        },
+      });
+    }
+  }
+
   if (!groupNode) return;
 
-  figma.viewport.scrollAndZoomIntoView([groupNode]);
-
   dispatch({
-    type: "UI/SELECT_GROUP",
+    type: "UI/FOCUS_GROUP",
     payload: groupNode.id,
   });
 }
@@ -83,6 +83,11 @@ function onMessage(action: Action) {
   const { type, payload } = action;
 
   switch (type) {
+    case "APP/FOCUS_GROUP":
+      if (payload) {
+        figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
+      }
+      return;
     case "APP/SELECT_GROUP":
       if (!payload) return (figma.currentPage.selection = []);
 
@@ -91,6 +96,7 @@ function onMessage(action: Action) {
         getNode(payload, "GROUP"),
       ];
       figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
+      figma.clientStorage.setAsync("selected-group", payload);
       return;
     case "APP/SELECT_BADGE":
       if (!payload) return (figma.currentPage.selection = []);

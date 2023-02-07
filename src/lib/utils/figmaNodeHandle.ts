@@ -200,7 +200,10 @@ export function getGroupNode(
   let parent = node;
   while (parent) {
     if (parent.getPluginData(NUMBERING_GROUP_ID)) return parent;
-    if (parent.parent) parent = parent.parent;
+
+    if (!parent.parent) return null;
+
+    parent = parent.parent;
   }
   return null;
 }

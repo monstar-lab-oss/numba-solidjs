@@ -59,6 +59,10 @@ export type Action =
       payload: Group["id"][];
     }
   | {
-      type: "UI/SELECT_GROUP";
+      type: "UI/FOCUS_GROUP";
       payload: NodeId;
+    }
+  | {
+      type: "APP/FOCUS_GROUP";
+      payload: NodeId | null;
     };

@@ -128,6 +128,12 @@ export const Provider: ParentComponent<Props> = (props) => {
       }>) => {
         const { type, payload } = data.pluginMessage;
         switch (type) {
+          case "UI/FOCUS_GROUP":
+            // make sure the groupID is exists.
+            if (selectedGroupId() === payload) return;
+            _setSelectedGroupId(payload);
+            dispatch({ type: "APP/FOCUS_GROUP", payload });
+            return;
           case "UI/UPDATE_STORE": {
             // reduce with selected state
             const badgesRaw = payload.numberingbadgeGroups;
@@ -182,14 +188,7 @@ export const Provider: ParentComponent<Props> = (props) => {
           case "UI/TOGGLE_CREATE_GROUP_BUTTON":
             setEnabled(payload);
             return;
-          case "UI/SELECT_GROUP":
-            // make sure the groupID is exists.
-            if (state.groups.find((v) => v.id === payload)) {
-              _setSelectedGroupId(payload);
-              return;
-            }
 
-            return;
           default:
             return;
         }
