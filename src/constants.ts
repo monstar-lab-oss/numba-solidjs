@@ -6,7 +6,6 @@ export const MAX_BADGE_ALLOWED = 999;
 export const GROUP_NAME = `(${APP_NAME})`;
 export const NUMBERING_GROUP_NAME = `${GROUP_NAME}numbering`;
 // 連続してバッジを付与できない時間(msec)
-// FIXME: Figmaのバグか不明
 export const NUMBA_BADGE_THROTTLING = 200;
 
 // This attr added on Group, badge and badge text
