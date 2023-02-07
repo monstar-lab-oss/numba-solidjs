@@ -60,25 +60,24 @@ async function onSelectionchange() {
     NUMBA_SELECTED_GROUP
   );
 
-  if (groupID) {
-    figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, groupID);
-    const now = Date.now();
-    const prev = await figma.clientStorage.getAsync(NUMBA_LAST_BADGED_AT);
+  if (!groupID) return;
 
-    // FIXME: サイドバーからバッジを付与すると選択されているオブジェクトがシフトして再度バッジが付与されてしまうので時間で制御
-    if (currentGroupID === groupID && now - prev > NUMBA_BADGE_THROTTLING) {
-      await figma.clientStorage.setAsync(NUMBA_LAST_BADGED_AT, now);
-      dispatch({
-        type: "UI/SHOULD_MAKE_BADGE",
-        payload: {
-          groupId: groupID,
-          targetId: currentNode.id,
-        },
-      });
-    }
+  figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, groupID);
+  const now = Date.now();
+  const prev = await figma.clientStorage.getAsync(NUMBA_LAST_BADGED_AT);
+
+  // FIXME: サイドバーからバッジを付与すると選択されているオブジェクトがシフトして再度バッジが付与されてしまうので時間で制御
+  if (currentGroupID === groupID && now - prev > NUMBA_BADGE_THROTTLING) {
+    await figma.clientStorage.setAsync(NUMBA_LAST_BADGED_AT, now);
+    dispatch({
+      type: "UI/SHOULD_MAKE_BADGE",
+      payload: {
+        groupId: groupID,
+        targetId: currentNode.id,
+      },
+    });
   }
 
-  if (!groupID) return;
   dispatch({
     type: "UI/FOCUS_GROUP",
     payload: groupID,
