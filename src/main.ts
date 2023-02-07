@@ -67,6 +67,7 @@ async function onSelectionchange() {
   const prev = await figma.clientStorage.getAsync(NUMBA_LAST_BADGED_AT);
 
   // FIXME: サイドバーからバッジを付与すると選択されているオブジェクトがシフトして再度バッジが付与されてしまうので時間で制御
+  // FIXME: 詳細 https://github.com/monstar-lab-group/numba/pull/181#discussion_r1098304731
   if (currentGroupID === groupID && now - prev > NUMBA_BADGE_THROTTLING) {
     await figma.clientStorage.setAsync(NUMBA_LAST_BADGED_AT, now);
     dispatch({
