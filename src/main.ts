@@ -85,7 +85,7 @@ async function onSelectionchange() {
   });
 }
 
-function onMessage(action: Action) {
+async function onMessage(action: Action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -102,7 +102,7 @@ function onMessage(action: Action) {
         getNode(payload, "GROUP"),
       ];
       figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
-      figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, payload);
+      await figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, payload);
       return;
     case "APP/SELECT_BADGE":
       if (!payload) return (figma.currentPage.selection = []);
