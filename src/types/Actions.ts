@@ -1,7 +1,7 @@
 import type { Badge } from "@/types/Badge";
 import type { Group } from "@/types/Group";
 
-export type NodeId = string;
+type NodeId = string;
 
 export type UpdateStorePayload = {
   selectedGroupID?: string;
