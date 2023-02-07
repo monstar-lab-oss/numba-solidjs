@@ -1,6 +1,9 @@
 import {
   MAX_BADGE_ALLOWED,
+  NUMBA_BADGE_THROTTLING,
   NUMBA_FIRST_OPEN,
+  NUMBA_LAST_BADGED_AT,
+  NUMBA_SELECTED_GROUP,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   UI_HEIGHT,
@@ -10,7 +13,6 @@ import { dispatch } from "@/lib/dispatch";
 import {
   createGroup,
   createNumberGroup,
-  getGroupNode,
   getNode,
   isEnableCreateGroup,
   reduceAllNodes,
@@ -53,29 +55,33 @@ async function onSelectionchange() {
 
   if (!currentNode) return;
 
-  const groupNode = getGroupNode(currentNode);
   const groupID = shouldMakeBadge(currentNode) as string | undefined;
-  const sg = await figma.clientStorage.getAsync("selected-group");
+  const currentGroupID = await figma.clientStorage.getAsync(
+    NUMBA_SELECTED_GROUP
+  );
 
   if (groupID) {
-    figma.clientStorage.setAsync("selected-group", groupID);
+    figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, groupID);
+    const now = Date.now();
+    const prev = await figma.clientStorage.getAsync(NUMBA_LAST_BADGED_AT);
 
-    if (sg === groupID) {
+    // FIXME: サイドバーからバッジを付与すると選択されているオブジェクトがシフトして再度バッジが付与されてしまうので時間で制御
+    if (currentGroupID === groupID && now - prev > NUMBA_BADGE_THROTTLING) {
+      await figma.clientStorage.setAsync(NUMBA_LAST_BADGED_AT, now);
       dispatch({
         type: "UI/SHOULD_MAKE_BADGE",
         payload: {
-          groupId: shouldMakeBadge(currentNode) as string | undefined,
+          groupId: groupID,
           targetId: currentNode.id,
         },
       });
     }
   }
 
-  if (!groupNode) return;
-
+  if (!groupID) return;
   dispatch({
     type: "UI/FOCUS_GROUP",
-    payload: groupNode.id,
+    payload: groupID,
   });
 }
 
@@ -96,7 +102,7 @@ function onMessage(action: Action) {
         getNode(payload, "GROUP"),
       ];
       figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
-      figma.clientStorage.setAsync("selected-group", payload);
+      figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, payload);
       return;
     case "APP/SELECT_BADGE":
       if (!payload) return (figma.currentPage.selection = []);

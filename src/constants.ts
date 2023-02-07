@@ -5,6 +5,9 @@ export const UI_HEIGHT = 392;
 export const MAX_BADGE_ALLOWED = 999;
 export const GROUP_NAME = `(${APP_NAME})`;
 export const NUMBERING_GROUP_NAME = `${GROUP_NAME}numbering`;
+// 連続してバッジを付与できない時間(msec)
+// FIXME: Figmaのバグか不明
+export const NUMBA_BADGE_THROTTLING = 200;
 
 // This attr added on Group, badge and badge text
 export const RELATED_WITH_NUMBA = "RELATED_WITH_NUMBA";
@@ -16,3 +19,7 @@ export const BADGE_TARGET_ID = "BADGE_TARGET_ID";
 
 // Figma client storage keys
 export const NUMBA_FIRST_OPEN = "NUMBA_FIRST_OPEN";
+export const NUMBA_LAST_BADGED_AT = "NUMBA_LAST_BADGED_AT";
+export const NUMBA_SELECTED_GROUP = "NUMBA_SELECTED_GROUP";
+
+;
