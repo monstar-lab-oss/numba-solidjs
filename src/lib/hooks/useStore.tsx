@@ -129,8 +129,6 @@ export const Provider: ParentComponent<Props> = (props) => {
         const { type, payload } = data.pluginMessage;
         switch (type) {
           case "UI/FOCUS_GROUP":
-            // make sure the groupID is exists.
-            if (selectedGroupId() === payload) return;
             _setSelectedGroupId(payload);
             dispatch({ type: "APP/FOCUS_GROUP", payload });
             return;
