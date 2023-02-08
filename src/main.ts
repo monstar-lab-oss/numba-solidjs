@@ -63,9 +63,6 @@ async function onSelectionchange() {
   if (!currentNode) return;
 
   const groupID = shouldMakeBadge(currentNode) as string | undefined;
-  const currentGroupID = await figma.clientStorage.getAsync(
-    NUMBA_SELECTED_GROUP
-  );
 
   if (groupID) {
     figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, groupID);
@@ -74,16 +71,23 @@ async function onSelectionchange() {
 
     // FIXME: サイドバーからバッジを付与すると選択されているオブジェクトがシフトして再度バッジが付与されてしまうので時間で制御
     // FIXME: 詳細 https://github.com/monstar-lab-group/numba/pull/181#discussion_r1098304731
-    if (currentGroupID === groupID && now - prev > NUMBA_BADGE_THROTTLING) {
-      await figma.clientStorage.setAsync(NUMBA_LAST_BADGED_AT, now);
-      dispatch({
-        type: "UI/SHOULD_MAKE_BADGE",
-        payload: {
-          groupId: groupID,
-          targetId: currentNode.id,
-        },
-      });
-    }
+    if (now - prev <= NUMBA_BADGE_THROTTLING) return;
+
+    // NOTE: https://github.com/monstar-lab-group/numba/issues/156#issuecomment-1422071421
+    // NOTE: 実際に使ってみてから検討
+    // const currentGroupID = await figma.clientStorage.getAsync(
+    //   NUMBA_SELECTED_GROUP
+    // );
+    // if (currentGroupID === groupID) return;
+
+    await figma.clientStorage.setAsync(NUMBA_LAST_BADGED_AT, now);
+    dispatch({
+      type: "UI/SHOULD_MAKE_BADGE",
+      payload: {
+        groupId: groupID,
+        targetId: currentNode.id,
+      },
+    });
   }
 }
 
