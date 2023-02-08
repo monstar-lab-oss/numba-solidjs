@@ -29,7 +29,7 @@
     @apply font-medium truncate w-[182px];
   }
   .textWrapper{
-    @apply h-[32px] flex items-center pr-4;
+    @apply h-[30px] flex items-center pr-4;
   }
   .style tbody tr th div p{
     @apply truncate;
