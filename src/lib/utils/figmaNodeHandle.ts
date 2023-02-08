@@ -202,8 +202,6 @@ export function getGroupNode(
   while (parent) {
     if (parent.getPluginData(NUMBERING_GROUP_ID)) return parent;
 
-    if (parent.getPluginData(RELATED_WITH_NUMBA)) return parent;
-
     if (!parent.parent) return null;
 
     parent = parent.parent;
