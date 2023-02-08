@@ -20,10 +20,10 @@
     @apply p-0;
   }
   .style tbody tr.item {
-    @apply w-full cursor-pointer flex-row bg-white hover:bg-numba-white-gray pl-4;
+    @apply border border-transparent w-full cursor-pointer flex-row bg-white pl-4 hover:border-numba-white-gray;
   }
-  .style tbody tr.selected_row {
-    @apply bg-numba-white-gray;
+   .style tbody tr.clicked {
+    @apply transition delay-1000 bg-numba-white-gray hover:delay-[0ms] active:delay-[0ms];
   }
   .text{
     @apply font-medium truncate w-[182px];
