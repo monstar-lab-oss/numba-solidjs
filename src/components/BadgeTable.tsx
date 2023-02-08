@@ -49,7 +49,7 @@ export const BadgeTable: Component<Props> = (props) => {
         const parentId = selectedGroupId();
         if (!parentId) return;
         removeBadge(parentId, selectedBadgeIds);
-        setSelectedGroupId(null);
+
         setShow(false);
         e.stopImmediatePropagation();
       },

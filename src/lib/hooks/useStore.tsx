@@ -104,6 +104,7 @@ export const Provider: ParentComponent<Props> = (props) => {
 
     if (state.badges[parentId].length <= 0) {
       removeGroup(parentId);
+      setSelectedGroupId(null);
     } else {
       dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
     }
