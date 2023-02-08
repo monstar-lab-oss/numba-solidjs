@@ -54,13 +54,13 @@ async function onSelectionchange() {
     payload: isEnableCreateGroup(currentNode),
   });
 
-  const groupNode = getGroupNode(currentNode);
-  dispatch({
-    type: "UI/FOCUS_GROUP",
-    payload: groupNode ? groupNode.id : "",
-  });
-
-  if (!currentNode) return;
+  if (!currentNode) {
+    dispatch({
+      type: "UI/FOCUS_GROUP",
+      payload: "",
+    });
+    return;
+  }
 
   const groupID = shouldMakeBadge(currentNode) as string | undefined;
 
@@ -89,6 +89,12 @@ async function onSelectionchange() {
       },
     });
   }
+
+  const groupNode = getGroupNode(currentNode);
+  dispatch({
+    type: "UI/FOCUS_GROUP",
+    payload: groupNode ? groupNode.id : "",
+  });
 }
 
 async function onMessage(action: Action) {
