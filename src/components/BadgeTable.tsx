@@ -190,7 +190,6 @@ export const BadgeTable: Component<Props> = (props) => {
                 </td>
               </tr>
             )}
-            
           >
             <For each={props.data}>{(item) => <BadgeCard item={item} />}</For>
           </Show>
