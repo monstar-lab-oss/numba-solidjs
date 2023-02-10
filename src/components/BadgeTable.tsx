@@ -27,7 +27,7 @@ export const BadgeTable: Component<Props> = (props) => {
 
   const [
     _,
-    { removeBadge, selectedGroupId, setSelectedGroupId, setSelectedBadgeID },
+    { removeBadge, selectedGroupId, setSelectedBadgeID },
   ] = props.useStore();
 
   const isDisabledRemove = createMemo(() =>
