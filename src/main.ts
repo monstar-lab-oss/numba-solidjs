@@ -102,9 +102,7 @@ async function onMessage(action: Action) {
 
   switch (type) {
     case "APP/FOCUS_GROUP":
-      if (payload) {
-        figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
-      }
+      figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
       return;
     case "APP/SELECT_GROUP":
       if (!payload) return (figma.currentPage.selection = []);

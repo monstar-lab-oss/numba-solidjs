@@ -64,5 +64,5 @@ export type Action =
     }
   | {
       type: "APP/FOCUS_GROUP";
-      payload: NodeId | null;
+      payload: NodeId;
     };
