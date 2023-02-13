@@ -194,17 +194,14 @@ const isRelatedWithNUMBA = (node: SceneNode | (BaseNode & ChildrenMixin)) => {
   );
 };
 
-export function getGroupNode(
-  node: SceneNode | (BaseNode & ChildrenMixin)
-): SceneNode | (BaseNode & ChildrenMixin) | null {
-  let parent = node;
-  console.log("here");
-  while (parent) {
-    if (parent.getPluginData(NUMBERING_GROUP_ID)) return parent;
+// TODO: 共通化したい
+export type NodeWithChildren = BaseNode & ChildrenMixin;
+export function getNumberingGroup(
+  node: NodeWithChildren
+): NodeWithChildren | null {
+  if (node.getPluginData(NUMBERING_GROUP_ID)) return node;
 
-    if (!parent.parent) return null;
+  if (!node.parent) return null;
 
-    parent = parent.parent;
-  }
-  return null;
+  return getNumberingGroup(node.parent);
 }

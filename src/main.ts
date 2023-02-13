@@ -10,11 +10,12 @@ import {
   UI_WIDTH,
 } from "@/constants";
 import { dispatch } from "@/lib/dispatch";
+import type { NodeWithChildren } from "@/lib/utils/figmaNodeHandle";
 import {
   createGroup,
   createNumberGroup,
-  getGroupNode,
   getNode,
+  getNumberingGroup,
   isEnableCreateGroup,
   reduceAllNodes,
   removeBadgeNode,
@@ -90,7 +91,7 @@ async function onSelectionchange() {
     });
   }
 
-  const groupNode = getGroupNode(currentNode);
+  const groupNode = getNumberingGroup(currentNode as NodeWithChildren);
   dispatch({
     type: "UI/FOCUS_GROUP",
     payload: groupNode ? groupNode.id : "",
