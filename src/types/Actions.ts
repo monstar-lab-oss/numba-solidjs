@@ -57,4 +57,12 @@ export type Action =
   | {
       type: "APP/REMOVE_BADGES";
       payload: Group["id"][];
+    }
+  | {
+      type: "UI/FOCUS_GROUP";
+      payload: NodeId;
+    }
+  | {
+      type: "APP/FOCUS_GROUP";
+      payload: NodeId;
     };

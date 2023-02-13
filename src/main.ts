@@ -1,16 +1,21 @@
 import {
   MAX_BADGE_ALLOWED,
+  NUMBA_BADGE_THROTTLING,
   NUMBA_FIRST_OPEN,
+  NUMBA_LAST_BADGED_AT,
+  NUMBA_SELECTED_GROUP,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   UI_HEIGHT,
   UI_WIDTH,
 } from "@/constants";
 import { dispatch } from "@/lib/dispatch";
+import type { NodeWithChildren } from "@/lib/utils/figmaNodeHandle";
 import {
   createGroup,
   createNumberGroup,
   getNode,
+  getNumberingGroup,
   isEnableCreateGroup,
   reduceAllNodes,
   removeBadgeNode,
@@ -34,7 +39,7 @@ function shouldMakeBadge(
   return shouldMakeBadge(node.parent);
 }
 
-function onSelectionchange() {
+async function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
 
   // Reflected in Store when operated at the Figma panel
@@ -50,21 +55,56 @@ function onSelectionchange() {
     payload: isEnableCreateGroup(currentNode),
   });
 
-  if (!currentNode) return;
+  if (!currentNode) {
+    dispatch({
+      type: "UI/FOCUS_GROUP",
+      payload: "",
+    });
+    return;
+  }
 
+  const groupID = shouldMakeBadge(currentNode) as string | undefined;
+
+  if (groupID) {
+    figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, groupID);
+    const now = Date.now();
+    const prev = await figma.clientStorage.getAsync(NUMBA_LAST_BADGED_AT);
+
+    // FIXME: サイドバーからバッジを付与すると選択されているオブジェクトがシフトして再度バッジが付与されてしまうので時間で制御
+    // FIXME: 詳細 https://github.com/monstar-lab-group/numba/pull/181#discussion_r1098304731
+    if (now - prev <= NUMBA_BADGE_THROTTLING) return;
+
+    // NOTE: https://github.com/monstar-lab-group/numba/issues/156#issuecomment-1422071421
+    // NOTE: 実際に使ってみてから検討
+    // const currentGroupID = await figma.clientStorage.getAsync(
+    //   NUMBA_SELECTED_GROUP
+    // );
+    // if (currentGroupID === groupID) return;
+
+    await figma.clientStorage.setAsync(NUMBA_LAST_BADGED_AT, now);
+    dispatch({
+      type: "UI/SHOULD_MAKE_BADGE",
+      payload: {
+        groupId: groupID,
+        targetId: currentNode.id,
+      },
+    });
+  }
+
+  const groupNode = getNumberingGroup(currentNode as NodeWithChildren);
   dispatch({
-    type: "UI/SHOULD_MAKE_BADGE",
-    payload: {
-      groupId: shouldMakeBadge(currentNode) as string | undefined,
-      targetId: currentNode.id,
-    },
+    type: "UI/FOCUS_GROUP",
+    payload: groupNode ? groupNode.id : "",
   });
 }
 
-function onMessage(action: Action) {
+async function onMessage(action: Action) {
   const { type, payload } = action;
 
   switch (type) {
+    case "APP/FOCUS_GROUP":
+      figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
+      return;
     case "APP/SELECT_GROUP":
       if (!payload) return (figma.currentPage.selection = []);
 
@@ -73,6 +113,7 @@ function onMessage(action: Action) {
         getNode(payload, "GROUP"),
       ];
       figma.viewport.scrollAndZoomIntoView([getNode(payload, "GROUP")]);
+      await figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, payload);
       return;
     case "APP/SELECT_BADGE":
       if (!payload) return (figma.currentPage.selection = []);
