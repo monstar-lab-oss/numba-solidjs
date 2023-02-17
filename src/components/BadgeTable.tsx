@@ -100,7 +100,7 @@ export const BadgeTable: Component<Props> = (props) => {
       const prev = prevInterval();
       if (prev) clearInterval(prev);
       setClicked(true);
-      setPrevInterval(setInterval(() => setClicked(false), 1000));
+      setPrevInterval(setTimeout(() => setClicked(false), 1000));
     };
 
     return (
