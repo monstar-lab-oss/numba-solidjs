@@ -104,6 +104,7 @@ export const Provider: ParentComponent<Props> = (props) => {
 
     if (state.badges[parentId].length <= 0) {
       removeGroup(parentId);
+      setSelectedGroupId(null);
     } else {
       dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
     }
@@ -128,6 +129,10 @@ export const Provider: ParentComponent<Props> = (props) => {
       }>) => {
         const { type, payload } = data.pluginMessage;
         switch (type) {
+          case "UI/FOCUS_GROUP":
+            _setSelectedGroupId(payload);
+            dispatch({ type: "APP/FOCUS_GROUP", payload });
+            return;
           case "UI/UPDATE_STORE": {
             // reduce with selected state
             const badgesRaw = payload.numberingbadgeGroups;
@@ -182,6 +187,7 @@ export const Provider: ParentComponent<Props> = (props) => {
           case "UI/TOGGLE_CREATE_GROUP_BUTTON":
             setEnabled(payload);
             return;
+
           default:
             return;
         }

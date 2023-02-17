@@ -193,3 +193,15 @@ const isRelatedWithNUMBA = (node: SceneNode | (BaseNode & ChildrenMixin)) => {
     node.getPluginData(RELATED_WITH_NUMBA) !== ""
   );
 };
+
+// TODO: 共通化したい
+export type NodeWithChildren = BaseNode & ChildrenMixin;
+export function getNumberingGroup(
+  node: NodeWithChildren
+): NodeWithChildren | null {
+  if (node.getPluginData(NUMBERING_GROUP_ID)) return node;
+
+  if (!node.parent) return null;
+
+  return getNumberingGroup(node.parent);
+}
