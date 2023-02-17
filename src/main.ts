@@ -39,7 +39,7 @@ function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
 
   // If the node is related with NUMBA which mean, you don't need any process to run
-  if (currentNode.getPluginData(RELATED_WITH_NUMBA)) return;
+  if (!currentNode || currentNode.getPluginData(RELATED_WITH_NUMBA)) return;
 
   // Reflected in Store when operated at the Figma panel
   // TODO: Very expensive logic, see useStore.tsx L115
