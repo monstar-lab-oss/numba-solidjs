@@ -11,6 +11,9 @@ export const NUMBA_BADGE_THROTTLING = 200;
 // This attr added on Group, badge and badge text
 export const RELATED_WITH_NUMBA = "RELATED_WITH_NUMBA";
 
+// Figma numbering object index key
+export const NUMBA_BADGE_INDEX = "NUMBA_BADGE_INDEX";
+
 // figma plugin keys
 export const NUMBERING_GROUP_ID = "NUMBERING_GROUP_ID";
 export const NUMBERING_BADGE_GROUP_ID = "NUMBERING_BADGE_GROUP_ID";
