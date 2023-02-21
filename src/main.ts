@@ -44,7 +44,16 @@ async function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
 
   // If the node is related with NUMBA which mean, you don't need any process to run
-  if (!currentNode || currentNode.getPluginData(RELATED_WITH_NUMBA)) return;
+
+  if (!currentNode) {
+    dispatch({
+      type: "UI/FOCUS_GROUP",
+      payload: "",
+    });
+    return;
+  }
+
+  if (currentNode.getPluginData(RELATED_WITH_NUMBA)) return;
 
   // Reflected in Store when operated at the Figma panel
   // TODO: Very expensive logic, see useStore.tsx L115
@@ -58,14 +67,6 @@ async function onSelectionchange() {
     type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
     payload: isEnableCreateGroup(currentNode),
   });
-
-  if (!currentNode) {
-    dispatch({
-      type: "UI/FOCUS_GROUP",
-      payload: "",
-    });
-    return;
-  }
 
   const groupID = shouldMakeBadge(currentNode) as string | undefined;
 
