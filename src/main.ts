@@ -45,15 +45,17 @@ async function onSelectionchange() {
 
   // If the node is related with NUMBA which mean, you don't need any process to run
 
-  if (!currentNode) {
+  if (!currentNode || currentNode.getPluginData(RELATED_WITH_NUMBA)) {
+    const groupNode = currentNode
+      ? getNumberingGroup(currentNode as NodeWithChildren)
+      : null;
+
     dispatch({
       type: "UI/FOCUS_GROUP",
-      payload: "",
+      payload: groupNode ? groupNode.id : "",
     });
     return;
   }
-
-  if (currentNode.getPluginData(RELATED_WITH_NUMBA)) return;
 
   // Reflected in Store when operated at the Figma panel
   // TODO: Very expensive logic, see useStore.tsx L115
