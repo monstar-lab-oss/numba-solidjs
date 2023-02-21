@@ -94,7 +94,8 @@ export const BadgeTable: Component<Props> = (props) => {
     const [clicked, setClicked] = createSignal(false);
     const [prevInterval, setPrevInterval] = createSignal<number | null>(null);
 
-    const onRowClicked = () => {
+    const onRowClick = (id: string) => {
+      setSelectedBadgeID(id);
       const prev = prevInterval();
       if (prev) clearInterval(prev);
       setClicked(true);
@@ -102,10 +103,7 @@ export const BadgeTable: Component<Props> = (props) => {
     };
 
     return (
-      <tr
-        class={clsx({ [css.item]: true, [css.clicked]: clicked() })}
-        onClick={onRowClicked}
-      >
+      <tr class={clsx({ [css.item]: true, [css.clicked]: clicked() })}>
         <td>
           <div class="flex items-center">
             <Checkbox
@@ -117,7 +115,7 @@ export const BadgeTable: Component<Props> = (props) => {
             {/* <label for="checkbox-table-search-1">checkbox</label> */}
           </div>
         </td>
-        <th colSpan={2} scope="row" onClick={() => setSelectedBadgeID(item.id)}>
+        <th colSpan={2} scope="row" onClick={() => onRowClick(item.id)}>
           <div class={clsx({ [css.textWrapper]: true })}>
             <Text class={clsx({ [css.text]: true })} size="sizeMedium">
               {item.name}
