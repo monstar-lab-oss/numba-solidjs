@@ -1,5 +1,6 @@
 import {
   MAX_BADGE_ALLOWED,
+  NUMBA_BADGE_INDEX,
   NUMBA_BADGE_THROTTLING,
   NUMBA_FIRST_OPEN,
   NUMBA_LAST_BADGED_AT,
@@ -186,8 +187,11 @@ async function onMessage(action: Action) {
       }
 
       const idx = getMissingSerialNumber(
-        badgeGroup.children.map((x) => Number(x.name))
+        badgeGroup.children.map((v) =>
+          Number(v.getPluginData(NUMBA_BADGE_INDEX))
+        )
       );
+
       const badgeNode = setIndexNode(idx, currentNode);
       if (!badgeNode) return;
       badgeGroup.insertChild(0, badgeNode);
