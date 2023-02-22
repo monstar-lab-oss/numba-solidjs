@@ -92,14 +92,14 @@ export const BadgeTable: Component<Props> = (props) => {
 
   const BadgeCard = ({ item }: { item: Badge }) => {
     const [clicked, setClicked] = createSignal(false);
-    const [prevInterval, setPrevInterval] = createSignal<number | null>(null);
+    const [prevInterval, setPrevTimeout] = createSignal<number | null>(null);
 
     const onRowClick = (id: string) => {
       setSelectedBadgeID(id);
       const prev = prevInterval();
       if (prev) clearInterval(prev);
       setClicked(true);
-      setPrevInterval(setTimeout(() => setClicked(false), 1000));
+      setPrevTimeout(setTimeout(() => setClicked(false), 1000));
     };
 
     return (
