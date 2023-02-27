@@ -152,7 +152,7 @@ export const Provider: ParentComponent<Props> = (props) => {
               groups: payload.numberingGroups,
               badges,
             }));
-            setFirstOpen(payload.firstOpen);
+            setFirstOpen(payload.firstOpen ?? false);
 
             // NOTE: I want to set only UI side if set to Figma side the numbering is going to be wrong place.
             if (payload.selectedGroupID)
