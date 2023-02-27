@@ -7,7 +7,7 @@ export type UpdateStorePayload = {
   selectedGroupID?: string;
   numberingGroups: Group[];
   numberingbadgeGroups: Record<string, Badge[]>;
-  firstOpen: boolean;
+  firstOpen?: boolean;
 };
 
 // refs. https://github.com/redux-utilities/flux-standard-action
