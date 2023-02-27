@@ -17,7 +17,6 @@ export function reduceAllNodes() {
   const acc: any = {};
   const numberingGroups: any[] = [];
 
-  console.log(nodes.length);
   for (const node of nodes) {
     const n: any = node;
     const numbering = n.children.find(
