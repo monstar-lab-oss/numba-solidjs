@@ -19,17 +19,20 @@ export function reduceAllNodes() {
   const numberingGroups: Group[] = [];
 
   for (const node of nodes) {
-    const n = node;
-    const numbering = n.children.find(
+    const numbering = node.children.find(
       (v) => v.name === NUMBERING_GROUP_NAME
     ) as GroupNode;
 
-    const c = numbering.children.map((x) => ({
-      id: x.id,
-      name: x.name,
-      color: "BLUE",
-      targetId: x.getPluginData(BADGE_TARGET_ID),
-    })) as Badge[];
+    const c = (
+      numbering
+        ? numbering.children.map((x) => ({
+            id: x.id,
+            name: x.name,
+            color: "BLUE",
+            targetId: x.getPluginData(BADGE_TARGET_ID),
+          }))
+        : []
+    ) as Badge[];
 
     numberingGroups.push({
       id: node.id,
@@ -45,17 +48,32 @@ export function reduceAllNodes() {
     numberingbadgeGroups,
   } as UpdateStorePayload;
 }
-export function getNodesByType<T extends NodeType>(type: T) {
+export function getNodesByType<T extends NodeType>(type?: T) {
   // OR https://github.com/figma/plugin-samples/blob/22e12c5406c72f2a88d18810d3a6efb18ece0356/text-search/code.ts#L28-L36
-  return figma.currentPage.findChildren(
-    (v) => v.type === type && isRelatedWithNUMBA(v)
+
+  if (type) {
+    return figma.currentPage.findChildren(
+      (v) => v.type === type && isRelatedWithNUMBA(v)
+    ) as GroupNode[];
+  }
+
+  return figma.currentPage.findChildren((v) =>
+    isRelatedWithNUMBA(v)
   ) as GroupNode[];
 }
 
 export function getNode(id: string, type: NodeType) {
-  const node = getNodesByType(type).find((g) => g.id === id);
-  if (!node) throw new Error(`NO ${type} NODE!`);
-  return node as GroupNode;
+  // NUMBA node
+  const nodes = getNodesByType();
+  for (const node of nodes) {
+    if (node.parent) {
+      const n = node.parent
+        .findAllWithCriteria({ types: [type] })
+        .find((v) => v.id === id);
+      if (n) return n as GroupNode;
+    }
+  }
+  throw new Error(`NO ${type} NODE!`);
 }
 
 export function getGroupNode(id: string) {

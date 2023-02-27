@@ -173,7 +173,7 @@ export const Provider: ParentComponent<Props> = (props) => {
             if (hasBadge) return;
 
             // if a badge group already exists
-            if (state.badges[groupId]) {
+            if (state.badges[groupId].length > 0) {
               dispatch({
                 type: "APP/APPEND_BADGE",
                 payload: {
