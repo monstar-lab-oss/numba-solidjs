@@ -21,7 +21,7 @@ export function reduceAllNodes() {
   for (const node of nodes) {
     const n = node;
     const numbering = n.children.find(
-      (v) => v.name === "(NUMBA)numbering"
+      (v) => v.name === NUMBERING_GROUP_NAME
     ) as GroupNode;
 
     const c = numbering.children.map((x) => ({
@@ -69,7 +69,7 @@ export function getBadgeNode(groupID: string, badgeID: string) {
   if (!node) throw new Error(`NO GROUP NODE!`);
 
   const numbering = node.children.find(
-    (v) => v.name === "(NUMBA)numbering"
+    (v) => v.name === NUMBERING_GROUP_NAME
   ) as GroupNode;
   if (!numbering) throw new Error(`NO NUMBERING NODE!`);
 
