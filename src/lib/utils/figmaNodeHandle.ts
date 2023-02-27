@@ -11,35 +11,32 @@ import { UpdateStorePayload } from "@/types/Actions";
 import { NodeType } from "@/types/Node";
 
 export function reduceAllNodes() {
-  const numberingbadgeGroups = getNodesByType("GROUP")
-    .map((g) => g.getPluginData(NUMBERING_BADGE_GROUP_ID) && (g as GroupNode))
-    .filter((x) => x)
-    .reduce((acc, cur) => {
-      if (!cur) return acc;
-      if (!cur.parent) return acc;
+  // TODO: need refactor, replace any to type
+  const nodes = getNodesByType("GROUP");
 
-      return Object.assign(acc, {
-        [cur.parent.id]: cur.children
-          .map((x) => ({
-            id: x.id,
-            name: x.name,
-            color: "BLUE",
-            targetId: x.getPluginData(BADGE_TARGET_ID),
-          }))
-          .reverse(),
-      });
-    }, {});
+  const acc: any = {};
+  const numberingGroups: any[] = [];
 
-  const numberingGroups = getNodesByType("GROUP")
-    .map(
-      (g) =>
-        g.getPluginData(NUMBERING_GROUP_ID) && {
-          id: g.id,
-          name: g.name,
-          children: g.children.map(({ id }) => id),
-        }
-    )
-    .filter((x) => x) as { id: string; name: string; children: string[] }[];
+  console.log(nodes.length);
+  for (const node of nodes) {
+    const n: any = node;
+    const numbering = n.children.find(
+      (v: any) => v.name === "(NUMBA)numbering"
+    );
+    const c = numbering.children.map((x: any) => ({
+      id: x.id,
+      name: x.name,
+      color: "BLUE",
+      targetId: x.getPluginData(BADGE_TARGET_ID),
+    }));
+    numberingGroups.push({
+      id: node.id,
+      name: node.name,
+      children: c,
+    });
+    acc[`${node.id}`] = c;
+  }
+  const numberingbadgeGroups = acc;
 
   return {
     numberingGroups,
@@ -47,17 +44,40 @@ export function reduceAllNodes() {
   } as UpdateStorePayload;
 }
 export function getNodesByType<T extends NodeType>(type: T) {
-  // Currently using `findAllWithCriteria`, should I use `findChildren` ?
   // OR https://github.com/figma/plugin-samples/blob/22e12c5406c72f2a88d18810d3a6efb18ece0356/text-search/code.ts#L28-L36
-  return figma.currentPage.findAllWithCriteria({
-    types: [type],
-  });
+  return figma.currentPage.findChildren(
+    (v) => v.type === type && isRelatedWithNUMBA(v)
+  );
 }
 
 export function getNode(id: string, type: NodeType) {
   const node = getNodesByType(type).find((g) => g.id === id);
   if (!node) throw new Error(`NO ${type} NODE!`);
   return node as GroupNode;
+}
+
+export function getGroupNode(id: string) {
+  // TODO: need refactor, replace any to type
+  const node: any = getNodesByType("GROUP").find((g) => g.id === id);
+  if (!node) throw new Error(`NO GROUP NODE!`);
+  return node as GroupNode;
+}
+
+export function getBadgeNode(groupID: string, badgeID: string) {
+  // TODO: need refactor, replace any to type
+  const node: any = getNodesByType("GROUP").find((v) => v.id === groupID);
+  if (!node) throw new Error(`NO GROUP NODE!`);
+
+  const numbering = node.children.find(
+    (v: any) => v.name === "(NUMBA)numbering"
+  );
+  if (!numbering) throw new Error(`NO NUMBERING NODE!`);
+
+  const badge = numbering.children.find((v: any) => v.id === badgeID);
+
+  if (!badge) throw new Error(`NO BADGE NODE!`);
+
+  return badge as GroupNode;
 }
 
 export function setGroup(node: SceneNode, name: string) {
@@ -68,7 +88,7 @@ export function setGroup(node: SceneNode, name: string) {
 }
 
 export function removeGroupNode(id: string) {
-  const groupNode = getNode(id, "GROUP");
+  const groupNode = getGroupNode(id);
   const parent = groupNode.parent;
   if (!parent) return;
 
@@ -86,10 +106,9 @@ export function removeGroupNode(id: string) {
   });
 }
 
-export function removeBadgeNode(id: string) {
-  const node = getNodesByType("INSTANCE").find((g) => g.id === id);
+export function removeBadgeNode(badgeID: string, groupID: string) {
+  const node = getBadgeNode(groupID, badgeID);
   if (!node) throw new Error("NO BADGE NODE!");
-
   node.remove();
 }
 

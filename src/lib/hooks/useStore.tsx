@@ -106,7 +106,10 @@ export const Provider: ParentComponent<Props> = (props) => {
       removeGroup(parentId);
       setSelectedGroupId(null);
     } else {
-      dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
+      dispatch({
+        type: "APP/REMOVE_BADGES",
+        payload: { badges: ids, groupID: parentId },
+      });
     }
   };
 
