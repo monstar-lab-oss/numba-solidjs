@@ -30,6 +30,7 @@ const GroupSearch: Component<GroupSearchProps> = (props) => {
         value={props.query()}
         type="text"
         placeholder="Search"
+        onKeyDown={(e) => e.key === "Enter" && e.preventDefault()}
         onInput={(e) => props.setQuery(e.currentTarget.value)}
         prefixElement={<Icon name="search" color="disabled" />}
         suffixElement={
