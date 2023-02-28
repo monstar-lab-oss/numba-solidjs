@@ -2,7 +2,7 @@ import {
   MAX_BADGE_ALLOWED,
   NUMBA_BADGE_INDEX,
   NUMBA_BADGE_THROTTLING,
-  NUMBA_FIRST_OPEN,
+  NUMBA_IS_OPEND_TUTORIAL,
   NUMBA_LAST_BADGED_AT,
   NUMBA_SELECTED_GROUP,
   NUMBERING_BADGE_GROUP_ID,
@@ -231,10 +231,15 @@ async function onRun() {
   });
 
   const payload = reduceAllNodes();
-  payload.firstOpen = await figma.clientStorage.getAsync(NUMBA_FIRST_OPEN);
 
-  if (payload.firstOpen)
-    await figma.clientStorage.setAsync(NUMBA_FIRST_OPEN, false);
+  if (await figma.clientStorage.getAsync(NUMBA_IS_OPEND_TUTORIAL)) {
+    dispatch({
+      type: "UI/IS_OPEND_TUTORIAL",
+      payload: undefined,
+    });
+  } else {
+    await figma.clientStorage.setAsync(NUMBA_IS_OPEND_TUTORIAL, true);
+  }
 
   // Initialize store data at startup app
   dispatch({

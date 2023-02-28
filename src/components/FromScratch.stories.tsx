@@ -68,13 +68,12 @@ const setSelectedProp = (v: any[]) => {
 
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => {
-  const [_, { enabled, groups, setFirstOpen, firstOpen }] = args.useStore();
+  const [_, { enabled, groups }] = args.useStore();
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
 
   const [showTutorial, setShowTutorial] = createSignal(false);
 
   const tutorialOnCLose = () => {
-    setFirstOpen(false);
     setShowTutorial(false);
   };
 
@@ -89,7 +88,7 @@ const Template: Story<Props> = (args) => {
     >
       {/* FIXME: Fixed height only now */}
       <div class={`flex h-[${UI_HEIGHT}px] items-stretch`}>
-        <Show when={showTutorial() || firstOpen()}>
+        <Show when={showTutorial()}>
           <Portal>
             <Tutorial onClose={tutorialOnCLose} version={__APP_VERSION__} />
           </Portal>
@@ -130,9 +129,6 @@ const useStore = (): UseStoreType => {
     {
       groups: () => [],
       enabled: () => false,
-      firstOpen: () => false,
-      // @ts-expect-error FIXME: Should pass tslint.
-      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
@@ -157,9 +153,6 @@ const useStoreEnabled = (): UseStoreType => {
     {
       groups: () => [],
       enabled: () => true,
-      firstOpen: () => false,
-      // @ts-expect-error FIXME: Should pass tslint.
-      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
@@ -191,9 +184,6 @@ const useStoreCreateDisabled = (): UseStoreType => {
     {
       groups,
       enabled: () => false,
-      firstOpen: () => false,
-      // @ts-expect-error FIXME: Should pass tslint.
-      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],
@@ -232,9 +222,6 @@ const useStoreGroupFilled = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
-      firstOpen: () => false,
-      // @ts-expect-error FIXME: Should pass tslint.
-      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       getBadgeByGroupId: () => [],
       // @ts-expect-error FIXME: Should pass tslint.
@@ -274,9 +261,6 @@ const useStoreGroupAndBadgeFilled = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
-      firstOpen: () => false,
-      // @ts-expect-error FIXME: Should pass tslint.
-      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],
@@ -320,9 +304,6 @@ const useStoreManyGroupAndBadges = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
-      firstOpen: () => false,
-      // @ts-expect-error FIXME: Should pass tslint.
-      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:108350",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],
@@ -368,9 +349,6 @@ const useStoreLongName = (): UseStoreType => {
     {
       groups,
       enabled: () => true,
-      firstOpen: () => false,
-      // @ts-expect-error FIXME: Should pass tslint.
-      setFirstOpen: () => console.log("setFirstOpen"),
       selectedGroupId: () => "472:10835",
       // @ts-expect-error FIXME: Should pass tslint.
       getBadgeByGroupId: () => [""],

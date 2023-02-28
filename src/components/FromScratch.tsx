@@ -13,14 +13,7 @@ import { useStore } from "@/lib/hooks/useStore";
 export const FromScratch: Component = () => {
   const [
     _,
-    {
-      selectedGroupId,
-      enabled,
-      groups,
-      getBadgeByGroupId,
-      setFirstOpen,
-      firstOpen,
-    },
+    { isOpendTutorial, selectedGroupId, enabled, groups, getBadgeByGroupId },
   ] = useStore();
 
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
@@ -34,7 +27,6 @@ export const FromScratch: Component = () => {
   const [showTutorial, setShowTutorial] = createSignal(false);
 
   const tutorialOnCLose = () => {
-    setFirstOpen(false);
     setShowTutorial(false);
   };
 
@@ -42,7 +34,7 @@ export const FromScratch: Component = () => {
     <>
       {/* FIXME: Fixed height only now */}
       <div class={`flex h-[${UI_HEIGHT}px] items-stretch`}>
-        <Show when={showTutorial() || firstOpen()}>
+        <Show when={showTutorial() || !isOpendTutorial()}>
           <Portal>
             <Tutorial onClose={tutorialOnCLose} version={__APP_VERSION__} />
           </Portal>
