@@ -1,6 +1,7 @@
 import {
   BADGE_TARGET_ID,
   GROUP_NAME,
+  NUMBA_BADGE_INDEX,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   NUMBERING_GROUP_NAME,
@@ -133,8 +134,10 @@ export function removeBadgeNode(badgeID: string, groupID: string) {
 export function setIndexNode(index: number, targetNode: SceneNode) {
   if (isRelatedWithNUMBA(targetNode)) return;
 
+  const indexStr = `${index}`;
+
   const componentNode = figma.createComponent();
-  componentNode.name = `${index}`;
+  componentNode.name = indexStr;
   componentNode.resize(24, 24);
   componentNode.cornerRadius = 24;
   componentNode.layoutMode = "HORIZONTAL";
@@ -146,7 +149,7 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 
   const textNode = figma.createText();
   textNode.fontSize = 12;
-  textNode.characters = `${index}`;
+  textNode.characters = indexStr;
   textNode.fills = [setColor({ r: 0, g: 0, b: 0 })];
   textNode.resize(24, 24);
   textNode.textAlignHorizontal = "CENTER";
@@ -156,8 +159,13 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 
   const instanceNode = componentNode.createInstance();
   instanceNode.setPluginData(BADGE_TARGET_ID, targetNode.id);
+
   textNode.setPluginData(RELATED_WITH_NUMBA, textNode.id);
   componentNode.setPluginData(RELATED_WITH_NUMBA, componentNode.id);
+
+  // NOTE: maybe we can put together with RELATED_WITH_NUMBA
+  textNode.setPluginData(NUMBA_BADGE_INDEX, indexStr);
+  componentNode.setPluginData(NUMBA_BADGE_INDEX, indexStr);
 
   // refs. https://forum.figma.com/t/known-bug-getting-x-y-coordinates-of-rectangles-within-frames-but-not-groups/7012
   const newNode = targetNode.absoluteTransform;

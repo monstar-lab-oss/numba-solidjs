@@ -133,9 +133,7 @@ export const Provider: ParentComponent<Props> = (props) => {
         const { type, payload } = data.pluginMessage;
         switch (type) {
           case "UI/FOCUS_GROUP":
-            _setSelectedGroupId(payload);
-            dispatch({ type: "APP/FOCUS_GROUP", payload });
-            return;
+            return _setSelectedGroupId(payload);
           case "UI/UPDATE_STORE": {
             // reduce with selected state
             const badgesRaw = payload.numberingbadgeGroups;
