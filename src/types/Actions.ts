@@ -62,10 +62,6 @@ export type Action =
       payload: NodeId;
     }
   | {
-      type: "APP/FOCUS_GROUP";
-      payload: NodeId;
-    }
-  | {
       type: "UI/SHOW_TUTORIAL";
       payload: undefined;
     };
