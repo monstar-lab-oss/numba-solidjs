@@ -1,5 +1,6 @@
 import {
   Component,
+  createEffect,
   createMemo,
   createSignal,
   For,
@@ -69,6 +70,30 @@ export const GroupTable: Component<Props> = (props) => {
     return props.data.filter((x) => re.test(x.name));
   });
 
+  const Card = ({ item }: { item: Group }) => {
+    createEffect(() => {
+      if (selectedGroupId() === item.id) {
+        const el = document.getElementById(item.id);
+        if (!el) return;
+        el.scrollIntoView();
+      }
+    });
+
+    return (
+      <tr
+        onClick={(e) => onSelectClick(e, item.id)}
+        class={clsx({
+          [css.selected_row]: selectedGroupId() === item.id,
+          [css.item]: true,
+        })}
+      >
+        <th scope="row" id={item.id}>
+          <Text size="sizeSmall">{item.name}</Text>
+        </th>
+      </tr>
+    );
+  };
+
   return (
     <div class={clsx({ [css.style]: true })} {...attributes}>
       <table class={clsx({ [css.style]: true })}>
@@ -104,19 +129,7 @@ export const GroupTable: Component<Props> = (props) => {
                 </tr>
               )}
             >
-              {(item) => (
-                <tr
-                  onClick={(e) => onSelectClick(e, item.id)}
-                  class={clsx({
-                    [css.selected_row]: selectedGroupId() === item.id,
-                    [css.item]: true,
-                  })}
-                >
-                  <th scope="row">
-                    <Text size="sizeSmall">{item.name}</Text>
-                  </th>
-                </tr>
-              )}
+              {(item) => <Card item={item} />}
             </For>
           </tbody>
         </Show>
