@@ -203,6 +203,7 @@ export const Provider: ParentComponent<Props> = (props) => {
     {
       enabled,
       shouldShowTutorial,
+      setShouldShowTutorial,
       setEnabled,
       selectedGroupId,
       setSelectedGroupId,
@@ -223,6 +224,7 @@ export type UseStoreType = [
   {
     enabled: Accessor<boolean>;
     shouldShowTutorial: Accessor<boolean>;
+    setShouldShowTutorial: Setter<boolean>;
     selectedGroupId: Accessor<string | null>;
     setSelectedGroupId: Setter<string | null>;
     setSelectedBadgeID: Setter<string | null>;

@@ -1,4 +1,4 @@
-import { Component, createMemo, createSignal, onMount, Show } from "solid-js";
+import { Component, createMemo, Show } from "solid-js";
 import { Portal } from "solid-js/web";
 import { BadgePanel } from "@/components/BadgePanel";
 import { BadgeTable } from "@/components/BadgeTable";
@@ -13,34 +13,34 @@ import { useStore } from "@/lib/hooks/useStore";
 export const FromScratch: Component = () => {
   const [
     _,
-    { isOpendTutorial, selectedGroupId, enabled, groups, getBadgeByGroupId },
+    {
+      shouldShowTutorial,
+      setShouldShowTutorial,
+      selectedGroupId,
+      enabled,
+      groups,
+      getBadgeByGroupId,
+    },
   ] = useStore();
 
   const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
-
-  onMount(() => {
-    setShowTutorial(!isOpendTutorial());
-  });
 
   const badges = createMemo(() => {
     const groupId = selectedGroupId();
     if (!groupId) return [];
     return getBadgeByGroupId(groupId);
   });
-  console.log("isOpendTutorial()", isOpendTutorial());
-  const [showTutorial, setShowTutorial] = createSignal(!isOpendTutorial());
-
-  const tutorialOnCLose = () => {
-    setShowTutorial(false);
-  };
 
   return (
     <>
       {/* FIXME: Fixed height only now */}
       <div class={`flex h-[${UI_HEIGHT}px] items-stretch`}>
-        <Show when={showTutorial()}>
+        <Show when={shouldShowTutorial()}>
           <Portal>
-            <Tutorial onClose={tutorialOnCLose} version={__APP_VERSION__} />
+            <Tutorial
+              onClose={() => setShouldShowTutorial(false)}
+              version={__APP_VERSION__}
+            />
           </Portal>
         </Show>
         <GroupPanel
@@ -62,7 +62,7 @@ export const FromScratch: Component = () => {
             iconColor="white"
             buttonColor="secondary"
             link
-            onClick={() => setShowTutorial(true)}
+            onClick={() => setShouldShowTutorial(true)}
           />
         </div>
       </div>
