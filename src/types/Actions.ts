@@ -66,6 +66,6 @@ export type Action =
       payload: NodeId;
     }
   | {
-      type: "UI/IS_OPEND_TUTORIAL";
+      type: "UI/SHOW_TUTORIAL";
       payload: undefined;
     };

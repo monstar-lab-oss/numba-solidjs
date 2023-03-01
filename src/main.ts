@@ -232,14 +232,14 @@ async function onRun() {
 
   const payload = reduceAllNodes();
 
-  if (await figma.clientStorage.getAsync(NUMBA_IS_OPEND_TUTORIAL)) {
-    console.log("dispatch");
+  // 初めてNUMBAを起動したユーザーの場合のみ、チュートリアルを表示する
+  if (!(await figma.clientStorage.getAsync(NUMBA_IS_OPEND_TUTORIAL))) {
     dispatch({
-      type: "UI/IS_OPEND_TUTORIAL",
+      type: "UI/SHOW_TUTORIAL",
       payload: undefined,
     });
-  } else {
-    await figma.clientStorage.setAsync(NUMBA_IS_OPEND_TUTORIAL, true);
+
+    figma.clientStorage.setAsync(NUMBA_IS_OPEND_TUTORIAL, true);
   }
 
   // Initialize store data at startup app

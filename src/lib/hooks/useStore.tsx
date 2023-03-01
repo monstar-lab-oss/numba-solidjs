@@ -27,7 +27,7 @@ type Props = {
 };
 
 export const Provider: ParentComponent<Props> = (props) => {
-  const [isOpendTutorial, setIsOpendTutorial] = createSignal(false);
+  const [shouldShowTutorial, setShouldShowTutorial] = createSignal(false);
   const [enabled, setEnabled] = createSignal(props.value.enabled);
   const [selectedGroupId, _setSelectedGroupId] = createSignal<string | null>(
     null
@@ -134,12 +134,8 @@ export const Provider: ParentComponent<Props> = (props) => {
             dispatch({ type: "APP/FOCUS_GROUP", payload });
             return;
 
-          case "UI/IS_OPEND_TUTORIAL": {
-            console.log("passing store");
-            // tutorialを既に表示しているか
-            setIsOpendTutorial(true);
-            return;
-          }
+          case "UI/SHOW_TUTORIAL":
+            return setShouldShowTutorial(true);
 
           case "UI/UPDATE_STORE": {
             // reduce with selected state
@@ -206,7 +202,7 @@ export const Provider: ParentComponent<Props> = (props) => {
     state,
     {
       enabled,
-      isOpendTutorial,
+      shouldShowTutorial,
       setEnabled,
       selectedGroupId,
       setSelectedGroupId,
@@ -226,7 +222,7 @@ export type UseStoreType = [
   Store,
   {
     enabled: Accessor<boolean>;
-    isOpendTutorial: Accessor<boolean>;
+    shouldShowTutorial: Accessor<boolean>;
     selectedGroupId: Accessor<string | null>;
     setSelectedGroupId: Setter<string | null>;
     setSelectedBadgeID: Setter<string | null>;
