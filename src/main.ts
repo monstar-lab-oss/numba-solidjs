@@ -211,7 +211,7 @@ async function onMessage(action: Action) {
     // figma.viewport.scrollAndZoomIntoView([badgeNode]);
 
     case "APP/REMOVE_BADGES": {
-      payload.forEach((id) => removeBadgeNode(id));
+      payload.badges.forEach((id) => removeBadgeNode(id, payload.groupID));
       return;
     }
     default:
