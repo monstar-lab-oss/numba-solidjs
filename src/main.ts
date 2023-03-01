@@ -135,7 +135,7 @@ async function onMessage(action: Action) {
       if (!currentNode || rest.length)
         return figma.notify("Please select a single node.");
 
-      const group = createGroup(currentNode);
+      const group = createGroup(currentNode, payload);
       if (!group) return;
 
       // FIXME: If I use spread syntax I got `Unexpected token ...` so I do this for now.

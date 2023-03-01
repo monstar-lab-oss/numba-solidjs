@@ -13,6 +13,7 @@ export const RELATED_WITH_NUMBA = "RELATED_WITH_NUMBA";
 
 // Figma numbering object index key
 export const NUMBA_BADGE_INDEX = "NUMBA_BADGE_INDEX";
+export const NUMBA_GROUP_INDEX = "NUMBA_GROUP_INDEX";
 
 // figma plugin keys
 export const NUMBERING_GROUP_ID = "NUMBERING_GROUP_ID";

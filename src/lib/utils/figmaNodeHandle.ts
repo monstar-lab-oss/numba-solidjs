@@ -2,6 +2,7 @@ import {
   BADGE_TARGET_ID,
   GROUP_NAME,
   NUMBA_BADGE_INDEX,
+  NUMBA_GROUP_INDEX,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   NUMBERING_GROUP_NAME,
@@ -27,6 +28,7 @@ export function reduceAllNodes() {
     const c = (
       numbering
         ? numbering.children.map((x) => ({
+            index: Number(node.getPluginData(NUMBA_BADGE_INDEX)),
             id: x.id,
             name: x.name,
             color: "BLUE",
@@ -34,8 +36,10 @@ export function reduceAllNodes() {
           }))
         : []
     ) as Badge[];
+    c.sort((a, b) => a.index - b.index);
 
     numberingGroups.push({
+      index: Number(node.getPluginData(NUMBA_GROUP_INDEX)),
       id: node.id,
       name: node.name,
       children: c.map((v) => v.id),
@@ -44,6 +48,7 @@ export function reduceAllNodes() {
     numberingbadgeGroups[node.id] = c;
   }
 
+  numberingGroups.sort((a, b) => a.index - b.index);
   return {
     numberingGroups,
     numberingbadgeGroups,
@@ -177,7 +182,7 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
   return instanceNode;
 }
 
-export function createGroup(node: SceneNode) {
+export function createGroup(node: SceneNode, groupIndex: number) {
   if (!node.parent || isRelatedWithNUMBA(node)) return;
 
   const i = node.parent.children.findIndex((x) => node.id === x.id);
@@ -185,6 +190,7 @@ export function createGroup(node: SceneNode) {
   group.name = `${GROUP_NAME}${node.name}`;
   group.setPluginData(NUMBERING_GROUP_ID, group.id);
   node.setPluginData(RELATED_WITH_NUMBA, node.id);
+  group.setPluginData(NUMBA_GROUP_INDEX, `${groupIndex}`);
 
   return group;
 }

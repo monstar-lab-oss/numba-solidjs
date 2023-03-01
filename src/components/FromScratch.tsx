@@ -23,7 +23,8 @@ export const FromScratch: Component = () => {
     },
   ] = useStore();
 
-  const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
+  const onClick = () =>
+    dispatch({ type: "APP/CREATE_GROUP", payload: groups().length });
 
   const badges = createMemo(() => {
     const groupId = selectedGroupId();

@@ -37,7 +37,7 @@ export type Action =
     }
   | {
       type: "APP/CREATE_GROUP";
-      payload: null;
+      payload: number;
     }
   | {
       type: "APP/REMOVE_GROUP";
