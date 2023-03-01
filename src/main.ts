@@ -233,6 +233,7 @@ async function onRun() {
   const payload = reduceAllNodes();
 
   if (await figma.clientStorage.getAsync(NUMBA_IS_OPEND_TUTORIAL)) {
+    console.log("dispatch");
     dispatch({
       type: "UI/IS_OPEND_TUTORIAL",
       payload: undefined,

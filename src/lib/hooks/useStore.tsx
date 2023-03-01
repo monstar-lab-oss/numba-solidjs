@@ -135,6 +135,7 @@ export const Provider: ParentComponent<Props> = (props) => {
             return;
 
           case "UI/IS_OPEND_TUTORIAL": {
+            console.log("passing store");
             // tutorialを既に表示しているか
             setIsOpendTutorial(true);
             return;
