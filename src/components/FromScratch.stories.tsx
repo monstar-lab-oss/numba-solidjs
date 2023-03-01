@@ -69,7 +69,8 @@ const setSelectedProp = (v: any[]) => {
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => {
   const [_, { enabled, groups, setFirstOpen, firstOpen }] = args.useStore();
-  const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
+  const onClick = () =>
+    dispatch({ type: "APP/CREATE_GROUP", payload: groups().length });
 
   const [showTutorial, setShowTutorial] = createSignal(false);
 
@@ -180,6 +181,7 @@ CreateEnabled.args = { useStore: useStoreEnabled, badges: () => [] };
 const useStoreCreateDisabled = (): UseStoreType => {
   const [groups, setGroups] = createSignal([
     {
+      index: 0,
       id: "472:10835",
       name: "TEST FRAME",
       children: ["423:12558", "472:11220"],
@@ -221,6 +223,7 @@ CreateDisabled.args = {
 const useStoreGroupFilled = (): UseStoreType => {
   const [groups, setGroups] = createSignal([
     {
+      index: 0,
       id: "472:10835",
       name: "TEST FRAME",
       children: ["423:12558", "472:11220"],
@@ -263,6 +266,7 @@ GroupFilled.args = {
 const useStoreGroupAndBadgeFilled = (): UseStoreType => {
   const [groups, setGroups] = createSignal([
     {
+      index: 0,
       id: "472:10835",
       name: "TEST FRAME",
       children: ["423:12558", "472:11220"],
