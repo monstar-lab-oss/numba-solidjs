@@ -106,7 +106,10 @@ export const Provider: ParentComponent<Props> = (props) => {
       removeGroup(parentId);
       setSelectedGroupId(null);
     } else {
-      dispatch({ type: "APP/REMOVE_BADGES", payload: ids });
+      dispatch({
+        type: "APP/REMOVE_BADGES",
+        payload: { badges: ids, groupID: parentId },
+      });
     }
   };
 
@@ -147,7 +150,7 @@ export const Provider: ParentComponent<Props> = (props) => {
               groups: payload.numberingGroups,
               badges,
             }));
-            setFirstOpen(payload.firstOpen);
+            setFirstOpen(payload.firstOpen ?? false);
 
             // NOTE: I want to set only UI side if set to Figma side the numbering is going to be wrong place.
             if (payload.selectedGroupID)
@@ -168,7 +171,7 @@ export const Provider: ParentComponent<Props> = (props) => {
             if (hasBadge) return;
 
             // if a badge group already exists
-            if (state.badges[groupId]) {
+            if (state.badges[groupId].length > 0) {
               dispatch({
                 type: "APP/APPEND_BADGE",
                 payload: {
