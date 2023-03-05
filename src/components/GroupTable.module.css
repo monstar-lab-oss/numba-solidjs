@@ -20,7 +20,7 @@
     @apply flex h-[280px] w-full table-auto flex-col items-center overflow-y-scroll border-t;
   }
   .item {
-    @apply hover:bg-numba-white-gray;
+    @apply border border-transparent hover:border-numba-white-gray;
   }
   .style tbody tr {
     @apply w-full cursor-pointer bg-transparent;
@@ -29,7 +29,7 @@
     @apply bg-numba-white-gray;
   }
   .style tbody tr th div {
-    @apply h-[32px] font-medium px-4 py-2 table-cell align-middle;
+    @apply h-[30px] font-medium px-4 py-2 table-cell align-middle;
   }
   .style tbody th {
     @apply p-0;

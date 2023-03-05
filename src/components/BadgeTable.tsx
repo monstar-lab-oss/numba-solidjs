@@ -90,6 +90,41 @@ export const BadgeTable: Component<Props> = (props) => {
   const isIndeterminate = () =>
     selectedItems().length > 0 && props.data.length !== selectedItems().length;
 
+  const BadgeCard = ({ item }: { item: Badge }) => {
+    const [clicked, setClicked] = createSignal(false);
+    const [prevInterval, setPrevTimeout] = createSignal<number>(0);
+
+    const onRowClick = (id: string) => {
+      setSelectedBadgeID(id);
+      clearInterval(prevInterval());
+      setClicked(true);
+      setPrevTimeout(setTimeout(() => setClicked(false), 1000));
+    };
+
+    return (
+      <tr class={clsx({ [css.item]: true, [css.clicked]: clicked() })}>
+        <td>
+          <div class="flex items-center">
+            <Checkbox
+              id="checkbox-table-search-1"
+              checked={item.selected()}
+              onChange={() => onToggleClick(item.id)}
+            />
+            {/* FIXME this label with class 'sr-only' occurred unexpected scroll effect.  */}
+            {/* <label for="checkbox-table-search-1">checkbox</label> */}
+          </div>
+        </td>
+        <th colSpan={2} scope="row" onClick={() => onRowClick(item.id)}>
+          <div class={clsx({ [css.textWrapper]: true })}>
+            <Text class={clsx({ [css.text]: true })} size="sizeMedium">
+              {item.name}
+            </Text>
+          </div>
+        </th>
+      </tr>
+    );
+  };
+
   return (
     <div class={clsx({ [css.style]: true })} {...attributes}>
       <Show when={show()}>
@@ -151,37 +186,7 @@ export const BadgeTable: Component<Props> = (props) => {
               </tr>
             )}
           >
-            <For each={props.data}>
-              {(item) => (
-                <tr class={clsx({ [css.item]: true })}>
-                  <td>
-                    <div class="flex items-center">
-                      <Checkbox
-                        id="checkbox-table-search-1"
-                        checked={item.selected()}
-                        onChange={() => onToggleClick(item.id)}
-                      />
-                      {/* FIXME this label with class 'sr-only' occurred unexpected scroll effect.  */}
-                      {/* <label for="checkbox-table-search-1">checkbox</label> */}
-                    </div>
-                  </td>
-                  <th
-                    colSpan={2}
-                    scope="row"
-                    onClick={() => setSelectedBadgeID(item.id)}
-                  >
-                    <div class={clsx({ [css.textWrapper]: true })}>
-                      <Text
-                        class={clsx({ [css.text]: true })}
-                        size="sizeMedium"
-                      >
-                        {item.name}
-                      </Text>
-                    </div>
-                  </th>
-                </tr>
-              )}
-            </For>
+            <For each={props.data}>{(item) => <BadgeCard item={item} />}</For>
           </Show>
         </tbody>
       </table>
