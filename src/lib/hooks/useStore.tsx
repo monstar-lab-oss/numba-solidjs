@@ -27,8 +27,8 @@ type Props = {
 };
 
 export const Provider: ParentComponent<Props> = (props) => {
+  const [shouldShowTutorial, setShouldShowTutorial] = createSignal(false);
   const [enabled, setEnabled] = createSignal(props.value.enabled);
-  const [firstOpen, setFirstOpen] = createSignal(false);
   const [selectedGroupId, _setSelectedGroupId] = createSignal<string | null>(
     null
   );
@@ -134,6 +134,10 @@ export const Provider: ParentComponent<Props> = (props) => {
         switch (type) {
           case "UI/FOCUS_GROUP":
             return _setSelectedGroupId(payload);
+
+          case "UI/SHOW_TUTORIAL":
+            return setShouldShowTutorial(true);
+
           case "UI/UPDATE_STORE": {
             // reduce with selected state
             const badgesRaw = payload.numberingbadgeGroups;
@@ -150,7 +154,6 @@ export const Provider: ParentComponent<Props> = (props) => {
               groups: payload.numberingGroups,
               badges,
             }));
-            setFirstOpen(payload.firstOpen ?? false);
 
             // NOTE: I want to set only UI side if set to Figma side the numbering is going to be wrong place.
             if (payload.selectedGroupID)
@@ -200,8 +203,8 @@ export const Provider: ParentComponent<Props> = (props) => {
     state,
     {
       enabled,
-      firstOpen,
-      setFirstOpen,
+      shouldShowTutorial,
+      setShouldShowTutorial,
       setEnabled,
       selectedGroupId,
       setSelectedGroupId,
@@ -221,8 +224,8 @@ export type UseStoreType = [
   Store,
   {
     enabled: Accessor<boolean>;
-    firstOpen: Accessor<boolean>;
-    setFirstOpen: Setter<boolean>;
+    shouldShowTutorial: Accessor<boolean>;
+    setShouldShowTutorial: Setter<boolean>;
     selectedGroupId: Accessor<string | null>;
     setSelectedGroupId: Setter<string | null>;
     setSelectedBadgeID: Setter<string | null>;

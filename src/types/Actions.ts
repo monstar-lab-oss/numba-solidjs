@@ -7,7 +7,6 @@ export type UpdateStorePayload = {
   selectedGroupID?: string;
   numberingGroups: Group[];
   numberingbadgeGroups: Record<string, Badge[]>;
-  firstOpen?: boolean;
 };
 
 // refs. https://github.com/redux-utilities/flux-standard-action
@@ -64,4 +63,8 @@ export type Action =
   | {
       type: "UI/FOCUS_GROUP";
       payload: NodeId;
+    }
+  | {
+      type: "UI/SHOW_TUTORIAL";
+      payload: undefined;
     };
