@@ -21,9 +21,6 @@ export function reduceAllNodes() {
   const numberingGroups: Group[] = [];
 
   for (const groupNode of groupNodes) {
-    if (groupNode.getPluginData(RELATED_WITH_NUMBA)) {
-      groupNode.setPluginData(RELATED_WITH_NUMBA, RELATED_WITH_NUMBA);
-    }
     const badgeNodes = groupNode.children.find(
       (v) => v.name === NUMBERING_GROUP_NAME
     ) as GroupNode;
