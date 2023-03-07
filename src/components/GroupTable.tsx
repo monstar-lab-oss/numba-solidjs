@@ -70,7 +70,7 @@ export const GroupTable: Component<Props> = (props) => {
     return props.data.filter((x) => re.test(x.name));
   });
 
-  const Card = ({ item }: { item: Group }) => {
+  const TableRow = ({ item }: { item: Group }) => {
     createEffect(() => {
       if (selectedGroupId() !== item.id) return;
       document.getElementById(item.id)?.scrollIntoView();
@@ -126,7 +126,7 @@ export const GroupTable: Component<Props> = (props) => {
                 </tr>
               )}
             >
-              {(item) => <Card item={item} />}
+              {(item) => <TableRow item={item} />}
             </For>
           </tbody>
         </Show>
