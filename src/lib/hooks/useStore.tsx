@@ -81,29 +81,6 @@ export const Provider: ParentComponent<Props> = (props) => {
     } as Badge;
   };
 
-  // TODO: 使ってないので消す！！！
-  const createBadge = ({
-    parentId,
-    id,
-    name,
-    targetId,
-    index,
-  }: {
-    parentId: Group["id"];
-    id: Badge["id"];
-    name: Badge["name"];
-    targetId: string;
-    index: number;
-  }) => {
-    const b: Badge = createBadgeWithSelectedState(parentId, {
-      id,
-      name,
-      targetId,
-      index,
-    });
-    setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
-  };
-
   const removeBadge = (parentId: Group["id"], ids: Badge["id"][]) => {
     ids.forEach((id) =>
       setState("badges", [parentId], (bx) => bx.filter((b) => b.id !== id))
@@ -216,7 +193,6 @@ export const Provider: ParentComponent<Props> = (props) => {
       groups,
       removeGroup,
       getBadgeByGroupId,
-      createBadge,
       removeBadge,
     },
   ] as const;
@@ -238,17 +214,6 @@ export type UseStoreType = [
     createGroup: ({ id, name }: { id: string; name: string }) => void;
     removeGroup: (id: Group["id"]) => void;
     getBadgeByGroupId: (id?: Group["id"]) => Badge[];
-    createBadge: ({
-      parentId,
-      id,
-      name,
-      index,
-    }: {
-      parentId: Group["id"];
-      id: Badge["id"];
-      name: Badge["name"];
-      index: Badge["index"];
-    }) => void;
     removeBadge: (parentId: Group["id"], ids: Badge["id"][]) => void;
   }
 ];

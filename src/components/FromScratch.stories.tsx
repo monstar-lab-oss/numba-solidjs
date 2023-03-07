@@ -142,7 +142,6 @@ const useStore = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => console.log("removeGroup"),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -169,7 +168,6 @@ const useStoreEnabled = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => console.log("removeGroup"),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -205,7 +203,6 @@ const useStoreCreateDisabled = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -246,7 +243,6 @@ const useStoreGroupFilled = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -290,7 +286,6 @@ const useStoreGroupAndBadgeFilled = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -336,7 +331,6 @@ const useStoreManyGroupAndBadges = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -384,7 +378,6 @@ const useStoreLongName = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
