@@ -72,11 +72,8 @@ export const GroupTable: Component<Props> = (props) => {
 
   const Card = ({ item }: { item: Group }) => {
     createEffect(() => {
-      if (selectedGroupId() === item.id) {
-        const el = document.getElementById(item.id);
-        if (!el) return;
-        el.scrollIntoView();
-      }
+      if (selectedGroupId() !== item.id) return;
+      document.getElementById(item.id)?.scrollIntoView();
     });
 
     return (
