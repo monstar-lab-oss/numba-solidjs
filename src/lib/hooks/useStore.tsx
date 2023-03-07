@@ -55,15 +55,17 @@ export const Provider: ParentComponent<Props> = (props) => {
     // Ref. https://github.com/monstar-lab-group/numba/pull/105#discussion_r1007785714
     if (!id || !state.badges[id]) return [];
 
-    const tmp = [...state.badges[id]];
-    tmp.sort((a, b) => Number(a.name) - Number(b.name));
-
-    return tmp;
+    return state.badges[id];
   };
 
   const createBadgeWithSelectedState = (
     groupID: string,
-    { id, name, targetId }: Pick<Badge, "id" | "name" | "targetId">
+    {
+      id,
+      name,
+      targetId,
+      index,
+    }: Pick<Badge, "id" | "name" | "targetId" | "index">
   ) => {
     const badge = state.badges[groupID]?.find((v) => v.id === id);
     const [selected, setSelected] = createSignal(!!badge?.selected());
@@ -73,26 +75,31 @@ export const Provider: ParentComponent<Props> = (props) => {
       name,
       color: "BLUE",
       targetId,
+      index,
       selected,
       setSelected,
     } as Badge;
   };
 
+  // TODO: 使ってないので消す！！！
   const createBadge = ({
     parentId,
     id,
     name,
     targetId,
+    index,
   }: {
     parentId: Group["id"];
     id: Badge["id"];
     name: Badge["name"];
     targetId: string;
+    index: number;
   }) => {
     const b: Badge = createBadgeWithSelectedState(parentId, {
       id,
       name,
       targetId,
+      index,
     });
     setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
   };
@@ -235,10 +242,12 @@ export type UseStoreType = [
       parentId,
       id,
       name,
+      index,
     }: {
       parentId: Group["id"];
       id: Badge["id"];
       name: Badge["name"];
+      index: Badge["index"];
     }) => void;
     removeBadge: (parentId: Group["id"], ids: Badge["id"][]) => void;
   }

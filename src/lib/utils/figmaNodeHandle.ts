@@ -15,20 +15,20 @@ import type { Group } from "@/types/Group";
 import { NodeType } from "@/types/Node";
 
 export function reduceAllNodes() {
-  const nodes = getNodesByType("GROUP");
+  const groupNodes = getNodesByType("GROUP");
 
   const numberingbadgeGroups: UpdateStorePayload["numberingbadgeGroups"] = {};
   const numberingGroups: Group[] = [];
 
-  for (const node of nodes) {
-    const numbering = node.children.find(
+  for (const groupNode of groupNodes) {
+    const badgeNodes = groupNode.children.find(
       (v) => v.name === NUMBERING_GROUP_NAME
     ) as GroupNode;
 
-    const c = (
-      numbering
-        ? numbering.children.map((x) => ({
-            index: Number(node.getPluginData(NUMBA_BADGE_INDEX)),
+    const badges = (
+      badgeNodes
+        ? badgeNodes.children.map((x) => ({
+            index: Number(x.getPluginData(NUMBA_BADGE_INDEX)),
             id: x.id,
             name: x.name,
             color: "BLUE",
@@ -36,16 +36,17 @@ export function reduceAllNodes() {
           }))
         : []
     ) as Badge[];
-    c.sort((a, b) => a.index - b.index);
+
+    badges.sort((a, b) => a.index - b.index);
 
     numberingGroups.push({
-      index: Number(node.getPluginData(NUMBA_GROUP_INDEX)),
-      id: node.id,
-      name: node.name,
-      children: c.map((v) => v.id),
+      index: Number(groupNode.getPluginData(NUMBA_GROUP_INDEX)),
+      id: groupNode.id,
+      name: groupNode.name,
+      children: badges.map((v) => v.id),
     });
 
-    numberingbadgeGroups[node.id] = c;
+    numberingbadgeGroups[groupNode.id] = badges;
   }
 
   numberingGroups.sort((a, b) => a.index - b.index);
@@ -170,7 +171,7 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 
   // NOTE: maybe we can put together with RELATED_WITH_NUMBA
   textNode.setPluginData(NUMBA_BADGE_INDEX, indexStr);
-  componentNode.setPluginData(NUMBA_BADGE_INDEX, indexStr);
+  instanceNode.setPluginData(NUMBA_BADGE_INDEX, indexStr);
 
   // refs. https://forum.figma.com/t/known-bug-getting-x-y-coordinates-of-rectangles-within-frames-but-not-groups/7012
   const newNode = targetNode.absoluteTransform;
