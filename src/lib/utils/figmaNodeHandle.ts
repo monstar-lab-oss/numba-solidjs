@@ -2,6 +2,7 @@ import {
   BADGE_TARGET_ID,
   GROUP_NAME,
   NUMBA_BADGE_INDEX,
+  NUMBA_GROUP_INDEX,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
   NUMBERING_GROUP_NAME,
@@ -14,19 +15,20 @@ import type { Group } from "@/types/Group";
 import { NodeType } from "@/types/Node";
 
 export function reduceAllNodes() {
-  const nodes = getNodesByType("GROUP");
+  const groupNodes = getNodesByType("GROUP");
 
   const numberingbadgeGroups: UpdateStorePayload["numberingbadgeGroups"] = {};
   const numberingGroups: Group[] = [];
 
-  for (const node of nodes) {
-    const numbering = node.children.find(
+  for (const groupNode of groupNodes) {
+    const badgeNodes = groupNode.children.find(
       (v) => v.name === NUMBERING_GROUP_NAME
     ) as GroupNode;
 
-    const c = (
-      numbering
-        ? numbering.children.map((x) => ({
+    const badges = (
+      badgeNodes
+        ? badgeNodes.children.map((x) => ({
+            index: Number(x.getPluginData(NUMBA_BADGE_INDEX)),
             id: x.id,
             name: x.name,
             color: "BLUE",
@@ -35,15 +37,19 @@ export function reduceAllNodes() {
         : []
     ) as Badge[];
 
+    badges.sort((a, b) => a.index - b.index);
+
     numberingGroups.push({
-      id: node.id,
-      name: node.name,
-      children: c.map((v) => v.id),
+      index: Number(groupNode.getPluginData(NUMBA_GROUP_INDEX)),
+      id: groupNode.id,
+      name: groupNode.name,
+      children: badges.map((v) => v.id),
     });
 
-    numberingbadgeGroups[node.id] = c;
+    numberingbadgeGroups[groupNode.id] = badges;
   }
 
+  numberingGroups.sort((a, b) => a.index - b.index);
   return {
     numberingGroups,
     numberingbadgeGroups,
@@ -165,7 +171,7 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
 
   // NOTE: maybe we can put together with RELATED_WITH_NUMBA
   textNode.setPluginData(NUMBA_BADGE_INDEX, indexStr);
-  componentNode.setPluginData(NUMBA_BADGE_INDEX, indexStr);
+  instanceNode.setPluginData(NUMBA_BADGE_INDEX, indexStr);
 
   // refs. https://forum.figma.com/t/known-bug-getting-x-y-coordinates-of-rectangles-within-frames-but-not-groups/7012
   const newNode = targetNode.absoluteTransform;
@@ -177,7 +183,7 @@ export function setIndexNode(index: number, targetNode: SceneNode) {
   return instanceNode;
 }
 
-export function createGroup(node: SceneNode) {
+export function createGroup(node: SceneNode, groupIndex: number) {
   if (!node.parent || isRelatedWithNUMBA(node)) return;
 
   const i = node.parent.children.findIndex((x) => node.id === x.id);
@@ -185,6 +191,7 @@ export function createGroup(node: SceneNode) {
   group.name = `${GROUP_NAME}${node.name}`;
   group.setPluginData(NUMBERING_GROUP_ID, group.id);
   node.setPluginData(RELATED_WITH_NUMBA, node.id);
+  group.setPluginData(NUMBA_GROUP_INDEX, `${groupIndex}`);
 
   return group;
 }

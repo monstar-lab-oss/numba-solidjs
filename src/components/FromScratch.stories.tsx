@@ -69,7 +69,8 @@ const setSelectedProp = (v: any[]) => {
 // @ts-expect-error FIXME: Should return Solid component
 const Template: Story<Props> = (args) => {
   const [_, { enabled, groups }] = args.useStore();
-  const onClick = () => dispatch({ type: "APP/CREATE_GROUP", payload: null });
+  const onClick = () =>
+    dispatch({ type: "APP/CREATE_GROUP", payload: groups().length });
 
   const [showTutorial, setShowTutorial] = createSignal(false);
 
@@ -137,7 +138,6 @@ const useStore = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => console.log("removeGroup"),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -161,7 +161,6 @@ const useStoreEnabled = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => console.log("removeGroup"),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -173,6 +172,7 @@ CreateEnabled.args = { useStore: useStoreEnabled, badges: () => [] };
 const useStoreCreateDisabled = (): UseStoreType => {
   const [groups, setGroups] = createSignal([
     {
+      index: 0,
       id: "472:10835",
       name: "TEST FRAME",
       children: ["423:12558", "472:11220"],
@@ -193,7 +193,6 @@ const useStoreCreateDisabled = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -211,6 +210,7 @@ CreateDisabled.args = {
 const useStoreGroupFilled = (): UseStoreType => {
   const [groups, setGroups] = createSignal([
     {
+      index: 0,
       id: "472:10835",
       name: "TEST FRAME",
       children: ["423:12558", "472:11220"],
@@ -230,7 +230,6 @@ const useStoreGroupFilled = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -250,6 +249,7 @@ GroupFilled.args = {
 const useStoreGroupAndBadgeFilled = (): UseStoreType => {
   const [groups, setGroups] = createSignal([
     {
+      index: 0,
       id: "472:10835",
       name: "TEST FRAME",
       children: ["423:12558", "472:11220"],
@@ -270,7 +270,6 @@ const useStoreGroupAndBadgeFilled = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -313,7 +312,6 @@ const useStoreManyGroupAndBadges = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];
@@ -358,7 +356,6 @@ const useStoreLongName = (): UseStoreType => {
       setSelectedBadgeID: () => console.log("setSelectedGroupId"),
       createGroup: () => console.log("createGroup"),
       removeGroup: () => setGroups([]),
-      createBadge: () => console.log("createBadge"),
       removeBadge: () => console.log("removeBadge"),
     },
   ];

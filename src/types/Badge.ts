@@ -4,6 +4,7 @@ type BadgeId = string;
 type NodeId = string;
 
 export type Badge = {
+  index: number;
   id: BadgeId;
   name: string;
   color: "RED" | "BLUE";

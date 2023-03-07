@@ -55,15 +55,17 @@ export const Provider: ParentComponent<Props> = (props) => {
     // Ref. https://github.com/monstar-lab-group/numba/pull/105#discussion_r1007785714
     if (!id || !state.badges[id]) return [];
 
-    const tmp = [...state.badges[id]];
-    tmp.sort((a, b) => Number(a.name) - Number(b.name));
-
-    return tmp;
+    return state.badges[id];
   };
 
   const createBadgeWithSelectedState = (
     groupID: string,
-    { id, name, targetId }: Pick<Badge, "id" | "name" | "targetId">
+    {
+      id,
+      name,
+      targetId,
+      index,
+    }: Pick<Badge, "id" | "name" | "targetId" | "index">
   ) => {
     const badge = state.badges[groupID]?.find((v) => v.id === id);
     const [selected, setSelected] = createSignal(!!badge?.selected());
@@ -73,28 +75,10 @@ export const Provider: ParentComponent<Props> = (props) => {
       name,
       color: "BLUE",
       targetId,
+      index,
       selected,
       setSelected,
     } as Badge;
-  };
-
-  const createBadge = ({
-    parentId,
-    id,
-    name,
-    targetId,
-  }: {
-    parentId: Group["id"];
-    id: Badge["id"];
-    name: Badge["name"];
-    targetId: string;
-  }) => {
-    const b: Badge = createBadgeWithSelectedState(parentId, {
-      id,
-      name,
-      targetId,
-    });
-    setState("badges", [parentId], (bx) => (bx ? [...bx, b] : [b]));
   };
 
   const removeBadge = (parentId: Group["id"], ids: Badge["id"][]) => {
@@ -212,7 +196,6 @@ export const Provider: ParentComponent<Props> = (props) => {
       groups,
       removeGroup,
       getBadgeByGroupId,
-      createBadge,
       removeBadge,
     },
   ] as const;
@@ -234,15 +217,6 @@ export type UseStoreType = [
     createGroup: ({ id, name }: { id: string; name: string }) => void;
     removeGroup: (id: Group["id"]) => void;
     getBadgeByGroupId: (id?: Group["id"]) => Badge[];
-    createBadge: ({
-      parentId,
-      id,
-      name,
-    }: {
-      parentId: Group["id"];
-      id: Badge["id"];
-      name: Badge["name"];
-    }) => void;
     removeBadge: (parentId: Group["id"], ids: Badge["id"][]) => void;
   }
 ];
