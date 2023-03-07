@@ -1,4 +1,4 @@
-import { Component, createMemo, createSignal, Show } from "solid-js";
+import { Component, createMemo, Show } from "solid-js";
 import { Portal } from "solid-js/web";
 import { BadgePanel } from "@/components/BadgePanel";
 import { BadgeTable } from "@/components/BadgeTable";
@@ -14,12 +14,12 @@ export const FromScratch: Component = () => {
   const [
     _,
     {
+      shouldShowTutorial,
+      setShouldShowTutorial,
       selectedGroupId,
       enabled,
       groups,
       getBadgeByGroupId,
-      setFirstOpen,
-      firstOpen,
     },
   ] = useStore();
 
@@ -32,20 +32,16 @@ export const FromScratch: Component = () => {
     return getBadgeByGroupId(groupId);
   });
 
-  const [showTutorial, setShowTutorial] = createSignal(false);
-
-  const tutorialOnCLose = () => {
-    setFirstOpen(false);
-    setShowTutorial(false);
-  };
-
   return (
     <>
       {/* FIXME: Fixed height only now */}
       <div class={`flex h-[${UI_HEIGHT}px] items-stretch`}>
-        <Show when={showTutorial() || firstOpen()}>
+        <Show when={shouldShowTutorial()}>
           <Portal>
-            <Tutorial onClose={tutorialOnCLose} version={__APP_VERSION__} />
+            <Tutorial
+              onClose={() => setShouldShowTutorial(false)}
+              version={__APP_VERSION__}
+            />
           </Portal>
         </Show>
         <GroupPanel
@@ -67,7 +63,7 @@ export const FromScratch: Component = () => {
             iconColor="white"
             buttonColor="secondary"
             link
-            onClick={() => setShowTutorial(true)}
+            onClick={() => setShouldShowTutorial(true)}
           />
         </div>
       </div>
