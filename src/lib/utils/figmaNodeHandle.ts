@@ -21,6 +21,9 @@ export function reduceAllNodes() {
   const numberingGroups: Group[] = [];
 
   for (const groupNode of groupNodes) {
+    if (groupNode.getPluginData(RELATED_WITH_NUMBA)) {
+      groupNode.setPluginData(RELATED_WITH_NUMBA, RELATED_WITH_NUMBA);
+    }
     const badgeNodes = groupNode.children.find(
       (v) => v.name === NUMBERING_GROUP_NAME
     ) as GroupNode;
@@ -75,7 +78,7 @@ export function getNode(id: string, type: NodeType) {
   for (const node of nodes) {
     if (node.parent) {
       const n = node.parent
-        .findAllWithCriteria({ types: [type] })
+        .findChildren((v) => v.type === type)
         .find((v) => v.id === id);
       if (n) return n as GroupNode;
     }
@@ -118,9 +121,9 @@ export function removeGroupNode(id: string) {
   if (!parent) return;
 
   // remove badge group
-  const badgeGroup = parent
-    .findAllWithCriteria({ types: ["GROUP"] })
-    .find((x) => x.getPluginData(NUMBERING_BADGE_GROUP_ID));
+  const badgeGroup = parent.findChild(
+    (x) => !!x.getPluginData(NUMBERING_BADGE_GROUP_ID)
+  );
   badgeGroup && badgeGroup.remove();
 
   // TODO: should we iterator? is children of group node is only one?
@@ -238,7 +241,9 @@ export function isEnableCreateGroup(node?: SceneNode) {
   return true;
 }
 
-const isRelatedWithNUMBA = (node: SceneNode | (BaseNode & ChildrenMixin)) => {
+export const isRelatedWithNUMBA = (
+  node: SceneNode | (BaseNode & ChildrenMixin)
+) => {
   return (
     node.getPluginData(NUMBERING_GROUP_ID) !== "" ||
     node.getPluginData(BADGE_TARGET_ID) !== "" ||

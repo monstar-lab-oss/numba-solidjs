@@ -5,6 +5,7 @@ import {
   createSignal,
   For,
   JSX,
+  on,
   Show,
   splitProps,
 } from "solid-js";
@@ -57,11 +58,14 @@ export type Props = {
 export const GroupTable: Component<Props> = (props) => {
   const [, attributes] = splitProps(props, ["data"]);
   const [query, setQuery] = createSignal("");
+  const [clickByUI, setClickByUI] = createSignal(false);
   const [_, { selectedGroupId, setSelectedGroupId }] = props.useStore();
 
   const onSelectClick = (e: MouseEvent, id: string) => {
+    setClickByUI(true);
     setSelectedGroupId(selectedGroupId() !== id ? id : null);
     e.stopImmediatePropagation();
+    setTimeout(() => setClickByUI(false), 500);
   };
 
   const filteredData = createMemo(() => {
@@ -71,10 +75,12 @@ export const GroupTable: Component<Props> = (props) => {
   });
 
   const TableRow = ({ item }: { item: Group }) => {
-    createEffect(() => {
-      if (selectedGroupId() !== item.id) return;
-      document.getElementById(item.id)?.scrollIntoView();
-    });
+    createEffect(
+      on(selectedGroupId, (selectedGroupId) => {
+        if (clickByUI() || selectedGroupId !== item.id) return;
+        document.getElementById(item.id)?.scrollIntoView();
+      })
+    );
 
     return (
       <tr
