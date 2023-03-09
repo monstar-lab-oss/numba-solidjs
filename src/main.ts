@@ -45,7 +45,6 @@ async function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
 
   // If the node is related with NUMBA which mean, you don't need any process to run
-
   if (!currentNode || isRelatedWithNUMBA(currentNode)) {
     const groupNode = currentNode
       ? getNumberingGroup(currentNode as NodeWithChildren)
@@ -146,6 +145,11 @@ async function onMessage(action: Action) {
       dispatch({
         type: "UI/UPDATE_STORE",
         payload: res,
+      });
+
+      dispatch({
+        type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
+        payload: isEnableCreateGroup(currentNode),
       });
       return;
     }
