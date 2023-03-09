@@ -7,7 +7,6 @@ import {
   NUMBA_SELECTED_GROUP,
   NUMBERING_BADGE_GROUP_ID,
   NUMBERING_GROUP_ID,
-  RELATED_WITH_NUMBA,
   UI_HEIGHT,
   UI_WIDTH,
 } from "@/constants";
@@ -19,6 +18,7 @@ import {
   getNode,
   getNumberingGroup,
   isEnableCreateGroup,
+  isRelatedWithNUMBA,
   reduceAllNodes,
   removeBadgeNode,
   removeGroupNode,
@@ -46,7 +46,7 @@ async function onSelectionchange() {
 
   // If the node is related with NUMBA which mean, you don't need any process to run
 
-  if (!currentNode || currentNode.getPluginData(RELATED_WITH_NUMBA)) {
+  if (!currentNode || isRelatedWithNUMBA(currentNode)) {
     const groupNode = currentNode
       ? getNumberingGroup(currentNode as NodeWithChildren)
       : null;
