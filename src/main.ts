@@ -178,7 +178,6 @@ async function onMessage(action: Action) {
         (x) => !!x.getPluginData(NUMBERING_BADGE_GROUP_ID)
       ) as GroupNode;
 
-
       if (badgeGroup.children.length + 1 > MAX_BADGE_ALLOWED) {
         figma.notify(
           `Sorry we were unavailable to use the number over ${MAX_BADGE_ALLOWED}.`,
