@@ -178,11 +178,9 @@ async function onMessage(action: Action) {
       const [currentNode] = figma.currentPage.selection;
       if (!currentNode) return;
 
-      const badgeGroup = getNode(payload.parentId, "GROUP")
-        .findAllWithCriteria({
-          types: ["GROUP"],
-        })
-        .find((x) => x.getPluginData(NUMBERING_BADGE_GROUP_ID)) as GroupNode;
+      const badgeGroup = getNode(payload.parentId, "GROUP").findChild(
+        (x) => !!x.getPluginData(NUMBERING_BADGE_GROUP_ID)
+      ) as GroupNode;
 
       if (badgeGroup.children.length + 1 > MAX_BADGE_ALLOWED) {
         figma.notify(
