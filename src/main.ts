@@ -178,7 +178,6 @@ async function onMessage(action: Action) {
         (x) => !!x.getPluginData(NUMBERING_BADGE_GROUP_ID)
       ) as GroupNode;
 
-      console.log(" badgeGroup ", badgeGroup.name);
 
       if (badgeGroup.children.length + 1 > MAX_BADGE_ALLOWED) {
         figma.notify(
