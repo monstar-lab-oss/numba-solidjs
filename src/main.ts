@@ -44,6 +44,11 @@ function shouldMakeBadge(
 async function onSelectionchange() {
   const [currentNode] = figma.currentPage.selection;
 
+  dispatch({
+    type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
+    payload: isEnableCreateGroup(currentNode),
+  });
+
   // If the node is related with NUMBA which mean, you don't need any process to run
   if (!currentNode || isRelatedWithNUMBA(currentNode)) {
     const groupNode = currentNode
@@ -63,11 +68,6 @@ async function onSelectionchange() {
   dispatch({
     type: "UI/UPDATE_STORE",
     payload: reduceAllNodes(),
-  });
-
-  dispatch({
-    type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
-    payload: isEnableCreateGroup(currentNode),
   });
 
   const groupID = shouldMakeBadge(currentNode) as string | undefined;
