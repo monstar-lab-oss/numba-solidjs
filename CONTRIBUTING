@@ -1,0 +1,45 @@
+# Contribution guide
+
+## Project tools
+
+- Github for code and issues management
+
+### Branch rules:
+
+1. Following branches should be used for primary code management
+
+   1. `main` there can be only this branch. This hold all the latest already released code.
+
+   - in case we are doing tag based release, `main` can be used as stable bleeding edge releasable code.
+
+   2. Branch name must be `<Type>/branch-name`.
+
+#### Type
+
+Must be one of the following:
+
+- **feat**: A new feature
+- **fix**: A bug fix
+- **docs**: Documentation only changes
+- **refactor**: A code change that neither fixes a bug nor adds a feature
+- **chore**: Other changes that don't modify `src` or `test` files
+
+### Pull requests
+
+Pull requests are the only way to propose a value you want to add. Following is a general workflow for submitting any requests.
+
+1. Clone the repo and create your branch from `main`.
+2. If you've added code that should be tested
+3. Ensure that your code doesn't fail to build
+4. Make pull request to `main` branch
+5. Assign respective developers to review and merge pull request
+
+### Commit Message Guidelines
+
+We have very precise rules over how our git commit messages can be formatted. This leads to **more
+readable messages** that are easy to follow when looking through the **project history**. But also,
+we use the git commit messages to **generate the changelog**.
+
+### Opening Issues
+
+Before opening any issues, it is prefered to ensure that the issue is not already reported by searching [here](https://github.com/monstar-lab-oss/numba-solidjs/issues).
