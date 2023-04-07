@@ -1,5 +1,7 @@
 # NUMBA
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 Figma plugin for easy numbering with 1-click.
 
 ## Installation
