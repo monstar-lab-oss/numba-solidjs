@@ -1,4 +1,5 @@
 import {
+  LAST_SELECTED_GROUPS,
   MAX_BADGE_ALLOWED,
   NUMBA_BADGE_INDEX,
   NUMBA_BADGE_THROTTLING,
@@ -49,16 +50,23 @@ async function onSelectionchange() {
     payload: isEnableCreateGroup(currentNode),
   });
 
+  let selectedGroups = await figma.clientStorage.getAsync(LAST_SELECTED_GROUPS);
+  if (!selectedGroups) selectedGroups = {};
+
   // If the node is related with NUMBA which mean, you don't need any process to run
   if (!currentNode || isRelatedWithNUMBA(currentNode)) {
     const groupNode = currentNode
       ? getNumberingGroup(currentNode as NodeWithChildren)
       : null;
-
+    const groupID = groupNode ? groupNode.id : "";
     dispatch({
       type: "UI/FOCUS_GROUP",
-      payload: groupNode ? groupNode.id : "",
+      payload: groupID,
     });
+
+    selectedGroups[figma.currentPage.id] = groupID;
+    await figma.clientStorage.setAsync(LAST_SELECTED_GROUPS, selectedGroups);
+
     return;
   }
 
@@ -71,7 +79,6 @@ async function onSelectionchange() {
   });
 
   const groupID = shouldMakeBadge(currentNode) as string | undefined;
-
   if (groupID) {
     figma.clientStorage.setAsync(NUMBA_SELECTED_GROUP, groupID);
     const now = Date.now();
@@ -99,10 +106,14 @@ async function onSelectionchange() {
   }
 
   const groupNode = getNumberingGroup(currentNode as NodeWithChildren);
+  const focusGroupID = groupNode ? groupNode.id : "";
   dispatch({
     type: "UI/FOCUS_GROUP",
-    payload: groupNode ? groupNode.id : "",
+    payload: focusGroupID,
   });
+
+  selectedGroups[figma.currentPage.id] = groupID;
+  await figma.clientStorage.setAsync(LAST_SELECTED_GROUPS, selectedGroups);
 }
 
 async function onMessage(action: Action) {
@@ -260,10 +271,19 @@ async function onRun() {
     type: "UI/TOGGLE_CREATE_GROUP_BUTTON",
     payload: isEnableCreateGroup(currentNode),
   });
+
+  let selectedGroups = await figma.clientStorage.getAsync(LAST_SELECTED_GROUPS);
+  if (!selectedGroups) selectedGroups = {};
+
+  dispatch({
+    type: "UI/FOCUS_GROUP",
+    payload: selectedGroups[figma.currentPage.id],
+  });
 }
 
 function main() {
   figma.on("run", onRun);
+  figma.on("currentpagechange", onRun);
   figma.on("selectionchange", onSelectionchange);
 
   figma.ui.onmessage = onMessage;
