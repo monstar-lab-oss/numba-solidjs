@@ -19,15 +19,15 @@ export default {
 
 const contents = [
   {
-    src: "https://placehold.jp/200x300.png",
+    src: "https://placehold.jp/300x200.png",
     body: <div>TEXT HERE</div>,
   },
   {
-    src: "https://placehold.jp/200x300.png",
+    src: "https://placehold.jp/300x200.png",
     body: <div>TEXT HERE</div>,
   },
   {
-    src: "https://placehold.jp/200x300.png",
+    src: "https://placehold.jp/300x200.png",
     body: <div>TEXT HERE</div>,
   },
 ];
