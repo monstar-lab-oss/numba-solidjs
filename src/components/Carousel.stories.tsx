@@ -19,15 +19,15 @@ export default {
 
 const contents = [
   {
-    src: "https://picsum.photos/300/200",
+    src: "https://placehold.jp/200x300.png",
     body: <div>TEXT HERE</div>,
   },
   {
-    src: "https://picsum.photos/200/300",
+    src: "https://placehold.jp/200x300.png",
     body: <div>TEXT HERE</div>,
   },
   {
-    src: "https://picsum.photos/300/300",
+    src: "https://placehold.jp/200x300.png",
     body: <div>TEXT HERE</div>,
   },
 ];
