@@ -1,8 +1,6 @@
-const Solid = require("vite-plugin-solid");
-const { mergeConfig } = require('vite');
-const path = require("path");
+import type { StorybookConfig } from "storybook-solidjs-vite";
 
-module.exports = {
+const config: StorybookConfig = {
   stories: [
     "../src/components/**/*.stories.@(jsx|tsx)",
     "../src/components/**/*.stories.mdx",
@@ -14,20 +12,12 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
   ],
-  framework: "@storybook/html",
-  core: {
-    builder: "@storybook/builder-vite",
+  framework: {
+    name: "storybook-solidjs-vite",
+    options: {},
   },
-  features: {
-    storyStoreV7: true,
-  },
-  async viteFinal(config) {
-    config.plugins.unshift(Solid({ hot: false }));
-    return mergeConfig(config, {
-      resolve: {
-        alias: { '@': path.resolve(path.dirname(__dirname), "src")},
-      },
-    });
+  docs: {
+    autodocs: "tag",
   },
   // https://storybook.js.org/docs/react/addons/writing-presets#previewmanager-templates
   previewHead: (head) => `
@@ -36,3 +26,4 @@ module.exports = {
     <script>window.global = window;</script>
   `,
 };
+export default config;
