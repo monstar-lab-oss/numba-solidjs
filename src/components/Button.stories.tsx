@@ -1,67 +1,77 @@
-import { Meta, Story } from "@storybook/html";
-import { Button, Props } from "./Button";
+import type { Meta, StoryObj } from "storybook-solidjs";
+import { Button } from "./Button";
 
-export default {
+const meta = {
   title: "Components/Button",
+  component: Button,
   args: {
     children: "Button",
+    color: undefined,
   },
-} as Meta;
+  tags: ["autodocs"],
+} satisfies Meta<typeof Button>;
 
-// @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => {
-  return <Button {...args}>{args.children}</Button>;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const Primary: Story = {
+  args: {
+    color: "primary",
+  },
 };
 
-export const Default = Template.bind({});
-Default.args = {};
-
-export const Primary = Template.bind({});
-Primary.args = {
-  color: "primary",
+export const Danger: Story = {
+  args: {
+    color: "danger",
+  },
 };
 
-export const Danger = Template.bind({});
-Danger.args = {
-  color: "danger",
+export const Disabled: Story = {
+  args: {
+    color: "disabled",
+  },
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  color: "disabled",
+export const Secondary: Story = {
+  args: {
+    color: "secondary",
+  },
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  color: "secondary",
+export const White: Story = {
+  args: {
+    color: "white",
+  },
 };
 
-export const White = Template.bind({});
-White.args = {
-  color: "white",
+export const DarkGray: Story = {
+  args: {
+    color: "darkGray",
+  },
 };
 
-export const DarkGray = Template.bind({});
-DarkGray.args = {
-  color: "darkGray",
+export const PrimaryOutline: Story = {
+  args: {
+    color: "primaryOutline",
+  },
 };
 
-export const PrimaryOutline = Template.bind({});
-PrimaryOutline.args = {
-  color: "primaryOutline",
+export const DangerOutline: Story = {
+  args: {
+    color: "dangerOutline",
+  },
 };
 
-export const DangerOutline = Template.bind({});
-DangerOutline.args = {
-  color: "dangerOutline",
+export const SecondaryOutline: Story = {
+  args: {
+    color: "secondaryOutline",
+  },
 };
 
-export const SecondaryOutline = Template.bind({});
-SecondaryOutline.args = {
-  color: "secondaryOutline",
-};
-
-export const Link = Template.bind({});
-Link.args = {
-  link: true,
+export const Link: Story = {
+  args: {
+    link: true,
+  },
 };
