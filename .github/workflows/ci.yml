@@ -23,7 +23,7 @@ jobs:
           node-version-file: ".node-version"
 
       - name: "Install dependencies"
-        uses: ./.github/actions
+        uses: ./.github/dependencies
 
       - run: pnpm build
       - run: pnpm test
