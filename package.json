@@ -51,7 +51,7 @@
     "@typescript-eslint/parser": "5.36.0",
     "autoprefixer": "10.4.8",
     "babel-loader": "8.2.5",
-    "chromatic": "6.9.0",
+    "chromatic": "6.17.4",
     "concurrently": "7.3.0",
     "esbuild": "0.15.1",
     "esbuild-register": "3.3.3",
