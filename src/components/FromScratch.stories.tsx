@@ -2,13 +2,12 @@ import { createSignal, Show } from "solid-js";
 import { Portal } from "solid-js/web";
 import { BadgeTable } from "@/components/BadgeTable";
 import { GroupTable } from "@/components/GroupTable";
-// import { useStore } from "@/lib/hooks/useStore";
 import { IconButton } from "@/components/IconButton";
 import { Tutorial } from "@/components/Tutorial";
 import { UI_HEIGHT, UI_WIDTH } from "@/constants";
 import type { UseStoreType } from "@/lib/hooks/useStore";
 import type { Action } from "@/types/Actions";
-import { Meta, Story } from "@storybook/html";
+import type { Meta } from "storybook-solidjs";
 import { BadgePanel } from "./BadgePanel";
 import { GroupPanel } from "./GroupPanel";
 
@@ -18,13 +17,14 @@ const styles = {
   width: UI_WIDTH + "px",
 };
 
-export default {
+const meta = {
   title: "Components/FromScratch",
   args: {
     children: "FromScratch",
   },
   decorators: [(storyFn) => <div style={styles}>{storyFn()}</div>],
-} as Meta;
+} satisfies Meta;
+export default meta;
 
 // FIXME: This code need refactor
 type Props = {
@@ -142,8 +142,13 @@ const useStore = (): UseStoreType => {
     },
   ];
 };
-export const Default = Template.bind({});
-Default.args = { useStore: useStore, badges: () => [] };
+
+export const Default = {
+  args: {
+    useStore: useStore,
+    badges: () => [],
+  },
+};
 
 // CreateEnabled
 const useStoreEnabled = (): UseStoreType => {
@@ -165,8 +170,12 @@ const useStoreEnabled = (): UseStoreType => {
     },
   ];
 };
-export const CreateEnabled = Template.bind({});
-CreateEnabled.args = { useStore: useStoreEnabled, badges: () => [] };
+export const CreateEnabled = {
+  args: {
+    useStore: useStoreEnabled,
+    badges: () => [],
+  },
+};
 
 // CreateDisabled
 const useStoreCreateDisabled = (): UseStoreType => {
@@ -200,10 +209,11 @@ const useStoreCreateDisabled = (): UseStoreType => {
 const CreateDisabledBadges = createBadges(5);
 setSelectedProp(CreateDisabledBadges);
 
-export const CreateDisabled = Template.bind({});
-CreateDisabled.args = {
-  useStore: useStoreCreateDisabled,
-  badges: () => CreateDisabledBadges,
+export const CreateDisabled = {
+  args: {
+    useStore: useStoreCreateDisabled,
+    badges: () => CreateDisabledBadges,
+  },
 };
 
 // GroupFilled
@@ -235,14 +245,14 @@ const useStoreGroupFilled = (): UseStoreType => {
   ];
 };
 
-export const GroupFilled = Template.bind({});
-
 const GroupFilledBadgeList = createBadges(0);
 setSelectedProp(GroupFilledBadgeList);
 
-GroupFilled.args = {
-  useStore: useStoreGroupFilled,
-  badges: () => GroupFilledBadgeList,
+export const GroupFilled = {
+  args: {
+    useStore: useStoreGroupFilled,
+    badges: () => GroupFilledBadgeList,
+  },
 };
 
 // GroupFilled
@@ -275,14 +285,14 @@ const useStoreGroupAndBadgeFilled = (): UseStoreType => {
   ];
 };
 
-export const GroupAndBadgeFilled = Template.bind({});
-
 const GroupAndBadgeFilledBadgeList = createBadges(5);
 setSelectedProp(GroupAndBadgeFilledBadgeList);
 
-GroupAndBadgeFilled.args = {
-  useStore: useStoreGroupAndBadgeFilled,
-  badges: () => GroupAndBadgeFilledBadgeList,
+export const GroupAndBadgeFilled = {
+  args: {
+    useStore: useStoreGroupAndBadgeFilled,
+    badges: () => GroupAndBadgeFilledBadgeList,
+  },
 };
 
 // ManyGroupAndBadges
@@ -317,14 +327,14 @@ const useStoreManyGroupAndBadges = (): UseStoreType => {
   ];
 };
 
-export const ManyGroupAndBadges = Template.bind({});
-
 const ManyGroupAndBadgesBadges = createBadges(999);
 setSelectedProp(ManyGroupAndBadgesBadges);
 
-ManyGroupAndBadges.args = {
-  useStore: useStoreManyGroupAndBadges,
-  badges: () => ManyGroupAndBadgesBadges,
+export const ManyGroupAndBadges = {
+  args: {
+    useStore: useStoreManyGroupAndBadges,
+    badges: () => ManyGroupAndBadgesBadges,
+  },
 };
 
 // LongName
@@ -361,15 +371,15 @@ const useStoreLongName = (): UseStoreType => {
   ];
 };
 
-export const LongName = Template.bind({});
-
 const LongNameBadges = createBadges(
   2,
   "Long name of badge could be break layout × Long name of badge could be break layout"
 );
 setSelectedProp(LongNameBadges);
 
-LongName.args = {
-  useStore: useStoreLongName,
-  badges: () => LongNameBadges,
+export const LongName = {
+  args: {
+    useStore: useStoreLongName,
+    badges: () => LongNameBadges,
+  },
 };
