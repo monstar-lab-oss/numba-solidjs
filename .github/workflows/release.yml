@@ -27,10 +27,34 @@ jobs:
           git tag $TAG_NAME
           git tag
           git push origin $TAG_NAME
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
       - name: Build
         run: |
-          npm ci --legacy-peer-deps
-          npm run build
+          pnpm build
           zip ${{ github.event.repository.name }}-${{ steps.tag.outputs.tag_name }} dist/* manifest.json
       - name: Publish a release
         id: release_drafter

@@ -71,7 +71,9 @@
     "vite-plugin-singlefile": "0.12.0",
     "vite-plugin-solid": "2.3.0"
   },
+  "packageManager": "pnpm@8.5.1",
   "engines": {
-    "node": "18.x"
+    "node": "18.x",
+    "pnpm": "8"
   }
 }
