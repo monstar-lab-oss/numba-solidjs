@@ -34,7 +34,7 @@ jobs:
           node-version-file: ".node-version"
 
       - name: "Install dependencies"
-        uses: ./.github/dependencies
+        uses: ./.github/actions/dependencies
 
       - name: Build
         run: |
