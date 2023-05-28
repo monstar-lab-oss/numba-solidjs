@@ -3,9 +3,11 @@ import type { StorybookConfig } from "storybook-solidjs-vite";
 const config: StorybookConfig = {
   stories: [
     "../src/components/**/*.stories.@(jsx|tsx)",
-    "../src/components/**/*.stories.mdx",
+    // TODO: Fix it with another PR and remove the comment.
+    // "../src/components/**/*.stories.mdx",
     "./stories/**/*.stories.@(jsx|tsx)",
-    "./stories/**/*.stories.mdx",
+    // TODO: Fix it with another PR and remove the comment.
+    // "./stories/**/*.stories.mdx",
   ],
   addons: [
     "@storybook/addon-links",
