@@ -1,6 +1,6 @@
-import { Props, Tutorial } from "@/components/Tutorial";
+import type { Meta, StoryObj } from "storybook-solidjs";
+import { Tutorial } from "@/components/Tutorial";
 import { UI_HEIGHT, UI_WIDTH } from "@/constants";
-import { Meta, Story } from "@storybook/html";
 
 const styles = {
   transform: "scale(1)",
@@ -8,21 +8,27 @@ const styles = {
   width: UI_WIDTH + "px",
 };
 
-export default {
+type Story = StoryObj<typeof Tutorial>;
+
+const meta: Meta<typeof Tutorial> = {
   title: "Components/Tutorial",
-  args: {
-    placeholder: "Placeholder",
-  },
-  decorators: [(storyFn) => <div style={styles}>{storyFn()}</div>],
-} as Meta;
-
-// @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => {
-  return <Tutorial {...args} />;
+  component: Tutorial,
+  tags: ["autodocs"],
+  decorators: [
+    (Story, args) => {
+      return (
+        <div style={styles}>
+          <Story {...args} />
+        </div>
+      );
+    },
+  ],
 };
+export default meta;
 
-export const Default = Template.bind({});
-Default.args = {
-  onClose: () => console.log("onclose"),
-  version: "999",
+export const Default: Story = {
+  args: {
+    onClose: () => console.log("onclose"),
+    version: "999",
+  },
 };
