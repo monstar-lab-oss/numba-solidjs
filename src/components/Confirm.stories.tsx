@@ -2,7 +2,7 @@ import { userEvent, within } from "@storybook/testing-library";
 import type { Meta, StoryObj } from "storybook-solidjs";
 import { Confirm } from "./Confirm";
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Confirm>;
 
 const meta = {
   component: Confirm,
