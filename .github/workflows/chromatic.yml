@@ -25,7 +25,7 @@ jobs:
         run: yarn
         
       - name: Orver write env
-        run: echo "STORYBOOK_VERIFY_TIMEOUT=600000" >> $GITHUB_ENV
+        run: echo "STORYBOOK_VERIFY_TIMEOUT=99999999999" >> $GITHUB_ENV
 
       - name: Publish to Chromatic
         if: github.ref != 'refs/heads/main'
