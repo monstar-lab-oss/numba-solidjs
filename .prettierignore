@@ -10,3 +10,6 @@ node_modules/
 # Include specific file extensions if they appear under a "src" folder
 !/src/**/*.ts
 !/src/**/*.tsx
+
+# config files
+!/vitest.config.ts
