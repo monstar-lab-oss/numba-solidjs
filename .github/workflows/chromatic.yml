@@ -33,6 +33,7 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           zip: true
+          storybookBuildDir: "storybook-static"
 
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
@@ -41,3 +42,4 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           autoAcceptChanges: true
           zip: true
+          storybookBuildDir: "storybook-static"
