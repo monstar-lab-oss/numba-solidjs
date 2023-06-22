@@ -17,12 +17,8 @@ jobs:
         with:
           node-version-file: ".node-version"
 
-      # - name: "Install dependencies"
-      #   uses: ./.github/actions/dependencies
-
-      - name: Install dependencies
-        # 👇 Install dependencies with the same package manager used in the project (replace it as needed), e.g. yarn, npm, pnpm
-        run: yarn
+      - name: "Install dependencies"
+        uses: ./.github/actions/dependencies
         
       - name: Orver write env
         run: echo "STORYBOOK_VERIFY_TIMEOUT=999999" >> $GITHUB_ENV
