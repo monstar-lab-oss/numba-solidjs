@@ -6,10 +6,10 @@ Figma plugin for easy numbering with 1-click.
 
 ## Installation
 
-Install it with npm:
+Install it with pnpm:
 
 ```sh
-npm ci
+pnpm i
 ```
 
 ## Getting started with plugin development
@@ -17,7 +17,7 @@ npm ci
 First start vite:
 
 ```sh
-npm run dev
+pnpm dev
 ```
 
 It will automatically build if you make changes to the code.
@@ -29,7 +29,7 @@ Then in Figma go to `File Menu > Plugins > Development > Import plugin from mani
 Builds the app for production to the dist folder.
 
 ```sh
-npm run build
+pnpm build
 ```
 
 ### Update to new versions

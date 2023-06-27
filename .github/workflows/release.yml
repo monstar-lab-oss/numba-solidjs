@@ -27,10 +27,18 @@ jobs:
           git tag $TAG_NAME
           git tag
           git push origin $TAG_NAME
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".node-version"
+
+      - name: "Install dependencies"
+        uses: ./.github/actions/dependencies
+
       - name: Build
         run: |
-          npm ci --legacy-peer-deps
-          npm run build
+          pnpm build
           zip ${{ github.event.repository.name }}-${{ steps.tag.outputs.tag_name }} dist/* manifest.json
       - name: Publish a release
         id: release_drafter
