@@ -1,14 +1,15 @@
-import {
-  FONT_COLOR,
-  FONT_SIZES,
-  FONT_WEIGHT,
-  Props,
-  Text,
-} from "@/components/Text";
-import { Meta, Story } from "@storybook/html";
+import type { Meta, StoryObj } from "storybook-solidjs";
+import { FONT_COLOR, FONT_SIZES, FONT_WEIGHT, Text } from "@/components/Text";
 
-export default {
+type Story = StoryObj<typeof Text>;
+
+const meta: Meta<typeof Text> = {
   title: "Components/Text",
+  component: Text,
+  tags: ["autodocs"],
+  args: {
+    children: "This is text.",
+  },
   argTypes: {
     size: {
       options: FONT_SIZES,
@@ -23,46 +24,56 @@ export default {
       control: { type: "select" },
     },
   },
-} as Meta;
-
-// @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => {
-  return <Text {...args}>This is text.</Text>;
 };
+export default meta;
 
-export const Default = Template.bind({});
-Default.args = {};
-
-export const SizeSmall = Template.bind({});
-SizeSmall.args = {
-  size: "sizeSmall",
-};
-export const SizeMedium = Template.bind({});
-SizeMedium.args = {
-  size: "sizeMedium",
-};
-export const SizeLarge = Template.bind({});
-SizeLarge.args = {
-  size: "sizeLarge",
+export const Default: Story = {
+  args: {},
 };
 
-export const WeightRegular = Template.bind({});
-WeightRegular.args = {
-  weight: "weightRegular",
-};
-export const WeightMedium = Template.bind({});
-WeightMedium.args = {
-  weight: "weightMedium",
-};
-export const WeightBold = Template.bind({});
-WeightBold.args = {
-  weight: "weightBold",
+export const SizeSmall: Story = {
+  args: {
+    size: "sizeSmall",
+  },
 };
 
-export const TextDefault = Template.bind({});
-TextDefault.args = {};
+export const SizeMedium: Story = {
+  args: {
+    size: "sizeMedium",
+  },
+};
 
-export const TextDarkGray = Template.bind({});
-TextDarkGray.args = {
-  color: "darkGray",
+export const SizeLarge: Story = {
+  args: {
+    size: "sizeLarge",
+  },
+};
+
+export const WeightRegular: Story = {
+  args: {
+    weight: "weightRegular",
+  },
+};
+
+export const WeightMedium: Story = {
+  args: {
+    weight: "weightMedium",
+  },
+};
+
+export const WeightBold: Story = {
+  args: {
+    weight: "weightBold",
+  },
+};
+
+//FIXME: remove this story because it is duplicated
+export const TextDefault: Story = {
+  args: {},
+};
+
+export const TextDarkGray: Story = {
+  args: {
+    color: "darkGray",
+  },
 };

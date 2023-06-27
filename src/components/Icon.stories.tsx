@@ -1,63 +1,66 @@
-import { Meta, Story } from "@storybook/html";
+import type { Meta, StoryObj } from "storybook-solidjs";
 import { COLOR } from "./constants";
-import { Icon as IconComponent, ICON_NAMES, Props } from "./Icon";
+import { Icon as IconComponent, ICON_NAMES } from "./Icon";
 
-export default {
+type Story = StoryObj<typeof IconComponent>;
+
+const meta: Meta<typeof IconComponent> = {
   title: "Components/Icon",
+  component: IconComponent,
+  tags: ["autodocs"],
   args: {
     children: "Icon",
+    name: "create",
+    color: "primary",
   },
   argTypes: {
     name: {
       options: ICON_NAMES,
       control: { type: "select" },
-      defaultValue: "create",
     },
     color: {
       options: COLOR,
       control: { type: "select" },
-      defaultValue: "primary",
     },
   },
-} as Meta;
-
-// @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => <IconComponent {...args} />;
-
-// @ts-expect-error FIXME: Should return Solid component
-const TemplateList: Story<{ data: Props[] }> = (args) => {
-  return args.data.map((v) => (
-    <>
-      <IconComponent {...v} />
-      <br />
-    </>
-  ));
 };
+export default meta;
 
-const baseData: Props = {
-  name: "create",
-  size: 24,
-  color: "primary",
+export const Icon: Story = {};
+
+export const Icons: Story = {
+  args: {
+    size: 24,
+    color: "primary",
+  },
 };
+Icons.decorators = [
+  (_, { args }) => {
+    return ICON_NAMES.map((name) => (
+      <>
+        <IconComponent {...args} name={name} />
+        <br />
+      </>
+    ));
+  },
+];
 
-export const Icon = Template.bind({});
-Icon.args;
-
-export const Icons = TemplateList.bind({});
-Icons.args = {
-  data: ICON_NAMES.map((name) => ({
-    ...baseData,
-    name,
-  })),
+export const Colors: Story = {
+  args: {
+    size: 24,
+    name: "create",
+  },
 };
-
-export const Colors = TemplateList.bind({});
-Colors.args = {
-  data: COLOR.map((color) => ({
-    ...baseData,
-    color,
-  })),
-};
+Colors.decorators = [
+  (_, { args }) => {
+    return COLOR.map((color) => (
+      <>
+        <IconComponent {...args} color={color} />
+        <br />
+      </>
+    ));
+  },
+];
 
 // FIXME For now chromatic dose not support for lazy load components test.
 // export const IconClick = Template.bind({});
