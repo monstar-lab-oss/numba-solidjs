@@ -1,25 +1,33 @@
-import { Meta, Story } from "@storybook/html";
-import { Modal as ModalComponent, Props } from "./Modal";
+import type { Meta, StoryObj } from "storybook-solidjs";
+import { Modal } from "./Modal";
 
-export default {
+type Story = StoryObj<typeof Modal>;
+
+const meta: Meta<typeof Modal> = {
   title: "Components/Modal",
+  component: Modal,
+  tags: ["autodocs"],
   args: {
     children: "Modal",
   },
-} as Meta;
+  decorators: [
+    (Story, args) => {
+      return (
+        <div style={{ width: "240px" }}>
+          <Story {...args} />
+        </div>
+      );
+    },
+  ],
+};
+export default meta;
 
-// @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => (
-  <div>
-    <ModalComponent>{args.children}</ModalComponent>
-  </div>
-);
-
-export const Default = Template.bind({});
-Default.args = {
-  children: (
-    <div class="w-full h-full bg-red-300 self-center text-center border-2 border-red-700 flex">
-      <div class="self-center text-center w-full">This is modal children</div>
-    </div>
-  ),
+export const Default: Story = {
+  args: {
+    children: (
+      <div class="w-full h-full bg-red-300 self-center text-center border-2 border-red-700 flex">
+        <div class="self-center text-center w-full">This is modal children</div>
+      </div>
+    ),
+  },
 };

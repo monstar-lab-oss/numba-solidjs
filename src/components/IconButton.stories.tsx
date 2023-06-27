@@ -1,63 +1,62 @@
 import { COLOR } from "@/components/constants";
 import { ICON_NAMES } from "@/components/Icon";
-import {
-  IconButton as IconButtonComponent,
-  Props,
-} from "@/components/IconButton";
-import { Meta, Story } from "@storybook/html";
+import { IconButton as IconButtonComponent } from "@/components/IconButton";
+import type { Meta, StoryObj } from "storybook-solidjs";
 
-export default {
+type Story = StoryObj<typeof IconButtonComponent>;
+
+const meta: Meta<typeof IconButtonComponent> = {
   title: "Components/IconButton",
+  component: IconButtonComponent,
+  tags: ["autodocs"],
   args: {
-    children: "IconButton",
+    name: "create",
+    color: "primary",
   },
   argTypes: {
     name: {
       options: ICON_NAMES,
       control: { type: "select" },
-      defaultValue: "create",
     },
     color: {
       options: COLOR,
       control: { type: "select" },
-      defaultValue: "primary",
     },
   },
-} as Meta;
+};
+export default meta;
 
-// @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => <IconButtonComponent {...args} />;
-
-export const Default = Template.bind({});
-Default.args = {
-  iconName: "create",
-  iconColor: "primary",
-  children: undefined,
+export const Default: Story = {
+  args: {
+    iconName: "create",
+    iconColor: "primary",
+  },
 };
 
-export const Link = Template.bind({});
-Link.args = {
-  iconName: "create",
-  iconColor: "primary",
-  link: true,
-  children: undefined,
+export const Link: Story = {
+  args: {
+    iconName: "create",
+    iconColor: "primary",
+    link: true,
+  },
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-  iconName: "create",
-  iconColor: "primary",
-  link: true,
-  disabled: true,
-  buttonColor: "white",
-  children: undefined,
+export const Disabled: Story = {
+  args: {
+    iconName: "create",
+    iconColor: "primary",
+    link: true,
+    disabled: true,
+    buttonColor: "white",
+  },
 };
 
-export const WithText = Template.bind({});
-WithText.args = {
-  iconName: "create",
-  iconColor: "primary",
-  children: "With text",
+export const WithText: Story = {
+  args: {
+    iconName: "create",
+    iconColor: "primary",
+    children: "With text",
+  },
 };
 
 // FIXME For now chromatic dose not support for lazy load components test.

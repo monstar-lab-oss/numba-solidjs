@@ -1,28 +1,14 @@
-import { Meta, Story } from "@storybook/html";
+import type { Meta } from "storybook-solidjs";
 import {
-  Checkbox as CheckboxComponent,
   CheckBoxColor,
+  Checkbox as CheckboxComponent,
   Props,
 } from "./Checkbox";
 
 const color = ["primary", "danger", "secondary"] as CheckBoxColor[];
 
-export default {
-  title: "Components/Checkbox",
-  args: {
-    children: "Checkbox",
-  },
-  argTypes: {
-    color: {
-      options: color,
-      control: { type: "select" },
-      defaultValue: "primary",
-    },
-  },
-} as Meta;
-
-// @ts-expect-error FIXME: Should return Solid component
-const TemplateList: Story<{ data: Props[] }> = (args) => {
+// NOTE: maybe it is not proper way to show list of checkbox
+const TemplateList = (args: { data: Props[] }) => {
   return args.data.map((v) => (
     <>
       <CheckboxComponent {...v} />
@@ -31,38 +17,46 @@ const TemplateList: Story<{ data: Props[] }> = (args) => {
   ));
 };
 
-// @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => <CheckboxComponent {...args} />;
+const meta = {
+  component: TemplateList,
+  title: "Components/Checkbox",
+  args: {},
+} satisfies Meta<typeof TemplateList>;
+export default meta;
 
-export const Checkbox = Template.bind({});
-Checkbox.args = {
-  color: "primary",
-  checked: true,
-};
-
-export const Colors = TemplateList.bind({});
-Colors.args = {
-  // Note: outline color dose not support.
-  data: color.map((color) => ({
-    color,
+export const Checkbox = {
+  args: {
+    color: "primary",
     checked: true,
-  })),
+  },
 };
 
-export const Indeterminate = TemplateList.bind({});
-Indeterminate.args = {
-  // Note: outline color dose not support.
-  data: color.map((color) => ({
-    color,
-    indeterminate: true,
-  })),
+export const Colors = {
+  args: {
+    // Note: outline color dose not support.
+    data: color.map((color) => ({
+      color,
+      checked: true,
+    })),
+  },
 };
 
-export const Disabled = TemplateList.bind({});
-Disabled.args = {
-  // Note: outline color dose not support.
-  data: color.map((color) => ({
-    color,
-    disabled: true,
-  })),
+export const Indeterminate = {
+  args: {
+    // Note: outline color dose not support.
+    data: color.map((color) => ({
+      color,
+      indeterminate: true,
+    })),
+  },
+};
+
+export const Disabled = {
+  args: {
+    // Note: outline color dose not support.
+    data: color.map((color) => ({
+      color,
+      disabled: true,
+    })),
+  },
 };

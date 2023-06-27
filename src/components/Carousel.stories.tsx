@@ -1,6 +1,6 @@
-import { Carousel, Props } from "@/components/Carousel";
+import { Carousel } from "@/components/Carousel";
 import { UI_HEIGHT, UI_WIDTH } from "@/constants";
-import { Meta, Story } from "@storybook/html";
+import type { Meta } from "storybook-solidjs";
 
 const styles = {
   transform: "scale(1)",
@@ -9,13 +9,13 @@ const styles = {
   "background-color": "white",
 };
 
-export default {
+const meta = {
+  component: Carousel,
   title: "Components/Carousel",
-  args: {
-    placeholder: "Placeholder",
-  },
+  args: {},
   decorators: [(storyFn) => <div style={styles}>{storyFn()}</div>],
-} as Meta;
+} satisfies Meta<typeof Carousel>;
+export default meta;
 
 const contents = [
   {
@@ -32,13 +32,9 @@ const contents = [
   },
 ];
 
-// @ts-expect-error FIXME: Should return Solid component
-const Template: Story<Props> = (args) => {
-  return <Carousel {...args} />;
-};
-
-export const Default = Template.bind({});
-Default.args = {
-  onClose: () => console.log("onclose"),
-  contents: contents,
+export const Default = {
+  args: {
+    onClose: () => console.log("onclose"),
+    contents: contents,
+  },
 };
