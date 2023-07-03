@@ -103,4 +103,3 @@ end
     - `/utils` - Helper functions.
   - `/main.ts` - Functions that can create/update specific Figma nodes and handle the messages.
   - `/types` - Common type of components.
-test
