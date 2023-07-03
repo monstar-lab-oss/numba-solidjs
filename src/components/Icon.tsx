@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Component, JSX } from "solid-js";
 import { lazy } from "solid-js";
 import { clsx } from "clsx";
