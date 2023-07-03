@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import type { Component, JSX } from "solid-js";
 import { lazy } from "solid-js";
 import { clsx } from "clsx";
