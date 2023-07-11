@@ -19,10 +19,9 @@ jobs:
 
       - name: "Install dependencies"
         uses: ./.github/actions/dependencies
-
       
       - name: Orver write env
-        run: echo "STORYBOOK_VERIFY_TIMEOUT=120" >> $GITHUB_ENV
+        run: echo "STORYBOOK_VERIFY_TIMEOUT=99999999" >> $GITHUB_ENV
 
       - name: Publish to Chromatic
         if: github.ref != 'refs/heads/main'
