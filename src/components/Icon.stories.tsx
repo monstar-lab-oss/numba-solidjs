@@ -26,6 +26,10 @@ const meta: Meta<typeof IconComponent> = {
 };
 export default meta;
 
+export const Default: Story = {
+  args: {},
+};
+
 export const Icon: Story = {};
 
 export const Icons: Story = {

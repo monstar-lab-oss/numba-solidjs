@@ -25,6 +25,9 @@ jobs:
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+      
+      - name: Orver write env
+        run: echo "STORYBOOK_VERIFY_TIMEOUT=120" >> $GITHUB_ENV
 
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
@@ -32,3 +35,4 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           autoAcceptChanges: true
+          zip: true
