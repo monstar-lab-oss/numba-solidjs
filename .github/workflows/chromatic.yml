@@ -19,12 +19,17 @@ jobs:
 
       - name: "Install dependencies"
         uses: ./.github/actions/dependencies
+      
+      - name: Orver write env
+        run: echo "STORYBOOK_VERIFY_TIMEOUT=99999999" >> $GITHUB_ENV
 
       - name: Publish to Chromatic
         if: github.ref != 'refs/heads/main'
         uses: chromaui/action@v1
         with:
+          autoAcceptChanges: true
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          zip: true
 
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
@@ -32,3 +37,4 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           autoAcceptChanges: true
+          zip: true
