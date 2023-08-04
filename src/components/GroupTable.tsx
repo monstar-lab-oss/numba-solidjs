@@ -103,6 +103,7 @@ export const GroupTable: Component<Props> = (props) => {
         </thead>
         <Show
           when={props.data.length}
+          // @ts-expect-error FIXME: need to fix
           fallback={() => (
             <Text
               size="sizeSmall"
@@ -116,6 +117,7 @@ export const GroupTable: Component<Props> = (props) => {
           <tbody>
             <For
               each={filteredData()}
+              // @ts-expect-error FIXME: need to fix
               fallback={() => (
                 <tr>
                   <td>

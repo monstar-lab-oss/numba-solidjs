@@ -1,18 +1,18 @@
-import type { Meta } from "storybook-solidjs";
+import type { Meta, StoryObj } from "storybook-solidjs";
+
 import { Button } from "./Button";
 
-const meta = {
-  component: Button,
-  title: "Components/Button",
-  args: {
-    children: "Button",
-  },
-} satisfies Meta<typeof Button>;
-export default meta;
+type Story = StoryObj<typeof Button>;
 
-export const Default = {
-  args: {},
+const meta: Meta<typeof Button> = {
+  title: "Components/Button",
+  component: Button,
+  args: {
+    children: "Button-test2",
+  },
 };
+
+export const Default: Story = {};
 
 export const Primary = {
   args: {
@@ -73,3 +73,5 @@ export const Link = {
     link: true,
   },
 };
+
+export default meta;

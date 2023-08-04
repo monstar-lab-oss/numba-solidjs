@@ -29,6 +29,7 @@ export const BadgePanel: Component<Props> = (props) => {
     <Panel>
       <Show
         when={groups().length > 0}
+        // @ts-expect-error FIXME: need to fix
         fallback={() => (
           <div class="m-4 flex justify-between">
             <div class="pr-1 mb-3">
