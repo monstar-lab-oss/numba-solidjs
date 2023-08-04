@@ -34,8 +34,8 @@ export const Icon: Component<Props> = (props) => {
     // FIXME Need refactor I wanna change button role to ButtonIcon
     <svg
       style={{
-        width: props.size || DEFAULT_ICON_SIZE,
-        height: props.size || DEFAULT_ICON_SIZE,
+        width: `${props.size || DEFAULT_ICON_SIZE}`,
+        height: `${props.size || DEFAULT_ICON_SIZE}`,
       }}
       class={clsx({
         [css.style]: true,
