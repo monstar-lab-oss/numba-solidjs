@@ -8,7 +8,7 @@ const meta: Meta<typeof Button> = {
   title: "Components/Button",
   component: Button,
   args: {
-    children: "Button",
+    children: "Button-test",
   },
 };
 
