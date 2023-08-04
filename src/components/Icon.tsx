@@ -16,7 +16,7 @@ export const ICON_NAMES = [
   "arrowRight",
 ] as const;
 
-export type IconName = typeof ICON_NAMES[number];
+export type IconName = (typeof ICON_NAMES)[number];
 
 export type Props = {
   name: IconName;
