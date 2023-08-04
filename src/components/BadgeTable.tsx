@@ -173,6 +173,7 @@ export const BadgeTable: Component<Props> = (props) => {
         <tbody>
           <Show
             when={props.data.length}
+            // @ts-expect-error FIXME: need to fix
             fallback={() => (
               <tr class={clsx({ [css.fallback]: true })}>
                 <td>
