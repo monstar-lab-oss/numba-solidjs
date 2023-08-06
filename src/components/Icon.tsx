@@ -16,7 +16,7 @@ export const ICON_NAMES = [
   "arrowRight",
 ] as const;
 
-export type IconName = typeof ICON_NAMES[number];
+export type IconName = (typeof ICON_NAMES)[number];
 
 export type Props = {
   name: IconName;
@@ -34,10 +34,8 @@ export const Icon: Component<Props> = (props) => {
     // FIXME Need refactor I wanna change button role to ButtonIcon
     <svg
       style={{
-        // @ts-expect-error FIXME: need to fix eg, `${props.size || DEFAULT_ICON_SIZE}`
-        width: props.size || DEFAULT_ICON_SIZE,
-        // @ts-expect-error FIXME: need to fix eg, `${props.size || DEFAULT_ICON_SIZE}`
-        height: props.size || DEFAULT_ICON_SIZE,
+        width: `${props.size || DEFAULT_ICON_SIZE}`,
+        height: `${props.size || DEFAULT_ICON_SIZE}`,
       }}
       class={clsx({
         [css.style]: true,

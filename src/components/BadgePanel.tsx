@@ -29,8 +29,7 @@ export const BadgePanel: Component<Props> = (props) => {
     <Panel>
       <Show
         when={groups().length > 0}
-        // @ts-expect-error FIXME: need to fix
-        fallback={() => (
+        fallback={
           <div class="m-4 flex justify-between">
             <div class="pr-1 mb-3">
               <Icon name="arrowLeftNUMBA" color="darkGray" />
@@ -41,7 +40,7 @@ export const BadgePanel: Component<Props> = (props) => {
               </Text>
             </div>
           </div>
-        )}
+        }
       >
         <div class={clsx({ "grid grid-rows-1": true })}>
           {/* FIXME: Fixed height only now */}

@@ -173,8 +173,7 @@ export const BadgeTable: Component<Props> = (props) => {
         <tbody>
           <Show
             when={props.data.length}
-            // @ts-expect-error FIXME: need to fix
-            fallback={() => (
+            fallback={
               <tr class={clsx({ [css.fallback]: true })}>
                 <td>
                   <Text color="darkGray" size="sizeSmall">
@@ -185,7 +184,7 @@ export const BadgeTable: Component<Props> = (props) => {
                   </Text>
                 </td>
               </tr>
-            )}
+            }
           >
             <For each={props.data}>{(item) => <BadgeCard item={item} />}</For>
           </Show>

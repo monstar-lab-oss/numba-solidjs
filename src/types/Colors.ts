@@ -1,3 +1,3 @@
 import { COLOR } from "@/components/constants";
 
-export type Color = typeof COLOR[number];
+export type Color = (typeof COLOR)[number];

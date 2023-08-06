@@ -12,9 +12,9 @@ export const FONT_WEIGHT = [
 ] as const;
 
 export type Props = {
-  size?: typeof FONT_SIZES[number];
-  weight?: typeof FONT_WEIGHT[number];
-  color?: typeof FONT_COLOR[number];
+  size?: (typeof FONT_SIZES)[number];
+  weight?: (typeof FONT_WEIGHT)[number];
+  color?: (typeof FONT_COLOR)[number];
   children: string;
 } & JSX.HTMLAttributes<HTMLDivElement>;
 
