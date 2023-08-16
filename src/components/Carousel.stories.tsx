@@ -19,15 +19,15 @@ export default meta;
 
 const contents = [
   {
-    src: "https://fastly.picsum.photos/id/147/300/200.jpg?hmac=ep-bYttkpW9fTVODbQBxJ4BaPvgLlGz72RJbj3A6-wM",
+    src: "https://placehold.jp/150x150.png",
     body: <div>TEXT HERE</div>,
   },
   {
-    src: "https://fastly.picsum.photos/id/221/200/300.jpg?hmac=vFrrajnPFCrr5ttjepVTsUDWzoo-orpnXOsqdqAd0LU",
+    src: "https://placehold.jp/300x150.png",
     body: <div>TEXT HERE</div>,
   },
   {
-    src: "https://fastly.picsum.photos/id/375/300/300.jpg?hmac=WPU2pySNBh6hmJVGA1V7vqZEOCpdyMjAZ5RfkBN6VVI",
+    src: "https://placehold.jp/3d4070/ffffff/150x150.png",
     body: <div>TEXT HERE</div>,
   },
 ];
