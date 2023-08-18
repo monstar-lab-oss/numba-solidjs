@@ -1,9 +1,5 @@
 import { Component } from "solid-js";
 import { clsx } from "clsx";
-import page1 from "@/asset/tutorial/page-1.png";
-import page2 from "@/asset/tutorial/page-2.png";
-import page3 from "@/asset/tutorial/page-3.png";
-import page4 from "@/asset/tutorial/page-4.png";
 import type { Content } from "@/components/Carousel";
 import { Carousel } from "@/components/Carousel";
 import { Modal } from "@/components/Modal";
@@ -19,7 +15,7 @@ export type Props = {
 export const Tutorial: Component<Props> = (props) => {
   const contents: Content[] = [
     {
-      src: page1,
+      src: "",
       body: (
         <>
           <Text size="sizeMedium" class={clsx({ [css.text]: true })}>
@@ -32,7 +28,7 @@ export const Tutorial: Component<Props> = (props) => {
       ),
     },
     {
-      src: page2,
+      src: "",
       body: (
         <>
           <Text size="sizeMedium" class={clsx({ [css.text]: true })}>
@@ -52,7 +48,7 @@ export const Tutorial: Component<Props> = (props) => {
       ),
     },
     {
-      src: page3,
+      src: "",
       body: (
         <Text size="sizeMedium" class={clsx({ [css.text]: true })}>
           To check the assigned numbers, select a group
@@ -60,7 +56,7 @@ export const Tutorial: Component<Props> = (props) => {
       ),
     },
     {
-      src: page4,
+      src: "",
       body: (
         <>
           <div class={clsx({ [css.textWithIcon]: true })}>
