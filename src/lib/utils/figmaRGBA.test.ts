@@ -25,4 +25,3 @@ test("figmaRGBAWithoutOptionalArgs", () => {
 });
 test.run();
 
-test.run();
