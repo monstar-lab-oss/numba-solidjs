@@ -15,7 +15,7 @@ test("figmaRGBA", () => {
 
 test("figmaRGBAWithoutOptionalArgs", () => {
   assert.type(setColor, "function");
-  assert.type(setColor({ r: 255, g: 2, b: 3, a: 4 }), "object");
+  assert.type(setColor({ r: 255, g: 255, b: 255 }), "object");
 
   const result = setColor({ r: 255, g: 255, b: 255 });
   assert.is(result.color.r, 1);
