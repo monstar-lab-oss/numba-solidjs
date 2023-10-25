@@ -6,6 +6,10 @@ const config: StorybookConfig = {
     name: "storybook-solidjs-vite",
     options: {},
   },
+  addons: [
+    "@storybook/addon-essentials",
+    "@storybook/docs-tools"
+  ],
   previewHead: (head) => `
     ${head}
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
